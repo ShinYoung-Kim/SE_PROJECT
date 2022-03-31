@@ -148,7 +148,7 @@ public class Board extends JFrame {
 		setFocusable(true);
 		requestFocus();
 		
-		//Create the first block and draw.
+		//Create the first block and draw
 		curr = getRandomBlock();
 		next = getRandomBlock();
 		
