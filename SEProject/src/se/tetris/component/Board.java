@@ -91,7 +91,6 @@ public class Board extends JFrame {
 		nextArea.setBackground(Color.BLACK);
 		nextArea.setBorder(border);
 		nextArea.setPreferredSize(new Dimension(150, 200));
-	
 		
 		scorePanel = new JPanel();
 		EtchedBorder scoreBorder = new EtchedBorder();
@@ -101,6 +100,10 @@ public class Board extends JFrame {
 		scoreLb1.setForeground(Color.darkGray);
 		scoreLb1.setAlignmentX(CENTER_ALIGNMENT);
 		scoreLb2 = new JLabel(Integer.toString(score));
+		JLabel scoreLb1 = new JLabel("Scores");
+		scoreLb1.setForeground(Color.darkGray);
+		scoreLb1.setAlignmentX(CENTER_ALIGNMENT);
+		JLabel scoreLb2 = new JLabel(Integer.toString(score));
 		scoreLb2.setForeground(Color.RED);
 		scorePanel.setLayout(new BoxLayout(scorePanel, BoxLayout.Y_AXIS));
 		scorePanel.add(scoreLb1);
@@ -115,6 +118,10 @@ public class Board extends JFrame {
 		levelLb1.setForeground(Color.darkGray);
 		levelLb1.setAlignmentX(CENTER_ALIGNMENT);
 		levelLb2 = new JLabel(Integer.toString(level));		
+		JLabel levelLb1 = new JLabel("Level");
+		levelLb1.setForeground(Color.darkGray);
+		levelLb1.setAlignmentX(CENTER_ALIGNMENT);
+		JLabel levelLb2 = new JLabel(Integer.toString(level));
 		levelLb2.setForeground(Color.BLUE);
 		levelPanel.setLayout(new BoxLayout(levelPanel, BoxLayout.Y_AXIS));
 		levelPanel.add(levelLb1);
@@ -136,7 +143,7 @@ public class Board extends JFrame {
 		panel.add(rightPanel);
 		
 		add(panel);
-		
+
 		//Set timer for block drops.
 		timer = new Timer(initInterval, new ActionListener() {			
 			@Override
@@ -180,7 +187,7 @@ public class Board extends JFrame {
 		
 		boardDoc = tetrisArea.getStyledDocument();
 		nextDoc = nextArea.getStyledDocument();
-		
+
 		placeBlock();
 		drawBoard();
 		placeNext();
@@ -282,7 +289,7 @@ public class Board extends JFrame {
 			sb.append(BORDER_CHAR);
 			for(int j=0; j < board[i].length; j++) {
 				if(board[i][j] == 1) {
-					sb.append("กแ");
+					sb.append("ยกรก");
 				} else {
 					sb.append(" ");
 				}
@@ -308,7 +315,7 @@ public class Board extends JFrame {
 		for(int i=0; i < nextBoard.length; i++) {
 			for(int j=0; j < nextBoard[i].length; j++) {
 				if(nextBoard[i][j] == 1) {
-					sb.append("กแ");
+					sb.append("ยกรก");
 				} else {
 					sb.append(" ");
 				}
@@ -332,6 +339,7 @@ public class Board extends JFrame {
 		drawBoard();	
 		placeNext();
 		drawNext();
+		this.board = new int[20][10];
 	}
 
 	public class PlayerKeyListener implements KeyListener {
@@ -425,4 +433,5 @@ public class Board extends JFrame {
 		levelLb1.setFont(new Font(null, Font.BOLD, size));
 		levelLb2.setFont(new Font(null, Font.BOLD, size));
 	}
+	
 }
