@@ -121,7 +121,6 @@ public class Board extends JFrame {
 		levelPanel.add(Box.createVerticalStrut(5));
 		levelPanel.add(levelLb2);
 		
-		
 		leftPanel = new JPanel();
 		leftPanel.add(tetrisArea);
 		rightPanel = new JPanel();
