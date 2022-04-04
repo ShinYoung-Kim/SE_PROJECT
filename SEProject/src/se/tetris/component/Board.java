@@ -136,7 +136,6 @@ public class Board extends JFrame {
 		panel.add(rightPanel);
 		
 		add(panel);
-	
 		
 		//Set timer for block drops.
 		timer = new Timer(initInterval, new ActionListener() {			
