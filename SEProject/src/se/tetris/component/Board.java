@@ -2,6 +2,7 @@ package se.tetris.component;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -13,6 +14,8 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JTextPane;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -46,6 +49,10 @@ public class Board extends JFrame {
 	private JPanel rightPanel;
 	private JPanel scorePanel;
 	private JPanel levelPanel;
+	private JLabel levelLb1;
+	private JLabel levelLb2;
+	private JLabel scoreLb1;
+	private JLabel scoreLb2;
 	private int[][] board;
 	private int[][] nextBoard;
 	private KeyListener playerKeyListener;
@@ -83,12 +90,16 @@ public class Board extends JFrame {
 		nextArea.setEditable(false);
 		nextArea.setBackground(Color.BLACK);
 		nextArea.setBorder(border);
-	
+		nextArea.setPreferredSize(new Dimension(150, 200));
 		
 		scorePanel = new JPanel();
 		EtchedBorder scoreBorder = new EtchedBorder();
 		scorePanel.setBorder(scoreBorder);
 		scorePanel.setPreferredSize(new Dimension(150, 50));
+		scoreLb1 = new JLabel("Scores");
+		scoreLb1.setForeground(Color.darkGray);
+		scoreLb1.setAlignmentX(CENTER_ALIGNMENT);
+		scoreLb2 = new JLabel(Integer.toString(score));
 		JLabel scoreLb1 = new JLabel("Scores");
 		scoreLb1.setForeground(Color.darkGray);
 		scoreLb1.setAlignmentX(CENTER_ALIGNMENT);
@@ -103,6 +114,10 @@ public class Board extends JFrame {
 		levelPanel = new JPanel();
 		levelPanel.setBorder(scoreBorder);
 		levelPanel.setPreferredSize(new Dimension(150, 50));
+		levelLb1 = new JLabel("Level");
+		levelLb1.setForeground(Color.darkGray);
+		levelLb1.setAlignmentX(CENTER_ALIGNMENT);
+		levelLb2 = new JLabel(Integer.toString(level));		
 		JLabel levelLb1 = new JLabel("Level");
 		levelLb1.setForeground(Color.darkGray);
 		levelLb1.setAlignmentX(CENTER_ALIGNMENT);
@@ -112,7 +127,6 @@ public class Board extends JFrame {
 		levelPanel.add(levelLb1);
 		levelPanel.add(Box.createVerticalStrut(5));
 		levelPanel.add(levelLb2);
-		
 		
 		leftPanel = new JPanel();
 		leftPanel.add(tetrisArea);
@@ -129,8 +143,7 @@ public class Board extends JFrame {
 		panel.add(rightPanel);
 		
 		add(panel);
-	
-		
+
 		//Set timer for block drops.
 		timer = new Timer(initInterval, new ActionListener() {			
 			@Override
@@ -174,7 +187,7 @@ public class Board extends JFrame {
 		
 		boardDoc = tetrisArea.getStyledDocument();
 		nextDoc = nextArea.getStyledDocument();
-	
+
 		placeBlock();
 		drawBoard();
 		placeNext();
@@ -276,7 +289,7 @@ public class Board extends JFrame {
 			sb.append(BORDER_CHAR);
 			for(int j=0; j < board[i].length; j++) {
 				if(board[i][j] == 1) {
-					sb.append("กแ");
+					sb.append("ยกรก");
 				} else {
 					sb.append(" ");
 				}
@@ -302,7 +315,7 @@ public class Board extends JFrame {
 		for(int i=0; i < nextBoard.length; i++) {
 			for(int j=0; j < nextBoard[i].length; j++) {
 				if(nextBoard[i][j] == 1) {
-					sb.append("กแ");
+					sb.append("ยกรก");
 				} else {
 					sb.append(" ");
 				}
@@ -316,6 +329,16 @@ public class Board extends JFrame {
 	
 	
 	public void reset() {
+		board = new int[HEIGHT][WIDTH];
+		nextBoard = new int[4][5];
+		x = 3;
+		y = 0;
+		curr = getRandomBlock();
+		next = getRandomBlock();
+		placeBlock();
+		drawBoard();	
+		placeNext();
+		drawNext();
 		this.board = new int[20][10];
 	}
 
@@ -345,6 +368,37 @@ public class Board extends JFrame {
 				curr.rotate();
 				drawBoard();
 				break;
+			case KeyEvent.VK_ESCAPE:
+				timer.stop();
+				String[] stopOption = {"Restart", "Play", "Exit"};
+				int choice = JOptionPane.showOptionDialog(null, "What Do You Want?", "Stop", 0, 0, null, stopOption,stopOption[1]);
+				switch(choice) {
+					case 0:
+						int confirm1 = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
+						if (confirm1 == 0) {
+							reset();
+							score = 0;
+							level = 0;
+							timer.restart();
+						}
+						else {
+							timer.start();
+						}
+						break;
+					case 1:
+						timer.start();
+						break;
+					case 2:
+						int confirm2 = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
+						if (confirm2 == 0) {
+							dispose(); //or save score and move to score board.
+						}
+						else {
+							timer.start();
+						}
+						break;
+				}
+				break;
 			}
 		}
 
@@ -352,6 +406,32 @@ public class Board extends JFrame {
 		public void keyReleased(KeyEvent e) {
 			
 		}
+		
+	}
+	
+	//max - 30, default - 20,  
+	public void setSize(int size) {
+		StyleConstants.setFontSize(stylesetBr, size);
+		StyleConstants.setFontSize(stylesetCur, size);
+		StyleConstants.setFontSize(stylesetNx, size+5);
+		drawBoard();
+		drawNext();
+	}
+	
+	
+	//max - (200, 60), default - (150, 50) 
+	public void setRtSize(int xSize, int ySize) {
+		scorePanel.setPreferredSize(new Dimension(xSize, ySize));
+		levelPanel.setPreferredSize(new Dimension(xSize, ySize));
+		nextArea.setPreferredSize(new Dimension(xSize, ySize * 4));
+	}
+	
+	//max - 17, default - nothing, 
+	public void setLbSize(int size) {
+		scoreLb1.setFont(new Font(null, Font.BOLD, size));
+		scoreLb2.setFont(new Font(null, Font.BOLD, size));
+		levelLb1.setFont(new Font(null, Font.BOLD, size));
+		levelLb2.setFont(new Font(null, Font.BOLD, size));
 	}
 	
 }
