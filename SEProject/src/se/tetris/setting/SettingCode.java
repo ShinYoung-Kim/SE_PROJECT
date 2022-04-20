@@ -22,11 +22,19 @@ public class SettingCode extends JFrame {
     private JPanel rightPanel;
     private JPanel scorePanel;
 
+    JRadioButton sizeOne = new JRadioButton("표준(400 * 600)");
+    JRadioButton sizeTwo = new JRadioButton("크게(800 * 1200)");
+    JRadioButton sizeThree = new JRadioButton("전체 화면 모드");
+
     int score = 0;
     public static int intervalNumber = 1000;
     public static int sizeNumber;
     public static int colorBlindModeCheck;
     public static int modeChoose = 2;
+    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+    int screenWidth = (int)(dimension.getWidth());
+    int screenHeight = (int)(dimension.getHeight());
+
 
     public static SettingCode setting;
 
@@ -59,37 +67,28 @@ public class SettingCode extends JFrame {
         screenSizeTitle.setForeground(Color.WHITE);
         screenSizeArea.add(screenSizeTitle);
         ButtonGroup sizeGroup = new ButtonGroup();
-        JRadioButton sizeOne = new JRadioButton("표준(400 * 600)");
+
         sizeOne.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setting.setSize(400, 600);
-                Start.start.setSize(400, 600);
-                Board.boardMain.setSize(400, 600);
                 sizeNumber = 1;
+                changeSize(sizeNumber);
             }
         });
-        JRadioButton sizeTwo = new JRadioButton("크게(800 * 1200)");
+
         sizeTwo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setting.setSize(800, 1200);
-                Start.start.setSize(800, 1200);
-                Board.boardMain.setSize(800, 1200);
                 sizeNumber = 2;
+                changeSize(sizeNumber);
             }
         });
         JRadioButton sizeThree = new JRadioButton("전체 화면 모드");
         sizeThree.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setting.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                setting.setUndecorated(true);
-                Start.start.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                Start.start.setUndecorated(true);
-                Board.boardMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                Board.boardMain.setUndecorated(true);
                 sizeNumber = 3;
+                changeSize(sizeNumber);
             }
         });
         sizeOne.setSelected(true);
@@ -218,6 +217,10 @@ public class SettingCode extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Board.boardMain.setVisible(true);
+                Board.boardMain.reset();
+                Board.boardMain.timer.restart();
+                Board.boardMain.score = 0;
+                Board.boardMain.level = 0;
                 setVisible(false);
             }
         });
@@ -288,14 +291,32 @@ public class SettingCode extends JFrame {
     public void changeSize(int SizeNumber){
         switch (sizeNumber) {
             case 1:
-                setSize(400, 600);
+                setting.setSize(400, 600);
+                Start.start.setSize(400, 600);
+                Board.boardMain.setSize(400, 600);
+                Board.setSize(30);
+                Board.setRtSize(150, 50);
+                Board.setLbSize(0);
+                sizeOne.setSelected(true);
                 break;
             case 2:
-                setSize(800, 1200);
+                setting.setSize(800, 1200);
+                Start.start.setSize(800, 1200);
+                Board.boardMain.setSize(800, 1200);
+                Board.setSize(30);
+                Board.setRtSize(175, 55);
+                Board.setLbSize(15);
+                sizeTwo.setSelected(true);
                 break;
             case 3:
-                setExtendedState(JFrame.MAXIMIZED_BOTH);
-                setUndecorated(true);
+                setting.setSize(screenWidth, screenHeight);
+                Start.start.setSize(screenWidth, screenHeight);
+                Board.boardMain.setSize(screenWidth, screenHeight);
+                sizeNumber = 3;
+                Board.setSize(30);
+                Board.setRtSize(200, 60);
+                Board.setLbSize(17);
+                sizeThree.setSelected(true);
                 break;
             default:
                 setSize(400, 600);

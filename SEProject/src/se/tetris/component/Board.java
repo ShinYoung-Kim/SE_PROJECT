@@ -1,7 +1,6 @@
 package se.tetris.component;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -51,30 +50,35 @@ public class Board extends JFrame {
 	Random rnd;
 	int block;
 
-	private JTextPane tetrisArea;
-	private JTextPane nextArea;
+	private static JTextPane tetrisArea;
+	private static JTextPane nextArea;
 	private JPanel panel;
 	private JPanel leftPanel;
 	private JPanel rightPanel;
-	private JPanel scorePanel;
-	private JPanel levelPanel;
-	private int[][] board;
-	private int[][] nextBoard;
+	private static JPanel scorePanel;
+	private static JPanel levelPanel;
+	private static int[][] board;
+	private static int[][] nextBoard;
 	private KeyListener playerKeyListener;
-	private SimpleAttributeSet stylesetBr;
-	private SimpleAttributeSet stylesetNx;
-	private SimpleAttributeSet stylesetCur;
-	private StyledDocument boardDoc;
-	private StyledDocument nextDoc;
-	private Timer timer;
-	private Block curr;
-	private Block next;
-	int x = 3; //Default Position.
-	int y = 0;
+	private static SimpleAttributeSet stylesetBr;
+	private static SimpleAttributeSet stylesetNx;
+	private static SimpleAttributeSet stylesetCur;
+	private static StyledDocument boardDoc;
+	private static StyledDocument nextDoc;
+	public static Timer timer;
+	private static Block curr;
+	private static Block next;
+	static int x = 3; //Default Position.
+	static int y = 0;
 	int nextX = 1;
 	int nextY = 1;
-	int score = 0;
-	int level = 0;
+	public static int score = 0;
+	public static int level = 0;
+
+	static JLabel scoreLb1 = new JLabel("Scores");
+	static JLabel scoreLb2 = new JLabel(Integer.toString(score));
+	static JLabel levelLb1 = new JLabel("Level");
+	static JLabel levelLb2 = new JLabel(Integer.toString(level));
 
 	//initInterval 난이도에 따라 조절
 	//public static int initEasyInterval = 2000;
@@ -108,10 +112,10 @@ public class Board extends JFrame {
 		EtchedBorder scoreBorder = new EtchedBorder();
 		scorePanel.setBorder(scoreBorder);
 		scorePanel.setPreferredSize(new Dimension(150, 50));
-		JLabel scoreLb1 = new JLabel("Scores");
+
 		scoreLb1.setForeground(Color.darkGray);
 		scoreLb1.setAlignmentX(CENTER_ALIGNMENT);
-		JLabel scoreLb2 = new JLabel(Integer.toString(score));
+
 		scoreLb2.setForeground(Color.RED);
 		scorePanel.setLayout(new BoxLayout(scorePanel, BoxLayout.Y_AXIS));
 		scorePanel.add(scoreLb1);
@@ -122,10 +126,10 @@ public class Board extends JFrame {
 		levelPanel = new JPanel();
 		levelPanel.setBorder(scoreBorder);
 		levelPanel.setPreferredSize(new Dimension(150, 50));
-		JLabel levelLb1 = new JLabel("Level");
+
 		levelLb1.setForeground(Color.darkGray);
 		levelLb1.setAlignmentX(CENTER_ALIGNMENT);
-		JLabel levelLb2 = new JLabel(Integer.toString(level));
+
 		levelLb2.setForeground(Color.BLUE);
 		levelPanel.setLayout(new BoxLayout(levelPanel, BoxLayout.Y_AXIS));
 		levelPanel.add(levelLb1);
@@ -362,7 +366,7 @@ public class Board extends JFrame {
 		placeBlock();
 	}
 
-	public void drawBoard() {
+	public static void drawBoard() {
 		StringBuffer sb = new StringBuffer();
 		for(int t=0; t<WIDTH+2; t++) sb.append(BORDER_CHAR);
 		sb.append("\n");
@@ -394,7 +398,7 @@ public class Board extends JFrame {
 		}
 	}
 	//blockNumber 증가 + timer 변경
-	public void drawNext() {
+	public static void drawNext() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("\n");
 		blockNumber++;
@@ -420,7 +424,7 @@ public class Board extends JFrame {
 	}
 
 	//interval 함수
-	int getInterval(int blockNumber) {
+	static int getInterval(int blockNumber) {
 		switch (blockNumber) {
 			case 2:
 				initInterval *= 0.9;
@@ -479,7 +483,6 @@ public class Board extends JFrame {
 						case 0:
 							int confirm1 = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
 							if (confirm1 == 0) {
-
 								reset();
 								score = 0;
 								level = 0;
@@ -512,7 +515,29 @@ public class Board extends JFrame {
 		}
 
 	}
+	public static void setSize(int size) {
+		StyleConstants.setFontSize(stylesetBr, size);
+		StyleConstants.setFontSize(stylesetCur, size);
+		StyleConstants.setFontSize(stylesetNx, size+5);
+		drawBoard();
+		drawNext();
+	}
 
+
+	//max - (200, 60), default - (150, 50)
+	public static void setRtSize(int xSize, int ySize) {
+		scorePanel.setPreferredSize(new Dimension(xSize, ySize));
+		levelPanel.setPreferredSize(new Dimension(xSize, ySize));
+		nextArea.setPreferredSize(new Dimension(xSize, ySize * 4));
+	}
+
+	//max - 17, default - nothing,
+	public static void setLbSize(int size) {
+		scoreLb1.setFont(new Font(null, Font.BOLD, size));
+		scoreLb2.setFont(new Font(null, Font.BOLD, size));
+		levelLb1.setFont(new Font(null, Font.BOLD, size));
+		levelLb2.setFont(new Font(null, Font.BOLD, size));
+	}
 	public static Board getBoard(){
 		return boardMain;
 	}
