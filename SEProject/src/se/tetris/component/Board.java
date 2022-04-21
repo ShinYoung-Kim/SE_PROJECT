@@ -455,7 +455,6 @@ public class Board extends JFrame {
 		StringBuffer sb = new StringBuffer();
 		sb.append("\n");
 		blockNumber++;
-		eraseCnt++;
 		timer.setDelay(getInterval(blockNumber, eraseCnt));
 		for(int i=0; i < nextBoard.length; i++) {
 			for(int j=0; j < nextBoard[i].length; j++) {
@@ -493,19 +492,31 @@ public class Board extends JFrame {
 		if (blockNumber == 30 || blockNumber == 60 || blockNumber == 80 || blockNumber == 100 || blockNumber == 120) {
 			if (intervalByMode == 1000) {
 				SettingValues.getInstance().intervalNumber *= 0.9;
+				level++;
+				levelLb2.setText(Integer.toString(level));
 			} else if (intervalByMode == 2000) {
 				SettingValues.getInstance().intervalNumber *= 0.92;
+				level++;
+				levelLb2.setText(Integer.toString(level));
 			} else if (intervalByMode == 500) {
 				SettingValues.getInstance().intervalNumber *= 0.88;
+				level++;
+				levelLb2.setText(Integer.toString(level));
 			}
 		}
 		if (eraseCnt == 5 || eraseCnt == 10 || eraseCnt == 15 || eraseCnt == 20 || eraseCnt == 25) {
 			if (intervalByMode == 1000) {
 				setting.intervalNumber *= 0.9;
+				level++;
+				levelLb2.setText(Integer.toString(level));
 			} else if (intervalByMode == 2000) {
 				setting.intervalNumber *= 0.92;
+				level++;
+				levelLb2.setText(Integer.toString(level));
 			} else if (intervalByMode == 500) {
 				setting.intervalNumber *= 0.88;
+				level++;
+				levelLb2.setText(Integer.toString(level));
 			}
 		}
 		System.out.println("Created : " + blockNumber + "   Removed : " + eraseCnt +"   intervalByMode" +intervalByMode + "   interval Number : " + setting.intervalNumber);
