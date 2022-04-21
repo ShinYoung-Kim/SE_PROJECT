@@ -455,6 +455,7 @@ public class Board extends JFrame {
 		StringBuffer sb = new StringBuffer();
 		sb.append("\n");
 		blockNumber++;
+		eraseCnt++;
 		timer.setDelay(getInterval(blockNumber, eraseCnt));
 		for(int i=0; i < nextBoard.length; i++) {
 			for(int j=0; j < nextBoard[i].length; j++) {
@@ -488,113 +489,24 @@ public class Board extends JFrame {
 
 
 	//interval 함수
-	int getInterval(int blockNumber, int blockRemovedNumber) {
-		switch (intervalByMode) {
-			case 1000:
-				switch (blockNumber) {
-					case 30:
-						setting.intervalNumber *= 0.9;
-						return setting.intervalNumber;
-					case 60:
-						setting.intervalNumber *= 0.9;
-						return setting.intervalNumber;
-					case 80:
-						setting.intervalNumber *= 0.9;
-						return setting.intervalNumber;
-					case 100:
-						setting.intervalNumber *= 0.9;
-						return setting.intervalNumber;
-					case 120:
-						setting.intervalNumber *= 0.9;
-						return setting.intervalNumber;
-				}
-				switch (blockRemovedNumber) {
-					case 5:
-						setting.intervalNumber *= 0.9;
-						return setting.intervalNumber;
-					case 10:
-						setting.intervalNumber *= 0.9;
-						return setting.intervalNumber;
-					case 15:
-						setting.intervalNumber *= 0.9;
-						return setting.intervalNumber;
-					case 20:
-						setting.intervalNumber *= 0.9;
-						return setting.intervalNumber;
-					case 25:
-						setting.intervalNumber *= 0.9;
-						return setting.intervalNumber;
-				}
-			case 2000:
-				switch (blockNumber) {
-					case 30:
-						setting.intervalNumber *= 0.92;
-						return setting.intervalNumber;
-					case 60:
-						setting.intervalNumber *= 0.92;
-						return setting.intervalNumber;
-					case 80:
-						setting.intervalNumber *= 0.92;
-						return setting.intervalNumber;
-					case 100:
-						setting.intervalNumber *= 0.92;
-						return setting.intervalNumber;
-					case 120:
-						setting.intervalNumber *= 0.92;
-						return setting.intervalNumber;
-				}
-				switch (blockRemovedNumber) {
-					case 5:
-						setting.intervalNumber *= 0.92;
-						return setting.intervalNumber;
-					case 10:
-						setting.intervalNumber *= 0.92;
-						return setting.intervalNumber;
-					case 15:
-						setting.intervalNumber *= 0.92;
-						return setting.intervalNumber;
-					case 20:
-						setting.intervalNumber *= 0.92;
-						return setting.intervalNumber;
-					case 25:
-						setting.intervalNumber *= 0.92;
-						return setting.intervalNumber;
-				}
-			case 500:
-				switch (blockNumber) {
-					case 30:
-						setting.intervalNumber *= 0.88;
-						return setting.intervalNumber;
-					case 60:
-						setting.intervalNumber *= 0.88;
-						return setting.intervalNumber;
-					case 80:
-						setting.intervalNumber *= 0.88;
-						return setting.intervalNumber;
-					case 100:
-						setting.intervalNumber *= 0.88;
-						return setting.intervalNumber;
-					case 120:
-						setting.intervalNumber *= 0.88;
-						return setting.intervalNumber;
-				}
-				switch (blockRemovedNumber) {
-					case 5:
-						setting.intervalNumber *= 0.88;
-						return setting.intervalNumber;
-					case 10:
-						setting.intervalNumber *= 0.88;
-						return setting.intervalNumber;
-					case 15:
-						setting.intervalNumber *= 0.88;
-						return setting.intervalNumber;
-					case 20:
-						setting.intervalNumber *= 0.88;
-						return setting.intervalNumber;
-					case 25:
-						setting.intervalNumber *= 0.88;
-						return setting.intervalNumber;
-				}
+	int getInterval(int blockNumber, int eraseCnt) {
+		if (blockNumber == 30 || blockNumber == 60 || blockNumber == 80 || blockNumber == 100 || blockNumber == 120) {
+			if (intervalByMode == 1000) {
+				SettingValues.getInstance().intervalNumber *= 0.9;
+			} else if (intervalByMode == 2000) {
+				SettingValues.getInstance().intervalNumber *= 0.92;
+			} else if (intervalByMode == 500) {
+				SettingValues.getInstance().intervalNumber *= 0.88;
+			}
+		}
+		if (eraseCnt == 5 || eraseCnt == 10 || eraseCnt == 15 || eraseCnt == 20 || eraseCnt == 25) {
+			if (intervalByMode == 1000) {
+				setting.intervalNumber *= 0.9;
+			} else if (intervalByMode == 2000) {
+				setting.intervalNumber *= 0.92;
+			} else if (intervalByMode == 500) {
+				setting.intervalNumber *= 0.88;
+			}
 		}
 		System.out.println("Created : " + blockNumber + "   Removed : " + eraseCnt +"   intervalByMode" +intervalByMode + "   interval Number : " + setting.intervalNumber);
 		return setting.intervalNumber;
