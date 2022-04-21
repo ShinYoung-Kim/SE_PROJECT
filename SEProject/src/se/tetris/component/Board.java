@@ -658,6 +658,7 @@ public class Board extends JFrame {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
+			if(SettingValues.getInstance().keyChoose == 1) {
 			switch(e.getKeyCode()) {
 				case KeyEvent.VK_DOWN:
 					moveDown();
@@ -678,8 +679,8 @@ public class Board extends JFrame {
 				case KeyEvent.VK_ESCAPE:
 					timer.stop();
 					String[] stopOption = {"Restart", "Play", "Exit"};
-					int choice = JOptionPane.showOptionDialog(null, "What Do You Want?", "Stop", 0, 0, null, stopOption,stopOption[1]);
-					switch(choice) {
+					int choice = JOptionPane.showOptionDialog(null, "What Do You Want?", "Stop", 0, 0, null, stopOption, stopOption[1]);
+					switch (choice) {
 						case 0:
 							int confirm1 = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
 							if (confirm1 == 0) {
@@ -687,8 +688,7 @@ public class Board extends JFrame {
 								score = 0;
 								level = 0;
 								timer.restart();
-							}
-							else {
+							} else {
 								timer.start();
 							}
 							break;
@@ -699,13 +699,61 @@ public class Board extends JFrame {
 							int confirm2 = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
 							if (confirm2 == 0) {
 								dispose(); //or save score and move to score board.
-							}
-							else {
+							} else {
 								timer.start();
 							}
 							break;
 					}
 					break;
+			}
+			}else if(SettingValues.getInstance().keyChoose == 2) {
+				switch(e.getKeyCode()) {
+					case KeyEvent.VK_S:
+						moveDown();
+						drawBoard();
+						break;
+					case KeyEvent.VK_D:
+						moveRight();
+						drawBoard();
+						break;
+					case KeyEvent.VK_A:
+						moveLeft();
+						drawBoard();
+						break;
+					case KeyEvent.VK_W:
+						blockRotate();
+						drawBoard();
+						break;
+					case KeyEvent.VK_ESCAPE:
+						timer.stop();
+						String[] stopOption = {"Restart", "Play", "Exit"};
+						int choice = JOptionPane.showOptionDialog(null, "What Do You Want?", "Stop", 0, 0, null, stopOption, stopOption[1]);
+						switch (choice) {
+							case 0:
+								int confirm1 = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
+								if (confirm1 == 0) {
+									reset();
+									score = 0;
+									level = 0;
+									timer.restart();
+								} else {
+									timer.start();
+								}
+								break;
+							case 1:
+								timer.start();
+								break;
+							case 2:
+								int confirm2 = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
+								if (confirm2 == 0) {
+									dispose(); //or save score and move to score board.
+								} else {
+									timer.start();
+								}
+								break;
+						}
+						break;
+				}
 			}
 		}
 
