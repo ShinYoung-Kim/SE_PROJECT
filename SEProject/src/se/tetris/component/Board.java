@@ -494,106 +494,106 @@ public class Board extends JFrame {
 				switch (blockNumber) {
 					case 30:
 						setting.intervalNumber *= 0.9;
-						break;
+						return setting.intervalNumber;
 					case 60:
 						setting.intervalNumber *= 0.9;
-						break;
+						return setting.intervalNumber;
 					case 80:
 						setting.intervalNumber *= 0.9;
-						break;
+						return setting.intervalNumber;
 					case 100:
 						setting.intervalNumber *= 0.9;
-						break;
+						return setting.intervalNumber;
 					case 120:
 						setting.intervalNumber *= 0.9;
-						break;
+						return setting.intervalNumber;
 				}
 				switch (blockRemovedNumber) {
-					case 1:
+					case 5:
 						setting.intervalNumber *= 0.9;
-						break;
-					case 2:
+						return setting.intervalNumber;
+					case 10:
 						setting.intervalNumber *= 0.9;
-						break;
+						return setting.intervalNumber;
 					case 15:
 						setting.intervalNumber *= 0.9;
-						break;
+						return setting.intervalNumber;
 					case 20:
 						setting.intervalNumber *= 0.9;
-						break;
+						return setting.intervalNumber;
 					case 25:
 						setting.intervalNumber *= 0.9;
-						break;
+						return setting.intervalNumber;
 				}
 			case 2000:
 				switch (blockNumber) {
 					case 30:
 						setting.intervalNumber *= 0.92;
-						break;
+						return setting.intervalNumber;
 					case 60:
 						setting.intervalNumber *= 0.92;
-						break;
+						return setting.intervalNumber;
 					case 80:
 						setting.intervalNumber *= 0.92;
-						break;
+						return setting.intervalNumber;
 					case 100:
 						setting.intervalNumber *= 0.92;
-						break;
+						return setting.intervalNumber;
 					case 120:
 						setting.intervalNumber *= 0.92;
-						break;
+						return setting.intervalNumber;
 				}
 				switch (blockRemovedNumber) {
 					case 5:
 						setting.intervalNumber *= 0.92;
-						break;
+						return setting.intervalNumber;
 					case 10:
 						setting.intervalNumber *= 0.92;
-						break;
+						return setting.intervalNumber;
 					case 15:
 						setting.intervalNumber *= 0.92;
-						break;
+						return setting.intervalNumber;
 					case 20:
 						setting.intervalNumber *= 0.92;
-						break;
+						return setting.intervalNumber;
 					case 25:
 						setting.intervalNumber *= 0.92;
-						break;
+						return setting.intervalNumber;
 				}
 			case 500:
 				switch (blockNumber) {
 					case 30:
 						setting.intervalNumber *= 0.88;
-						break;
+						return setting.intervalNumber;
 					case 60:
 						setting.intervalNumber *= 0.88;
-						break;
+						return setting.intervalNumber;
 					case 80:
 						setting.intervalNumber *= 0.88;
-						break;
+						return setting.intervalNumber;
 					case 100:
 						setting.intervalNumber *= 0.88;
-						break;
+						return setting.intervalNumber;
 					case 120:
 						setting.intervalNumber *= 0.88;
-						break;
+						return setting.intervalNumber;
 				}
 				switch (blockRemovedNumber) {
 					case 5:
 						setting.intervalNumber *= 0.88;
-						break;
+						return setting.intervalNumber;
 					case 10:
 						setting.intervalNumber *= 0.88;
-						break;
+						return setting.intervalNumber;
 					case 15:
 						setting.intervalNumber *= 0.88;
-						break;
+						return setting.intervalNumber;
 					case 20:
 						setting.intervalNumber *= 0.88;
-						break;
+						return setting.intervalNumber;
 					case 25:
 						setting.intervalNumber *= 0.88;
-						break;
+						return setting.intervalNumber;
 				}
 		}
 		System.out.println("Created : " + blockNumber + "   Removed : " + eraseCnt +"   intervalByMode" +intervalByMode + "   interval Number : " + setting.intervalNumber);
