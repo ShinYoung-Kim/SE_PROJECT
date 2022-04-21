@@ -9,6 +9,7 @@ public class SettingValues {
     public int fontSize = 30;
     public int colorBlindModeCheck = 0;
     public int modeChoose = 2;
+    public int keyChoose = 1;
 
     private SettingValues() {}
 
