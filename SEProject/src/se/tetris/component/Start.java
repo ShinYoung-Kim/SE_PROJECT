@@ -49,12 +49,12 @@ public class Start extends JFrame {
 	}
 
 	public void startItemMode() {
-		/*
-		ItemBoard itemView = new ItemBoard();
-		itemView.setSize(400, 600);
-		itemView.setVisible(true);
+		ItemBoard.itemBoardMain.reset();
+		ItemBoard.itemBoardMain.timer.restart();
+		ItemBoard.itemBoardMain.score = 0;
+		ItemBoard.itemBoardMain.level = 0;
+		ItemBoard.itemBoardMain.setVisible(true);
 		setVisible(false);
-		 */
 	}
 
 	public void startScoreMode() {
@@ -125,6 +125,12 @@ public class Start extends JFrame {
 			Board.boardMain = new Board();
 			Board.boardMain.timer.stop();
 			Board.boardMain.setSize(400, 600);
+		}
+
+		if (ItemBoard.getItemBoard() == null) {
+			ItemBoard.itemBoardMain = new ItemBoard();
+			ItemBoard.itemBoardMain.timer.stop();
+			ItemBoard.itemBoardMain.setSize(400, 600);
 		}
 
 		stdBtn.addActionListener(new ActionListener() {

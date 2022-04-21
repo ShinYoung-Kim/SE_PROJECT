@@ -1,6 +1,7 @@
 package se.tetris.setting;
 
 import se.tetris.component.Board;
+import se.tetris.component.ItemBoard;
 import se.tetris.component.Start;
 
 import javax.swing.*;
@@ -31,7 +32,7 @@ public class SettingCode extends JFrame {
 
     Color grayMade = new Color(238,238,238);
 
-    JLabel settingTitle = new JLabel("테트리스 게임 설정");
+    JLabel settingTitle = new JLabel("Team1 테트리스 게임 설정");
 
     JButton scoreReset = new JButton("<html><body style='text-align:center;'>스코어보드<br>초기화</body></html>");
     JButton BackToGame = new JButton("<html><body style='text-align:center;'>일반<br>게임으로</body></html>");
@@ -84,7 +85,6 @@ public class SettingCode extends JFrame {
 
         settingTitle.setForeground(Color.WHITE);
         tetrisArea.add(settingTitle);
-
 
         nextArea = new JPanel();
         //nextArea.setPreferredSize(new Dimension(250, 400));
@@ -270,14 +270,12 @@ public class SettingCode extends JFrame {
         BackToItemGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*
-                Board.boardMain.setVisible(true);
-                Board.boardMain.reset();
-                Board.boardMain.timer.restart();
-                Board.boardMain.score = 0;
-                Board.boardMain.level = 0;
+                ItemBoard.itemBoardMain.setVisible(true);
+                ItemBoard.itemBoardMain.reset();
+                ItemBoard.itemBoardMain.timer.restart();
+                ItemBoard.itemBoardMain.score = 0;
+                ItemBoard.itemBoardMain.level = 0;
                 setVisible(false);
-                 */
             }
         });
 
@@ -998,8 +996,6 @@ public class SettingCode extends JFrame {
                 }
             }
 
-
-
             @Override
             public void keyReleased(KeyEvent e) {
 
@@ -1019,7 +1015,7 @@ public class SettingCode extends JFrame {
     }
 
     private void modeThreefun() {
-        SettingValues.getInstance().intervalNumber = 500;
+        SettingValues.getInstance().intervalNumber = 800;
         SettingValues.getInstance().modeChoose = 3;
         modeThree.setSelected(true);
     }
@@ -1105,6 +1101,10 @@ public class SettingCode extends JFrame {
                 Board.boardMain.setSize(30);
                 Board.setRtSize(150, 50);
                 Board.setLbSize(0);
+                ItemBoard.itemBoardMain.setSize(400, 600);
+                ItemBoard.itemBoardMain.setSize(30);
+                ItemBoard.setRtSize(150, 50);
+                ItemBoard.setLbSize(0);
                 sizeOne.setSelected(true);
                 break;
             case 2:
@@ -1146,6 +1146,10 @@ public class SettingCode extends JFrame {
                 Board.boardMain.setSize(30);
                 Board.setRtSize(175, 55);
                 Board.setLbSize(15);
+                ItemBoard.itemBoardMain.setSize(800, 800);
+                ItemBoard.itemBoardMain.setSize(30);
+                ItemBoard.setRtSize(175, 55);
+                ItemBoard.setLbSize(15);
                 sizeTwo.setSelected(true);
                 break;
             case 3:
@@ -1188,6 +1192,10 @@ public class SettingCode extends JFrame {
                 Board.boardMain.setSize(30);
                 Board.setRtSize(200, 60);
                 Board.setLbSize(17);
+                ItemBoard.itemBoardMain.setSize(screenWidth, screenHeight);
+                ItemBoard.itemBoardMain.setSize(30);
+                ItemBoard.setRtSize(200, 60);
+                ItemBoard.setLbSize(17);
                 sizeThree.setSelected(true);
                 break;
             default:
