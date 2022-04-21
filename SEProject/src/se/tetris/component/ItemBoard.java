@@ -42,7 +42,7 @@ public class ItemBoard extends JFrame {
 
 	double min;
 	double max;
-	double weighted;
+	double percentage;
 	Random rnd;
 	int block;
 
@@ -214,13 +214,13 @@ public class ItemBoard extends JFrame {
 			case 1:
 				min = 1;
 				max = 100;
-				weighted = Math.random() * (max - min) + min;
-				if (weighted <= (80/7 + 20))
+				percentage = Math.random() * (max - min) + min;
+				if (percentage <= (double)100 / 720 * 100 * 1.2)
 					return new IBlock();
 				else
 				{
 					rnd = new Random(System.currentTimeMillis());
-					block = rnd.nextInt(7);
+					block = rnd.nextInt(6);
 					switch(block) {
 						case 0:
 							return new JBlock();
@@ -256,12 +256,15 @@ public class ItemBoard extends JFrame {
 						return new OBlock();
 				}
 			case 3:
-				if (weighted <= (120/7 - 20))
+				min = 1;
+				max = 100;
+				percentage = Math.random() * (max - min) + min;
+				if (percentage <= (double)100 / 680 * 100 * 0.8)
 					return new IBlock();
 				else
 				{
 					rnd = new Random(System.currentTimeMillis());
-					block = rnd.nextInt(7);
+					block = rnd.nextInt(6);
 					switch(block) {
 						case 0:
 							return new JBlock();
@@ -281,7 +284,7 @@ public class ItemBoard extends JFrame {
 			default:
 				break;
 		}
-		return new LBlock();
+		return new IBlock();
 	}
 
 
