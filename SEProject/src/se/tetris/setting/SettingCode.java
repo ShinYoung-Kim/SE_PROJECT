@@ -1,18 +1,16 @@
 package se.tetris.setting;
 
+import se.tetris.component.Board;
+import se.tetris.component.Start;
+
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import se.tetris.main.Tetris;
-import se.tetris.component.Board;
-import se.tetris.component.Start;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
 public class SettingCode extends JFrame {
     private JPanel tetrisArea;
@@ -27,16 +25,10 @@ public class SettingCode extends JFrame {
     JRadioButton sizeThree = new JRadioButton("전체 화면 모드");
 
     int score = 0;
-    public static int intervalNumber = 1000;
-    public static int sizeNumber;
-    public static int colorBlindModeCheck;
-    public static int modeChoose = 2;
+
     Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     int screenWidth = (int)(dimension.getWidth());
     int screenHeight = (int)(dimension.getHeight());
-
-
-    public static SettingCode setting;
 
     public SettingCode() {
 
@@ -71,24 +63,24 @@ public class SettingCode extends JFrame {
         sizeOne.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sizeNumber = 1;
-                changeSize(sizeNumber);
+                SettingValues.getInstance().sizeNumber = 1;
+                changeSize(SettingValues.getInstance().sizeNumber);
             }
         });
 
         sizeTwo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sizeNumber = 2;
-                changeSize(sizeNumber);
+                SettingValues.getInstance().sizeNumber = 2;
+                changeSize(SettingValues.getInstance().sizeNumber);
             }
         });
         JRadioButton sizeThree = new JRadioButton("전체 화면 모드");
         sizeThree.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sizeNumber = 3;
-                changeSize(sizeNumber);
+                SettingValues.getInstance().sizeNumber = 3;
+                changeSize(SettingValues.getInstance().sizeNumber);
             }
         });
         sizeOne.setSelected(true);
@@ -128,13 +120,13 @@ public class SettingCode extends JFrame {
         colorBlindOne.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                colorBlindModeCheck = 0;
+                SettingValues.getInstance().colorBlindModeCheck = 0;
             }
         });
         colorBlindTwo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                colorBlindModeCheck = 1;
+                SettingValues.getInstance().colorBlindModeCheck = 1;
             }
         });
         colorBlindOne.setSelected(true);
@@ -155,24 +147,24 @@ public class SettingCode extends JFrame {
         modeOne.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                intervalNumber = 2000;
-                modeChoose = 1;
+                SettingValues.getInstance().intervalNumber = 2000;
+                SettingValues.getInstance().modeChoose = 1;
             }
         });
         JRadioButton modeTwo = new JRadioButton("Normal");
         modeTwo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                intervalNumber = 1000;
-                modeChoose = 2;
+                SettingValues.getInstance().intervalNumber = 1000;
+                SettingValues.getInstance().modeChoose = 2;
             }
         });
         JRadioButton modeThree = new JRadioButton("Hard");
         modeThree.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                intervalNumber = 500;
-                modeChoose = 3;
+                SettingValues.getInstance().intervalNumber = 500;
+                SettingValues.getInstance().modeChoose = 3;
             }
         });
         modeTwo.setSelected(true);
@@ -209,7 +201,8 @@ public class SettingCode extends JFrame {
         EtchedBorder buttonBorder = new EtchedBorder();
         buttonPanel.setBorder(buttonBorder);
         buttonPanel.setPreferredSize(new Dimension(80, 300));
-        JButton BackToGame = new JButton("게임으로");
+        JButton BackToGame = new JButton("일반 게임으로");
+        JButton BackToItemGame = new JButton("아이템 모드 게임으로");
         JButton BackToStart = new JButton("시작 메뉴");
         JButton settingReset = new JButton("설정초기화");
 
@@ -222,6 +215,20 @@ public class SettingCode extends JFrame {
                 Board.boardMain.score = 0;
                 Board.boardMain.level = 0;
                 setVisible(false);
+            }
+        });
+
+        BackToItemGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /*
+                Board.boardMain.setVisible(true);
+                Board.boardMain.reset();
+                Board.boardMain.timer.restart();
+                Board.boardMain.score = 0;
+                Board.boardMain.level = 0;
+                setVisible(false);
+                 */
             }
         });
 
@@ -244,6 +251,7 @@ public class SettingCode extends JFrame {
         });
 
         buttonPanel.add(BackToGame);
+        buttonPanel.add(BackToItemGame);
         buttonPanel.add(BackToStart);
         buttonPanel.add(settingReset);
 
@@ -280,40 +288,46 @@ public class SettingCode extends JFrame {
 
     }
 
-    public static int getInitInterval(){
-        return intervalNumber;
-    }
+    public abstract class SettingPageKeyListener implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
 
-    public static int getSizeNumber(){
-        return sizeNumber;
-    }
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            switch(e.getKeyCode()) {
+
+            }
+        }
+        }
 
     public void changeSize(int SizeNumber){
-        switch (sizeNumber) {
+        switch (SettingValues.getInstance().sizeNumber) {
             case 1:
-                setting.setSize(400, 600);
+                setSize(400, 600);
                 Start.start.setSize(400, 600);
                 Board.boardMain.setSize(400, 600);
-                Board.setSize(30);
+                Board.boardMain.setSize(30);
                 Board.setRtSize(150, 50);
                 Board.setLbSize(0);
                 sizeOne.setSelected(true);
                 break;
             case 2:
-                setting.setSize(800, 1200);
+                setSize(800, 1200);
                 Start.start.setSize(800, 1200);
                 Board.boardMain.setSize(800, 1200);
-                Board.setSize(30);
+                Board.boardMain.setSize(30);
                 Board.setRtSize(175, 55);
                 Board.setLbSize(15);
                 sizeTwo.setSelected(true);
                 break;
             case 3:
-                setting.setSize(screenWidth, screenHeight);
+                setSize(screenWidth, screenHeight);
                 Start.start.setSize(screenWidth, screenHeight);
                 Board.boardMain.setSize(screenWidth, screenHeight);
-                sizeNumber = 3;
-                Board.setSize(30);
+                SettingValues.getInstance().sizeNumber = 3;
+                Board.boardMain.setSize(30);
                 Board.setRtSize(200, 60);
                 Board.setLbSize(17);
                 sizeThree.setSelected(true);
@@ -323,18 +337,25 @@ public class SettingCode extends JFrame {
                 break;
         }
     }
+/*
+    private void addKeyListener(new KeyListener() {
 
-    public static SettingCode getSettingCode() {
-        return setting;
+        @Override
+        public void keyTyped(KeyEvent e) {}
+
+        @Override
+        public void keyReleased(KeyEvent e) {}
+
+        @Override
+        public void keyPressed(KeyEvent e) {}) {
+
     }
 
-    public static int getColorBlindModeCheck() {
-        return colorBlindModeCheck;
-    }
+ */
 
     public static void main(String[] args) {
-        //SettingCode setting = new SettingCode();
-        int sizeNumber = setting.getSizeNumber();
+        SettingCode setting = new SettingCode();
+        int sizeNumber = SettingValues.getInstance().sizeNumber;
         switch (sizeNumber) {
             case 1:
                 setting.setSize(400, 600);
