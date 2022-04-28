@@ -30,6 +30,9 @@ import javax.swing.text.StyledDocument;
 
 import se.tetris.component.Board;
 import se.tetris.setting.SettingCode;
+import se.tetris.component.*;
+import se.tetris.data.*;
+
 import se.tetris.setting.SettingValues;
 
 public class Start extends JFrame {

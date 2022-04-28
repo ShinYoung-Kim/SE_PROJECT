@@ -5,15 +5,11 @@ import java.awt.Color;
 public class SBlock extends Block {
 
 	public SBlock() {
-		shape = new int[][] { 
-			{0, 1, 1},
-			{1, 1, 0}
+		shape = new int[][] {
+				{0, 1, 1},
+				{1, 1, 0}
 		};
 		color = Color.GREEN;
-		numOfBlockType = 2;
-	}
-	
-	public int[] getBlock() {
-	    return shape[r];
+		colorBlind = new Color(247, 193, 121);
 	}
 }
