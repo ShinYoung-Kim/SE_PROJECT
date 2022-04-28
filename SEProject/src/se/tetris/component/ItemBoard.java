@@ -354,8 +354,12 @@ public class ItemBoard extends JFrame {
 			eraseCnt++;
 			getScore(eraseCnt);
 			setScore();
-			if ((eraseCnt != 0) && (eraseCnt % 10 == 0))
+			if ((eraseCnt != 0) && (eraseCnt % 10 == 0)){
 				itemFlag = true;
+				setScore();
+			}
+
+
 		}
 	}
 
@@ -395,6 +399,10 @@ public class ItemBoard extends JFrame {
 		y = 0;
 		if (isGameOver() == true) {
 			timer.stop();
+			System.out.println("게임 종료!!");
+			boolean result = scoreItem.showDialog(getNowScore(), 1 , level);
+			setVisible(result);
+
 			//종료 화면과 잇기
 		}
 		else {
@@ -1042,12 +1050,29 @@ public class ItemBoard extends JFrame {
 	}
 
 	public void getScore(int lines) {
-		int scorePre = lines * 10;
-		updateSroce(scorePre);
+		int scorePre = lines;
+		updateScoce(scorePre);
 	}
 
-	public int updateSroce(int sc) {
-		this.score += sc;
+	public int getNowScore() {
+		int score = this.score;
+		return score;
+	}
+
+	public int updateScoce(int sc) {
+		if(sc>0 && sc<=5) {
+			this.score += 10;
+		}else if(sc>5 && sc<=10) {
+			this.score += 15;
+		}else {
+			this.score += 20;
+		}
+		if(sc%3 ==0) {
+			this.score += 3*sc;
+		}
+		if(sc%11 ==0) {
+			this.score += 11;
+		}
 		setScore();
 		return score;
 	}

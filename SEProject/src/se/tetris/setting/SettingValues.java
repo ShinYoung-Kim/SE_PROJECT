@@ -6,7 +6,6 @@ public class SettingValues {
 
     public int intervalNumber = 1000;
     public int sizeNumber = 1;
-    public int fontSize = 30;
     public int colorBlindModeCheck = 0;
     public int modeChoose = 2;
     public int keyChoose = 1;
@@ -16,4 +15,9 @@ public class SettingValues {
     public static SettingValues getInstance() {
         return instance;
     }
+    /*
+    public static void setIntervalNumber(int intervalNumber) {
+        instance.intervalNumber = intervalNumber;
+    }
+    */
 }

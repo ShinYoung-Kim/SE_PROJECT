@@ -160,7 +160,6 @@ public class Board extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				moveDown();
-				drawBoard();
 			}
 		});
 
@@ -343,6 +342,8 @@ public class Board extends JFrame {
 		y = 0;
 		if (isGameOver() == true) {
 			timer.stop();
+			boolean result = scoreItem.showDialog(getNowScore(), 0 , level);
+			setVisible(result);
 			//종료 화면과 잇기
 		}
 		else {
@@ -368,8 +369,6 @@ public class Board extends JFrame {
 			eraseCnt++;
 			getScore(eraseCnt);
 			setScore();
-			if ((eraseCnt != 0) && (eraseCnt % 3 == 0))
-				System.out.println("1"+ eraseCnt);
 		}
 	}
 
@@ -667,7 +666,6 @@ public class Board extends JFrame {
 						else {
 							y++;
 						}
-						lineRemove();
 						placeBlock();
 						drawBoard();
 					}
@@ -819,8 +817,26 @@ public class Board extends JFrame {
 		updateSroce(scorePre);
 	}
 
+	public int getNowScore() {
+		int score = this.score;
+		return score;
+	}
+
 	public int updateSroce(int sc) {
-		this.score += sc;
+		if(sc>0 && sc<=5) {
+			this.score += 10;
+		}else if(sc>5 && sc<=10) {
+			this.score += 15;
+		}else {
+			this.score += 20;
+		}
+		if(sc%3 ==0) {
+			this.score += 3*sc;
+		}
+		if(sc%11 ==0) {
+			this.score += 11;
+		}
+
 		setScore();
 		return score;
 	}
