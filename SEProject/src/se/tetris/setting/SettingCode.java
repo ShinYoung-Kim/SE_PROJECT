@@ -66,6 +66,8 @@ public class SettingCode extends JFrame {
     int KeyCount = 0;
     int KeyFoucus = 0;
 
+    DBCalls dataCalls = new DBCalls();
+
     public SettingCode() {
 
         super("SeoulTech SE Tetris");
@@ -1017,46 +1019,72 @@ public class SettingCode extends JFrame {
     private void modeThreefun() {
         SettingValues.getInstance().intervalNumber = 800;
         SettingValues.getInstance().modeChoose = 3;
+
+        dataCalls.UpdateLevelSetting(2);
+
+        System.out.println("3번");
+
         modeThree.setSelected(true);
     }
 
     private void modeTwofun() {
         SettingValues.getInstance().intervalNumber = 1000;
         SettingValues.getInstance().modeChoose = 2;
+
+        dataCalls.UpdateLevelSetting(0);
+
         modeTwo.setSelected(true);
     }
 
     private void modeOnefun() {
         SettingValues.getInstance().intervalNumber = 2000;
         SettingValues.getInstance().modeChoose = 1;
+
+        dataCalls.UpdateLevelSetting(1);
+
         modeOne.setSelected(true);
     }
 
     private void sizeOnefun() {
         SettingValues.getInstance().sizeNumber = 1;
+
+        dataCalls.UpdateWindowSetting(SettingValues.getInstance().sizeNumber - 1);
+
         changeSize(SettingValues.getInstance().sizeNumber);
         sizeOne.setSelected(true);
     }
 
     private void sizeTwofun() {
         SettingValues.getInstance().sizeNumber = 2;
+
+        dataCalls.UpdateWindowSetting(SettingValues.getInstance().sizeNumber - 1);
+
         changeSize(SettingValues.getInstance().sizeNumber);
         sizeTwo.setSelected(true);
     }
 
     private void sizeThreefun() {
         SettingValues.getInstance().sizeNumber = 3;
+
+        dataCalls.UpdateWindowSetting(SettingValues.getInstance().sizeNumber - 1);
+
         changeSize(SettingValues.getInstance().sizeNumber);
         sizeThree.setSelected(true);
     }
 
     private void colorBlindOneFun() {
         SettingValues.getInstance().colorBlindModeCheck = 0;
+
+        dataCalls.UpdateColorSetting(SettingValues.getInstance().colorBlindModeCheck);
+
         colorBlindOne.setSelected(true);
     }
 
     private void colorBlindTwoFun() {
         SettingValues.getInstance().colorBlindModeCheck = 1;
+
+        dataCalls.UpdateColorSetting(SettingValues.getInstance().colorBlindModeCheck);
+
         colorBlindTwo.setSelected(true);
     }
 
@@ -1095,6 +1123,9 @@ public class SettingCode extends JFrame {
                 modeOne.setFont(fontSmall);
                 modeTwo.setFont(fontSmall);
                 modeThree.setFont(fontSmall);
+
+                Start startview = new Start();
+                startview.setSize(400,400);
 
                 Start.start.setSize(400, 600);
                 Board.boardMain.setSize(400, 600);
