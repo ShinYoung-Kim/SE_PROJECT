@@ -3,6 +3,7 @@ package se.tetris.setting;
 import se.tetris.component.Board;
 import se.tetris.component.ItemBoard;
 import se.tetris.component.Start;
+import se.tetris.data.DBCalls;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -16,6 +17,11 @@ import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.VK_UP;
 
 public class SettingCode extends JFrame {
+
+    public static Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+    public static int screenWidth = (int) (dimension.getWidth());
+    public static int screenHeight = (int) (dimension.getHeight());
+
     private JPanel tetrisArea;
     private JPanel nextArea;
     private JPanel panel;
@@ -59,16 +65,14 @@ public class SettingCode extends JFrame {
     JRadioButton modeTwo = new JRadioButton("Normal");
     JRadioButton modeThree = new JRadioButton("Hard");
 
-    Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-    int screenWidth = (int)(dimension.getWidth());
-    int screenHeight = (int)(dimension.getHeight());
-
     int KeyCount = 0;
     int KeyFoucus = 0;
 
     DBCalls dataCalls = new DBCalls();
 
-    public SettingCode() {
+	int Window = dataCalls.getWindowSetting();
+
+	public SettingCode() {
 
         super("SeoulTech SE Tetris");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -266,6 +270,19 @@ public class SettingCode extends JFrame {
                 Board.boardMain.score = 0;
                 Board.boardMain.level = 0;
                 setVisible(false);
+                Window = dataCalls.getWindowSetting();
+                changeSize(Window - 1);
+                /*
+                if (Window == 0) {
+                    main.setSize(400, 600);
+                } else if (Window == 1) {
+                    main.setSize(800, 800);
+                } else {
+                    main.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+                }
+                main.setVisible(true);
+
+                 */
             }
         });
 
@@ -278,6 +295,20 @@ public class SettingCode extends JFrame {
                 ItemBoard.itemBoardMain.score = 0;
                 ItemBoard.itemBoardMain.level = 0;
                 setVisible(false);
+                changeSize(Window - 1);
+                ItemBoard.level = dataCalls.getLevelSetting();
+/*
+                if (Window == 0) {
+                    itemBoard.setSize(400, 600);
+                } else if (Window == 1) {
+                    itemBoard.setSize(800, 800);
+                } else {
+                    itemBoard.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+                }
+
+                itemBoard.setVisible(true);
+
+ */
             }
         });
 
@@ -286,6 +317,20 @@ public class SettingCode extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 Start.start.setVisible(true);
                 setVisible(false);
+                Window = dataCalls.getWindowSetting();
+                changeSize(Window - 1);
+                /*
+                if (Window == 0) {
+                    startView.setSize(400, 600);
+                } else if (Window == 1) {
+                    startView.setSize(800, 800);
+                } else {
+                    startView.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+                }
+
+                startView.setVisible(true);
+
+                 */
             }
         });
 
@@ -296,6 +341,20 @@ public class SettingCode extends JFrame {
                 keyOnefun();
                 colorBlindOneFun();
                 modeTwofun();
+
+                dataCalls.UpdateWindowSetting(0);
+                dataCalls.UpdateColorSetting(0);
+                dataCalls.UpdateLevelSetting(0);
+            }
+        });
+        scoreReset.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dataCalls.refreshScoreData();
+
+                int Result = JOptionPane.showConfirmDialog(null, "초기화 되었습니다!", "스코어 보드 초기화",
+                        JOptionPane.DEFAULT_OPTION);
             }
         });
 
@@ -1004,6 +1063,7 @@ public class SettingCode extends JFrame {
             }
         });
         settingView.setFocusable(true);
+        changeSize(SettingValues.getInstance().sizeNumber);
     }
 
     private void keyTwofun() {
@@ -1124,18 +1184,15 @@ public class SettingCode extends JFrame {
                 modeTwo.setFont(fontSmall);
                 modeThree.setFont(fontSmall);
 
-                Start startview = new Start();
-                startview.setSize(400,400);
-
                 Start.start.setSize(400, 600);
                 Board.boardMain.setSize(400, 600);
-                Board.boardMain.setSize(30);
+                Board.boardMain.setSize(20);
                 Board.setRtSize(150, 50);
-                Board.setLbSize(0);
+                Board.setLbSize(10);
                 ItemBoard.itemBoardMain.setSize(400, 600);
-                ItemBoard.itemBoardMain.setSize(30);
+                ItemBoard.itemBoardMain.setSize(20);
                 ItemBoard.setRtSize(150, 50);
-                ItemBoard.setLbSize(0);
+                ItemBoard.setLbSize(10);
                 sizeOne.setSelected(true);
                 break;
             case 2:
@@ -1175,11 +1232,11 @@ public class SettingCode extends JFrame {
                 Start.start.setSize(800, 800);
                 Board.boardMain.setSize(800, 800);
                 Board.boardMain.setSize(30);
-                Board.setRtSize(175, 55);
+                Board.setRtSize(300, 55);
                 Board.setLbSize(15);
                 ItemBoard.itemBoardMain.setSize(800, 800);
                 ItemBoard.itemBoardMain.setSize(30);
-                ItemBoard.setRtSize(175, 55);
+                ItemBoard.setRtSize(300, 55);
                 ItemBoard.setLbSize(15);
                 sizeTwo.setSelected(true);
                 break;
@@ -1252,22 +1309,6 @@ public class SettingCode extends JFrame {
 
     public static void main(String[] args) {
         SettingCode setting = new SettingCode();
-        int sizeNumber = SettingValues.getInstance().sizeNumber;
-        switch (sizeNumber) {
-            case 1:
-                setting.setSize(400, 600);
-                break;
-            case 2:
-                setting.setSize(800, 1200);
-                break;
-            case 3:
-                setting.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                setting.setUndecorated(true);
-                break;
-            default:
-                setting.setSize(400, 600);
-                break;
-        }
-        setting.setVisible(true);
+
     }
 }

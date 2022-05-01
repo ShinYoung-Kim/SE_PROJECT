@@ -1,8 +1,6 @@
 package se.tetris.component;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -28,6 +26,7 @@ import javax.swing.text.StyledDocument;
 
 import se.tetris.blocks.*;
 import se.tetris.component.Board.PlayerKeyListener;
+import se.tetris.data.*;
 import se.tetris.setting.SettingCode;
 import se.tetris.setting.SettingValues;
 
@@ -35,6 +34,8 @@ public class ItemBoard extends JFrame {
 
 	public static ItemBoard itemBoardMain;
 	private static final long serialVersionUID = 2434035659171694595L;
+
+	ScoreItem scoreItem = new ScoreItem();
 
 	public static final int HEIGHT = 20;
 	public static final int WIDTH = 10;
@@ -45,6 +46,8 @@ public class ItemBoard extends JFrame {
 	double percentage;
 	Random rnd;
 	int block;
+
+	DBCalls dataCalls = new DBCalls();
 
 	private static JTextPane tetrisArea;
 	private static JTextPane nextArea;
@@ -80,6 +83,8 @@ public class ItemBoard extends JFrame {
 	int itemY = 0;
 	int itemType;
 
+	public static int mode = 0;
+
 	static JLabel scoreLb1 = new JLabel("Scores");
 	static JLabel scoreLb2 = new JLabel(Integer.toString(score));
 	static JLabel levelLb1 = new JLabel("Level");
@@ -106,6 +111,7 @@ public class ItemBoard extends JFrame {
 				BorderFactory.createLineBorder(Color.GRAY, 10),
 				BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
 		tetrisArea.setBorder(border);
+		tetrisArea.setLayout(new BoxLayout(tetrisArea, BoxLayout.Y_AXIS));
 
 		nextArea = new JTextPane();
 		nextArea.setEditable(false);
@@ -154,8 +160,12 @@ public class ItemBoard extends JFrame {
 		panel = new JPanel();
 		panel.add(leftPanel);
 		panel.add(rightPanel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
 		add(panel);
+
+
+		mode= dataCalls.getLevelSetting();
 
 		//Set timer for block drops.
 		timer = new Timer(getInterval(blockNumber, eraseCnt), new ActionListener() {
@@ -187,7 +197,7 @@ public class ItemBoard extends JFrame {
 		StyleConstants.setAlignment(stylesetBr, StyleConstants.ALIGN_CENTER);
 
 		stylesetCur = new SimpleAttributeSet();
-		StyleConstants.setFontSize(stylesetCur, 20);
+		StyleConstants.setFontSize(stylesetCur, 30);
 		StyleConstants.setFontFamily(stylesetCur, "Courier New");
 		StyleConstants.setBold(stylesetCur, true);
 		StyleConstants.setAlignment(stylesetCur, StyleConstants.ALIGN_CENTER);
@@ -352,14 +362,11 @@ public class ItemBoard extends JFrame {
 				}
 			}
 			eraseCnt++;
-			getScore(eraseCnt);
+			getScore(eraseCnt, "line");
 			setScore();
 			if ((eraseCnt != 0) && (eraseCnt % 10 == 0)){
 				itemFlag = true;
-				setScore();
 			}
-
-
 		}
 	}
 
@@ -399,8 +406,7 @@ public class ItemBoard extends JFrame {
 		y = 0;
 		if (isGameOver() == true) {
 			timer.stop();
-			System.out.println("게임 종료!!");
-			boolean result = scoreItem.showDialog(getNowScore(), 1 , level);
+			boolean result = scoreItem.showDialog(getNowScore(), 1 , mode);
 			setVisible(result);
 
 			//종료 화면과 잇기
@@ -564,14 +570,20 @@ public class ItemBoard extends JFrame {
 		if (blockNumber == 30 || blockNumber == 60 || blockNumber == 80 || blockNumber == 100 || blockNumber == 120) {
 			if (intervalByMode == 1000) {
 				SettingValues.getInstance().intervalNumber *= 0.9;
+				getScore(3*eraseCnt, "std");
+				setScore();
 				level++;
 				levelLb2.setText(Integer.toString(level));
 			} else if (intervalByMode == 2000) {
 				SettingValues.getInstance().intervalNumber *= 0.92;
+				getScore(7*eraseCnt, "std");
+				setScore();
 				level++;
 				levelLb2.setText(Integer.toString(level));
 			} else if (intervalByMode == 800) {
 				SettingValues.getInstance().intervalNumber *= 0.88;
+				getScore(11*eraseCnt, "std");
+				setScore();
 				level++;
 				levelLb2.setText(Integer.toString(level));
 			}
@@ -580,14 +592,20 @@ public class ItemBoard extends JFrame {
 			if (intervalByMode == 1000) {
 				setting.intervalNumber *= 0.9;
 				level++;
+				getScore(7*eraseCnt, "std");
+				setScore();
 				levelLb2.setText(Integer.toString(level));
 			} else if (intervalByMode == 2000) {
 				setting.intervalNumber *= 0.92;
 				level++;
+				getScore(10*eraseCnt, "std");
+				setScore();
 				levelLb2.setText(Integer.toString(level));
 			} else if (intervalByMode == 800) {
 				setting.intervalNumber *= 0.88;
 				level++;
+				getScore(20*eraseCnt, "std");
+				setScore();
 				levelLb2.setText(Integer.toString(level));
 			}
 		}
@@ -1028,9 +1046,9 @@ public class ItemBoard extends JFrame {
 
 	//max - (200, 60), default - (150, 50)
 	public static void setRtSize(int xSize, int ySize) {
+		nextArea.setPreferredSize(new Dimension(xSize,xSize));
 		scorePanel.setPreferredSize(new Dimension(xSize, ySize));
 		levelPanel.setPreferredSize(new Dimension(xSize, ySize));
-		nextArea.setPreferredSize(new Dimension(xSize, ySize * 4));
 	}
 
 	//max - 17, default - nothing,
@@ -1043,15 +1061,13 @@ public class ItemBoard extends JFrame {
 
 	public void setScore() {
 		String scoretxt = Integer.toString(score);
-//				String.valueOf(score);
 		String prescoretxt = scoreLb2.getText();
-		System.out.println("점수 변경" + prescoretxt+"...>"+ scoretxt);
 		scoreLb2.setText(scoretxt);
 	}
 
-	public void getScore(int lines) {
+	public void getScore(int lines, String mode) {
 		int scorePre = lines;
-		updateScoce(scorePre);
+		updateSroce(scorePre, mode);
 	}
 
 	public int getNowScore() {
@@ -1059,19 +1075,23 @@ public class ItemBoard extends JFrame {
 		return score;
 	}
 
-	public int updateScoce(int sc) {
-		if(sc>0 && sc<=5) {
-			this.score += 10;
-		}else if(sc>5 && sc<=10) {
-			this.score += 15;
+	public int updateSroce(int sc, String mode) {
+		if(mode =="line") {
+			if(sc>0 && sc<=5) {
+				this.score += 10;
+			}else if(sc>5 && sc<=10) {
+				this.score += 15;
+			}else {
+				this.score += 20;
+			}
+			if(sc%3 ==0) {
+				this.score += 3*sc;
+			}
+			if(sc%11 ==0) {
+				this.score += 11;
+			}
 		}else {
-			this.score += 20;
-		}
-		if(sc%3 ==0) {
-			this.score += 3*sc;
-		}
-		if(sc%11 ==0) {
-			this.score += 11;
+			this.score += sc;
 		}
 		setScore();
 		return score;
