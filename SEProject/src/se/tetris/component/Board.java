@@ -23,6 +23,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+import javax.xml.crypto.Data;
 
 import se.tetris.blocks.Block;
 import se.tetris.blocks.IBlock;
@@ -34,6 +35,7 @@ import se.tetris.blocks.TBlock;
 import se.tetris.blocks.ZBlock;
 
 import se.tetris.setting.SettingValues;
+import se.tetris.data.*;
 
 public class Board extends JFrame {
 
@@ -49,6 +51,8 @@ public class Board extends JFrame {
 	double percentage;
 	Random rnd;
 	int block;
+
+	DBCalls dataCalls = new DBCalls();
 
 	private static JTextPane tetrisArea;
 	private static JTextPane nextArea;
@@ -74,6 +78,8 @@ public class Board extends JFrame {
 	int nextY = 1;
 	public static int score = 0;
 	public static int level = 0;
+
+	public static int mode = 0;
 	int eraseCnt = 0;
 
 	static JLabel scoreLb1 = new JLabel("Scores");
@@ -91,6 +97,8 @@ public class Board extends JFrame {
 	//만들어진 블럭 개수 세기
 	private static int blockNumber = 0;
 
+	ScoreItem scoreItem = new ScoreItem();
+
 	public Board() {
 		super("SeoulTech SE Tetris");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -103,6 +111,7 @@ public class Board extends JFrame {
 				BorderFactory.createLineBorder(Color.GRAY, 10),
 				BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
 		tetrisArea.setBorder(border);
+		tetrisArea.setLayout(new BoxLayout(tetrisArea, BoxLayout.Y_AXIS));
 
 		nextArea = new JTextPane();
 		nextArea.setEditable(false);
@@ -129,6 +138,8 @@ public class Board extends JFrame {
 		levelPanel.setBorder(scoreBorder);
 		levelPanel.setPreferredSize(new Dimension(150, 50));
 
+		mode = dataCalls.getLevelSetting();
+
 		levelLb1.setForeground(Color.darkGray);
 		levelLb1.setAlignmentX(CENTER_ALIGNMENT);
 
@@ -151,6 +162,7 @@ public class Board extends JFrame {
 		panel = new JPanel();
 		panel.add(leftPanel);
 		panel.add(rightPanel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
 		add(panel);
 
@@ -160,6 +172,7 @@ public class Board extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				moveDown();
+				drawBoard();
 			}
 		});
 
@@ -184,7 +197,7 @@ public class Board extends JFrame {
 		StyleConstants.setAlignment(stylesetBr, StyleConstants.ALIGN_CENTER);
 
 		stylesetCur = new SimpleAttributeSet();
-		StyleConstants.setFontSize(stylesetCur, 20);
+		StyleConstants.setFontSize(stylesetCur, 30);
 		StyleConstants.setFontFamily(stylesetCur, "Courier New");
 		StyleConstants.setBold(stylesetCur, true);
 		StyleConstants.setAlignment(stylesetCur, StyleConstants.ALIGN_CENTER);
@@ -342,7 +355,7 @@ public class Board extends JFrame {
 		y = 0;
 		if (isGameOver() == true) {
 			timer.stop();
-			boolean result = scoreItem.showDialog(getNowScore(), 0 , level);
+			boolean result = scoreItem.showDialog(getNowScore(), 0 , mode);
 			setVisible(result);
 			//종료 화면과 잇기
 		}
@@ -367,7 +380,7 @@ public class Board extends JFrame {
 			}
 			index = 0;
 			eraseCnt++;
-			getScore(eraseCnt);
+			getScore(eraseCnt, "line");
 			setScore();
 		}
 	}
@@ -491,41 +504,54 @@ public class Board extends JFrame {
 		boardDoc.setCharacterAttributes(offset, 1, stylesetCur, true);
 	}
 
-	//interval 함수
-	int getInterval(int blockNumber, int eraseCnt) {
-		if (blockNumber == 30 || blockNumber == 60 || blockNumber == 80 || blockNumber == 100 || blockNumber == 120) {
-			if (intervalByMode == 1000) {
-				SettingValues.getInstance().intervalNumber *= 0.9;
-				level++;
-				levelLb2.setText(Integer.toString(level));
-			} else if (intervalByMode == 2000) {
-				SettingValues.getInstance().intervalNumber *= 0.92;
-				level++;
-				levelLb2.setText(Integer.toString(level));
-			} else if (intervalByMode == 800) {
-				SettingValues.getInstance().intervalNumber *= 0.88;
-				level++;
-				levelLb2.setText(Integer.toString(level));
+		//interval 함수
+		int getInterval(int blockNumber, int eraseCnt) {
+			if (blockNumber == 30 || blockNumber == 60 || blockNumber == 80 || blockNumber == 100 || blockNumber == 120) {
+				if (intervalByMode == 1000) {
+					SettingValues.getInstance().intervalNumber *= 0.9;
+					getScore(5*eraseCnt, "std");
+					setScore();
+					level++;
+					levelLb2.setText(Integer.toString(level));
+				} else if (intervalByMode == 2000) {
+					SettingValues.getInstance().intervalNumber *= 0.92;
+					getScore(11*eraseCnt, "std");
+					setScore();
+					level++;
+					levelLb2.setText(Integer.toString(level));
+				} else if (intervalByMode == 800) {
+					SettingValues.getInstance().intervalNumber *= 0.88;
+					getScore(20*eraseCnt, "std");
+					setScore();
+
+					level++;
+					levelLb2.setText(Integer.toString(level));
+				}
 			}
-		}
-		if (eraseCnt == 5 || eraseCnt == 10 || eraseCnt == 15 || eraseCnt == 20 || eraseCnt == 25) {
-			if (intervalByMode == 1000) {
-				setting.intervalNumber *= 0.9;
-				level++;
-				levelLb2.setText(Integer.toString(level));
-			} else if (intervalByMode == 2000) {
-				setting.intervalNumber *= 0.92;
-				level++;
-				levelLb2.setText(Integer.toString(level));
-			} else if (intervalByMode == 800) {
-				setting.intervalNumber *= 0.88;
-				level++;
-				levelLb2.setText(Integer.toString(level));
+			if (eraseCnt == 5 || eraseCnt == 10 || eraseCnt == 15 || eraseCnt == 20 || eraseCnt == 25) {
+				if (intervalByMode == 1000) {
+					setting.intervalNumber *= 0.9;
+					getScore(3*eraseCnt, "std");
+					setScore();
+					level++;
+					levelLb2.setText(Integer.toString(level));
+				} else if (intervalByMode == 2000) {
+					getScore(9*eraseCnt, "std");
+					setScore();
+					setting.intervalNumber *= 0.92;
+					level++;
+					levelLb2.setText(Integer.toString(level));
+				} else if (intervalByMode == 800) {
+					setting.intervalNumber *= 0.88;
+					getScore(30*eraseCnt, "std");
+					setScore();
+					level++;
+					levelLb2.setText(Integer.toString(level));
+				}
 			}
+			System.out.println("Created : " + blockNumber + "   Removed : " + eraseCnt +"   intervalByMode" +intervalByMode + "   interval Number : " + setting.intervalNumber);
+			return setting.intervalNumber;
 		}
-		System.out.println("Created : " + blockNumber + "   Removed : " + eraseCnt +"   intervalByMode" +intervalByMode + "   interval Number : " + setting.intervalNumber);
-		return setting.intervalNumber;
-	}
 
 	public void reset() {
 		board = new int[HEIGHT][WIDTH];
@@ -787,9 +813,9 @@ public class Board extends JFrame {
 
 	//max - (200, 60), default - (150, 50)
 	public static void setRtSize(int xSize, int ySize) {
+		nextArea.setPreferredSize(new Dimension(xSize,xSize));
 		scorePanel.setPreferredSize(new Dimension(xSize, ySize));
 		levelPanel.setPreferredSize(new Dimension(xSize, ySize));
-		nextArea.setPreferredSize(new Dimension(xSize, ySize * 4));
 	}
 
 	//max - 17, default - nothing,
@@ -812,9 +838,9 @@ public class Board extends JFrame {
 		scoreLb2.setText(scoretxt);
 	}
 
-	public void getScore(int lines) {
-		int scorePre = lines * 10;
-		updateSroce(scorePre);
+	public void getScore(int lines, String mode) {
+		int scorePre = lines;
+		updateSroce(scorePre, mode);
 	}
 
 	public int getNowScore() {
@@ -822,19 +848,23 @@ public class Board extends JFrame {
 		return score;
 	}
 
-	public int updateSroce(int sc) {
-		if(sc>0 && sc<=5) {
-			this.score += 10;
-		}else if(sc>5 && sc<=10) {
-			this.score += 15;
+	public int updateSroce(int sc, String mode) {
+		if(mode =="line") {
+			if(sc>0 && sc<=5) {
+				this.score += 10;
+			}else if(sc>5 && sc<=10) {
+				this.score += 15;
+			}else {
+				this.score += 20;
+			}
+			if(sc%3 ==0) {
+				this.score += 3*sc;
+			}
+			if(sc%11 ==0) {
+				this.score += 11;
+			}
 		}else {
-			this.score += 20;
-		}
-		if(sc%3 ==0) {
-			this.score += 3*sc;
-		}
-		if(sc%11 ==0) {
-			this.score += 11;
+			this.score += sc;
 		}
 
 		setScore();
