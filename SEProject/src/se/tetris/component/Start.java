@@ -80,13 +80,16 @@ public class Start extends JFrame {
 		System.exit(0);
 	}
 
+	public void startBattleMode() {
+		//startBattle.setVisible(true);
+	}
 
 	public Start() {
 
 		setTitle("SeoulTech SE Tettris");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		GridLayout grid = new GridLayout(7,1,0,10);
+		GridLayout grid = new GridLayout(8,1,0,10);
 		Container startView = getContentPane();
 
 		startView.setLayout(grid);
@@ -106,12 +109,14 @@ public class Start extends JFrame {
 		JButton scoreBtn = new JButton("스코어");
 		JButton settingBtn = new JButton("설정");
 		JButton endBtn = new JButton("종료");
+		JButton battleBtn = new JButton("대전 모드");
 
 		stdBtn.setBackground(null);
 		itemBtn.setBackground(null);
 		scoreBtn.setBackground(null);
 		settingBtn.setBackground(null);
 		endBtn.setBackground(null);
+		battleBtn.setBackground(null);
 
 		startView.add(Title);
 		//startView.add(btnGroup);
@@ -121,6 +126,7 @@ public class Start extends JFrame {
 		startView.add(scoreBtn);
 		startView.add(settingBtn);
 		startView.add(endBtn);
+		startView.add(battleBtn);
 
 		startView.add(Team);
 
@@ -206,6 +212,7 @@ public class Start extends JFrame {
 						scoreBtn.setBackground(null);
 						settingBtn.setBackground(null);
 						endBtn.setBackground(null);
+						battleBtn.setBackground(null);
 						KeyFoucus = 1;
 					}else if(KeyFoucus ==1) {
 						scoreBtn.setBackground(new Color(106,215,255));
@@ -213,6 +220,7 @@ public class Start extends JFrame {
 						itemBtn.setBackground(null);
 						settingBtn.setBackground(null);
 						endBtn.setBackground(null);
+						battleBtn.setBackground(null);
 						KeyFoucus = 2;
 					}else if(KeyFoucus ==2) {
 						settingBtn.setBackground(new Color(106,215,255));
@@ -220,6 +228,7 @@ public class Start extends JFrame {
 						scoreBtn.setBackground(null);
 						itemBtn.setBackground(null);
 						endBtn.setBackground(null);
+						battleBtn.setBackground(null);
 						KeyFoucus = 3;
 					}else if(KeyFoucus ==3) {
 						endBtn.setBackground(new Color(106,215,255));
@@ -227,14 +236,24 @@ public class Start extends JFrame {
 						scoreBtn.setBackground(null);
 						settingBtn.setBackground(null);
 						itemBtn.setBackground(null);
+						battleBtn.setBackground(null);
 						KeyFoucus = 4;
 					}else if(KeyFoucus ==4) {
-						endBtn.setBackground(new Color(106,215,255));
+						battleBtn.setBackground(new Color(106,215,255));
 						stdBtn.setBackground(null);
 						scoreBtn.setBackground(null);
 						settingBtn.setBackground(null);
 						itemBtn.setBackground(null);
-						KeyFoucus = 4;
+						endBtn.setBackground(null);
+						KeyFoucus = 5;
+					}else if(KeyFoucus ==5) {
+						battleBtn.setBackground(new Color(106,215,255));
+						stdBtn.setBackground(null);
+						scoreBtn.setBackground(null);
+						settingBtn.setBackground(null);
+						itemBtn.setBackground(null);
+						endBtn.setBackground(null);
+						KeyFoucus = 5;
 					}
 					KeyCount++;
 				}
@@ -246,6 +265,7 @@ public class Start extends JFrame {
 						scoreBtn.setBackground(null);
 						settingBtn.setBackground(null);
 						endBtn.setBackground(null);
+						battleBtn.setBackground(null);
 						KeyFoucus = 0;
 					}else if(KeyFoucus ==1) {
 						stdBtn.setBackground(new Color(106,215,255));
@@ -253,6 +273,7 @@ public class Start extends JFrame {
 						scoreBtn.setBackground(null);
 						settingBtn.setBackground(null);
 						endBtn.setBackground(null);
+						battleBtn.setBackground(null);
 						KeyFoucus = 0;
 					}else if(KeyFoucus ==2) {
 						stdBtn.setBackground(null);
@@ -260,6 +281,7 @@ public class Start extends JFrame {
 						scoreBtn.setBackground(null);
 						settingBtn.setBackground(null);
 						endBtn.setBackground(null);
+						battleBtn.setBackground(null);
 						KeyFoucus = 1;
 					}else if(KeyFoucus ==3) {
 						stdBtn.setBackground(null);
@@ -267,6 +289,7 @@ public class Start extends JFrame {
 						scoreBtn.setBackground(new Color(106,215,255));
 						settingBtn.setBackground(null);
 						endBtn.setBackground(null);
+						battleBtn.setBackground(null);
 						KeyFoucus = 2;
 					}else if(KeyFoucus ==4) {
 						stdBtn.setBackground(null);
@@ -274,7 +297,17 @@ public class Start extends JFrame {
 						scoreBtn.setBackground(null);
 						settingBtn.setBackground(new Color(106,215,255));
 						endBtn.setBackground(null);
+						battleBtn.setBackground(null);
 						KeyFoucus = 3;
+					}
+					else if(KeyFoucus ==5) {
+						stdBtn.setBackground(null);
+						itemBtn.setBackground(null);
+						scoreBtn.setBackground(null);
+						settingBtn.setBackground(null);
+						endBtn.setBackground(new Color(106,215,255));
+						battleBtn.setBackground(null);
+						KeyFoucus = 4;
 					}
 					KeyCount++;
 				}
@@ -290,6 +323,9 @@ public class Start extends JFrame {
 						startSettingMode();
 					}else if(KeyFoucus ==4) {
 						startExitMode();
+					}
+					else if(KeyFoucus ==5) {
+						startBattleMode();
 					}
 				}
 
