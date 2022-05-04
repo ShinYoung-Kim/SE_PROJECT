@@ -197,7 +197,7 @@ public class ItemBoard extends JFrame {
 		StyleConstants.setAlignment(stylesetBr, StyleConstants.ALIGN_CENTER);
 
 		stylesetCur = new SimpleAttributeSet();
-		StyleConstants.setFontSize(stylesetCur, 30);
+		StyleConstants.setFontSize(stylesetCur, 20);
 		StyleConstants.setFontFamily(stylesetCur, "Courier New");
 		StyleConstants.setBold(stylesetCur, true);
 		StyleConstants.setAlignment(stylesetCur, StyleConstants.ALIGN_CENTER);
@@ -1046,9 +1046,10 @@ public class ItemBoard extends JFrame {
 
 	//max - (200, 60), default - (150, 50)
 	public static void setRtSize(int xSize, int ySize) {
-		nextArea.setPreferredSize(new Dimension(xSize,xSize));
+		//nextArea.setPreferredSize(new Dimension(xSize,xSize));
 		scorePanel.setPreferredSize(new Dimension(xSize, ySize));
 		levelPanel.setPreferredSize(new Dimension(xSize, ySize));
+		nextArea.setPreferredSize(new Dimension(xSize, ySize * 4));
 	}
 
 	//max - 17, default - nothing,

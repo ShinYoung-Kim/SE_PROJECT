@@ -13,14 +13,36 @@ public class Tetris {
 		DBConnectionManager data = new DBConnectionManager();
 
 		DBCalls dataCalls = new DBCalls();
-		int Window = dataCalls.getWindowSetting();
-		SettingValues.getInstance().sizeNumber = Window - 1;
 
-		SettingCode setting = new SettingCode();
-		Start.start.setVisible(true);
+		Start startView = new Start();
+
+		int Window = dataCalls.getWindowSetting();
+
+		if(Window == 0) {
+			startView.setSize(400, 600);
+		}else if(Window == 1) {
+			startView.setSize(800, 800);
+		}else {
+			startView.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+		}
+
+
+		startView.setVisible(true);
+
+
 
 		data.connect();
 		data.createNewTable();
+
+
+//		SettingCode setting = new SettingCode();
+//		int Window = dataCalls.getWindowSetting();
+//		SettingValues.getInstance().sizeNumber = Window - 1;
+//
+//		Start.start.setVisible(true);
+//
+//		data.connect();
+//		data.createNewTable();
 
 //
 //		dataCalls.getWindowSetting();
