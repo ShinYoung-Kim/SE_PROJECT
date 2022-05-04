@@ -111,7 +111,7 @@ public class Board extends JFrame {
 				BorderFactory.createLineBorder(Color.GRAY, 10),
 				BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
 		tetrisArea.setBorder(border);
-		tetrisArea.setLayout(new BoxLayout(tetrisArea, BoxLayout.Y_AXIS));
+		//tetrisArea.setLayout(new BoxLayout(tetrisArea, BoxLayout.Y_AXIS));
 
 		nextArea = new JTextPane();
 		nextArea.setEditable(false);
@@ -162,7 +162,7 @@ public class Board extends JFrame {
 		panel = new JPanel();
 		panel.add(leftPanel);
 		panel.add(rightPanel);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		//panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
 		add(panel);
 
@@ -172,7 +172,7 @@ public class Board extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				moveDown();
-				drawBoard();
+				//drawBoard();
 			}
 		});
 
@@ -197,7 +197,7 @@ public class Board extends JFrame {
 		StyleConstants.setAlignment(stylesetBr, StyleConstants.ALIGN_CENTER);
 
 		stylesetCur = new SimpleAttributeSet();
-		StyleConstants.setFontSize(stylesetCur, 30);
+		StyleConstants.setFontSize(stylesetCur, 20);
 		StyleConstants.setFontFamily(stylesetCur, "Courier New");
 		StyleConstants.setBold(stylesetCur, true);
 		StyleConstants.setAlignment(stylesetCur, StyleConstants.ALIGN_CENTER);
@@ -813,9 +813,10 @@ public class Board extends JFrame {
 
 	//max - (200, 60), default - (150, 50)
 	public static void setRtSize(int xSize, int ySize) {
-		nextArea.setPreferredSize(new Dimension(xSize,xSize));
+		//nextArea.setPreferredSize(new Dimension(xSize,xSize));
 		scorePanel.setPreferredSize(new Dimension(xSize, ySize));
 		levelPanel.setPreferredSize(new Dimension(xSize, ySize));
+		nextArea.setPreferredSize(new Dimension(xSize, ySize * 4));
 	}
 
 	//max - 17, default - nothing,

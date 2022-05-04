@@ -264,11 +264,11 @@ public class SettingCode extends JFrame {
         BackToGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Board.boardMain.setVisible(true);
                 Board.boardMain.reset();
                 Board.boardMain.timer.restart();
                 Board.boardMain.score = 0;
                 Board.boardMain.level = 0;
+                Board.boardMain.setVisible(true);
                 setVisible(false);
                 Window = dataCalls.getWindowSetting();
                 changeSize(Window - 1);
@@ -289,11 +289,11 @@ public class SettingCode extends JFrame {
         BackToItemGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ItemBoard.itemBoardMain.setVisible(true);
                 ItemBoard.itemBoardMain.reset();
                 ItemBoard.itemBoardMain.timer.restart();
                 ItemBoard.itemBoardMain.score = 0;
                 ItemBoard.itemBoardMain.level = 0;
+                ItemBoard.itemBoardMain.setVisible(true);
                 setVisible(false);
                 changeSize(Window - 1);
                 ItemBoard.level = dataCalls.getLevelSetting();
@@ -1081,8 +1081,6 @@ public class SettingCode extends JFrame {
         SettingValues.getInstance().modeChoose = 3;
 
         dataCalls.UpdateLevelSetting(2);
-
-        System.out.println("3번");
 
         modeThree.setSelected(true);
     }

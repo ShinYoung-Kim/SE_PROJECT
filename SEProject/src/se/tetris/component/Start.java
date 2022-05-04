@@ -81,7 +81,8 @@ public class Start extends JFrame {
 	}
 
 	public void startBattleMode() {
-		//startBattle.setVisible(true);
+		StartBattle startBattle = new StartBattle();
+		startBattle.setVisible(true);
 	}
 
 	public Start() {
