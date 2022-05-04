@@ -36,43 +36,68 @@ import se.tetris.data.*;
 import se.tetris.setting.SettingValues;
 
 public class Start extends JFrame {
-	public static Start start = new Start();
+	public static Start start;
 	int KeyCount = 0;
 	int KeyFoucus = 0;
-	SettingValues setting = SettingValues.getInstance();
-	SettingCode settingPage = null;
+	//SettingValues setting = SettingValues.getInstance();
+	//SettingCode settingPage = null;
+	DBCalls dataCalls = new DBCalls();
 
+	int Window = dataCalls.getWindowSetting();
 	public void startStdMode() {
-		Board.boardMain.setVisible(true);
-		Board.boardMain.reset();
-		Board.boardMain.timer.restart();
-		Board.boardMain.score = 0;
-		Board.boardMain.level = 0;
+		Board main = new Board();
+
+		if(Window == 0) {
+			main.setSize(400,600);
+		}else if(Window == 1) {
+			main.setSize(800,800);
+		}else {
+			main.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+		}
+
+		main.setVisible(true);
+
 		setVisible(false);
 	}
 
 	public void startItemMode() {
-		ItemBoard.itemBoardMain.reset();
-		ItemBoard.itemBoardMain.timer.restart();
-		ItemBoard.itemBoardMain.score = 0;
-		ItemBoard.itemBoardMain.level = 0;
-		ItemBoard.itemBoardMain.setVisible(true);
+		ItemBoard itemBoard = new ItemBoard();
+
+		if(Window == 0) {
+			itemBoard.setSize(400,600);
+		}else if(Window == 1) {
+			itemBoard.setSize(800,800);
+		}else {
+			itemBoard.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+		}
+
+		itemBoard.setVisible(true);
 		setVisible(false);
 	}
 
 	public void startScoreMode() {
 		Score scoreView = new Score();
-		scoreView.setSize(400, 600);
+		if(Window == 0) {
+			scoreView.setSize(400,600);
+		}else if(Window == 1) {
+			scoreView.setSize(800,800);
+		}else {
+			scoreView.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+		}
 		scoreView.setVisible(true);
 		setVisible(false);
 	}
 
 	public void startSettingMode() {
-		if (settingPage == null) {
-			settingPage = new SettingCode();
-			settingPage.setSize(400,600);
+		SettingCode setting = new SettingCode();
+		if(Window == 0) {
+			setting.setSize(400,600);
+		}else if(Window == 1) {
+			setting.setSize(800,800);
+		}else {
+			setting.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
 		}
-		settingPage.setVisible(true);
+		setting.setVisible(true);
 		setVisible(false);
 	}
 
@@ -130,7 +155,7 @@ public class Start extends JFrame {
 		startView.add(battleBtn);
 
 		startView.add(Team);
-
+/*
 		if (Board.getBoard() == null) {
 			Board.boardMain = new Board();
 			Board.boardMain.timer.stop();
@@ -143,15 +168,12 @@ public class Start extends JFrame {
 			ItemBoard.itemBoardMain.setSize(400, 600);
 		}
 
+
+ */
 		stdBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Board.boardMain.setVisible(true);
-				Board.boardMain.reset();
-				Board.boardMain.timer.restart();
-				Board.boardMain.score = 0;
-				Board.boardMain.level = 0;
-				setVisible(false);
+				startStdMode();
 			}
 		});
 
@@ -165,12 +187,7 @@ public class Start extends JFrame {
 		settingBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (settingPage == null) {
-					settingPage = new SettingCode();
-					settingPage.setSize(400,600);
-				}
-				settingPage.setVisible(true);
-				setVisible(false);
+				startSettingMode();
 			}
 		});
 
@@ -198,8 +215,8 @@ public class Start extends JFrame {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				System.out.println(e);
-				System.out.println(KeyCount);
+				//System.out.println(e);
+				//System.out.println(KeyCount);
 
 				if(KeyCount == 0) {
 					stdBtn.setBackground(new Color(106,215,255));
