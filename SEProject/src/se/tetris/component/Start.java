@@ -39,8 +39,7 @@ public class Start extends JFrame {
 	public static Start start;
 	int KeyCount = 0;
 	int KeyFoucus = 0;
-	//SettingValues setting = SettingValues.getInstance();
-	//SettingCode settingPage = null;
+
 	DBCalls dataCalls = new DBCalls();
 
 	int Window = dataCalls.getWindowSetting();
@@ -91,6 +90,19 @@ public class Start extends JFrame {
 			scoreView.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
 		}
 		scoreView.setVisible(true);
+		setVisible(false);
+	}
+
+	public void startBattleMode() {
+		StartBattle battleMode = new StartBattle();
+		if(Window == 0) {
+			battleMode.setSize(400,600);
+		}else if(Window == 1) {
+			battleMode.setSize(800,800);
+		}else {
+			battleMode.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+		}
+		battleMode.setVisible(true);
 		setVisible(false);
 	}
 
@@ -210,6 +222,13 @@ public class Start extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				startExitMode();
+			}
+		});
+
+		battleBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				startBattleMode();
 			}
 		});
 
@@ -350,9 +369,9 @@ public class Start extends JFrame {
 					}else if(KeyFoucus ==4) {
 						startExitMode();
 					}
-					/*else if(KeyFoucus ==5) {
+					else if(KeyFoucus ==5) {
 						startBattleMode();
-					}*/
+					}
 				}
 
 			}
