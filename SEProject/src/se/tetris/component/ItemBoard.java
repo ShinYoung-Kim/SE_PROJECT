@@ -1,6 +1,8 @@
 package se.tetris.component;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -30,6 +32,9 @@ import se.tetris.data.*;
 import se.tetris.setting.SettingCode;
 import se.tetris.setting.SettingValues;
 
+import static se.tetris.setting.SettingCode.screenHeight;
+import static se.tetris.setting.SettingCode.screenWidth;
+
 public class ItemBoard extends JFrame {
 
 	public static ItemBoard itemBoardMain;
@@ -44,6 +49,7 @@ public class ItemBoard extends JFrame {
 	double min;
 	double max;
 	double percentage;
+	double weighted;
 	Random rnd;
 	int block;
 
@@ -111,7 +117,6 @@ public class ItemBoard extends JFrame {
 				BorderFactory.createLineBorder(Color.GRAY, 10),
 				BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
 		tetrisArea.setBorder(border);
-		tetrisArea.setLayout(new BoxLayout(tetrisArea, BoxLayout.Y_AXIS));
 
 		nextArea = new JTextPane();
 		nextArea.setEditable(false);
@@ -133,6 +138,7 @@ public class ItemBoard extends JFrame {
 		scorePanel.add(scoreLb1);
 		scorePanel.add(Box.createVerticalStrut(5));
 		scorePanel.add(scoreLb2);
+
 
 		levelPanel = new JPanel();
 		levelPanel.setBorder(scoreBorder);
@@ -160,7 +166,6 @@ public class ItemBoard extends JFrame {
 		panel = new JPanel();
 		panel.add(leftPanel);
 		panel.add(rightPanel);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
 		add(panel);
 
@@ -172,7 +177,6 @@ public class ItemBoard extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				moveDown();
-				drawBoard();
 			}
 		});
 
@@ -187,6 +191,7 @@ public class ItemBoard extends JFrame {
 		//Create the first block and draw
 		curr = getRandomBlock(setting.modeChoose);
 		next = getRandomBlock(setting.modeChoose);
+
 
 		//Document default style.
 		stylesetBr = new SimpleAttributeSet();
@@ -364,9 +369,8 @@ public class ItemBoard extends JFrame {
 			eraseCnt++;
 			getScore(eraseCnt, "line");
 			setScore();
-			if ((eraseCnt != 0) && (eraseCnt % 10 == 0)){
+			if ((eraseCnt != 0) && (eraseCnt % 1 == 0))
 				itemFlag = true;
-			}
 		}
 	}
 
@@ -408,7 +412,6 @@ public class ItemBoard extends JFrame {
 			timer.stop();
 			boolean result = scoreItem.showDialog(getNowScore(), 1 , mode);
 			setVisible(result);
-
 			//종료 화면과 잇기
 		}
 		else {
@@ -612,6 +615,7 @@ public class ItemBoard extends JFrame {
 		System.out.println("Created : " + blockNumber + "   Removed : " + eraseCnt +"   intervalByMode" +intervalByMode + "   interval Number : " + setting.intervalNumber);
 		return setting.intervalNumber;
 	}
+
 
 	public void reset() {
 		board = new int[HEIGHT][WIDTH];
@@ -841,15 +845,20 @@ public class ItemBoard extends JFrame {
 						drawBoard();
 						break;
 					case KeyEvent.VK_RIGHT:
-						moveRight();
+						if(notMove == false) {
+							moveRight();
+						}
 						drawBoard();
 						break;
 					case KeyEvent.VK_LEFT:
-						moveLeft();
+						if(notMove == false) {
+							moveLeft();
+						}
 						drawBoard();
 						break;
 					case KeyEvent.VK_UP:
-						blockRotate();
+						if(blockFix == false)
+							blockRotate();
 						drawBoard();
 						break;
 					case KeyEvent.VK_SPACE:
@@ -938,15 +947,20 @@ public class ItemBoard extends JFrame {
 						drawBoard();
 						break;
 					case KeyEvent.VK_D:
-						moveRight();
+						if(notMove == false) {
+							moveRight();
+						}
 						drawBoard();
 						break;
 					case KeyEvent.VK_A:
-						moveLeft();
+						if(notMove == false) {
+							moveLeft();
+						}
 						drawBoard();
 						break;
 					case KeyEvent.VK_W:
-						blockRotate();
+						if(blockFix == false)
+							blockRotate();
 						drawBoard();
 						break;
 					case KeyEvent.VK_SPACE:
@@ -1031,7 +1045,6 @@ public class ItemBoard extends JFrame {
 		public void keyReleased(KeyEvent e) {
 
 		}
-
 	}
 
 	//max - 30, default - 20,
@@ -1046,7 +1059,6 @@ public class ItemBoard extends JFrame {
 
 	//max - (200, 60), default - (150, 50)
 	public static void setRtSize(int xSize, int ySize) {
-		//nextArea.setPreferredSize(new Dimension(xSize,xSize));
 		scorePanel.setPreferredSize(new Dimension(xSize, ySize));
 		levelPanel.setPreferredSize(new Dimension(xSize, ySize));
 		nextArea.setPreferredSize(new Dimension(xSize, ySize * 4));
@@ -1060,6 +1072,7 @@ public class ItemBoard extends JFrame {
 		levelLb2.setFont(new Font(null, Font.BOLD, size));
 	}
 
+	//score
 	public void setScore() {
 		String scoretxt = Integer.toString(score);
 		String prescoretxt = scoreLb2.getText();
@@ -1094,9 +1107,36 @@ public class ItemBoard extends JFrame {
 		}else {
 			this.score += sc;
 		}
+
 		setScore();
 		return score;
 	}
+	public void changeSize(int SizeNumber){
+		switch (SizeNumber) {
+			case 1:
+				setSize(400, 600);
+				setSize(20);
+				setRtSize(150, 50);
+				setLbSize(10);
+				break;
+			case 2:
+				setSize(800, 800);
+				setSize(30);
+				setRtSize(300, 55);
+				setLbSize(15);
+				break;
+			case 3:
+				setSize(screenWidth, screenHeight);
+				setSize(30);
+				setRtSize(200, 60);
+				setLbSize(17);
+				break;
+			default:
+				setSize(400, 600);
+				break;
+		}
+	}
+
 	public static ItemBoard getItemBoard(){
 		return itemBoardMain;
 	}

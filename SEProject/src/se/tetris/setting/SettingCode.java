@@ -3,7 +3,6 @@ package se.tetris.setting;
 import se.tetris.component.Board;
 import se.tetris.component.ItemBoard;
 import se.tetris.component.Start;
-import se.tetris.data.DBCalls;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -16,8 +15,9 @@ import java.awt.event.KeyEvent;
 
 import static java.awt.event.KeyEvent.VK_UP;
 
-public class SettingCode extends JFrame {
+import se.tetris.data.*;
 
+public class SettingCode extends JFrame {
     public static Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     public static int screenWidth = (int) (dimension.getWidth());
     public static int screenHeight = (int) (dimension.getHeight());
@@ -36,9 +36,9 @@ public class SettingCode extends JFrame {
     Font fontBig = new Font(null, Font.PLAIN, 20);
     Font fontFull = new Font(null, Font.PLAIN, 25);
 
-    Color grayMade = new Color(238,238,238);
+    Color grayMade = new Color(238, 238, 238);
 
-    JLabel settingTitle = new JLabel("Team1 테트리스 게임 설정");
+    JLabel settingTitle = new JLabel("테트리스 게임 설정");
 
     JButton scoreReset = new JButton("<html><body style='text-align:center;'>스코어보드<br>초기화</body></html>");
     JButton BackToGame = new JButton("<html><body style='text-align:center;'>일반<br>게임으로</body></html>");
@@ -51,9 +51,9 @@ public class SettingCode extends JFrame {
     JLabel colorBlindTitle = new JLabel("색맹모드");
     JLabel modeTitle = new JLabel("모드 선택");
 
-    JRadioButton sizeOne = new JRadioButton("표준(400 * 600)");
-    JRadioButton sizeTwo = new JRadioButton("크게(800 * 800)");
-    JRadioButton sizeThree = new JRadioButton("전체 화면 모드");
+    public JRadioButton sizeOne = new JRadioButton("표준(400 * 600)");
+    public JRadioButton sizeTwo = new JRadioButton("크게(800 * 800)");
+    public JRadioButton sizeThree = new JRadioButton("전체 화면 모드");
 
     JRadioButton keyOne = new JRadioButton("방향키");
     JRadioButton keyTwo = new JRadioButton("WASD");
@@ -70,30 +70,29 @@ public class SettingCode extends JFrame {
 
     DBCalls dataCalls = new DBCalls();
 
-	int Window = dataCalls.getWindowSetting();
+    int Window = dataCalls.getWindowSetting();
 
-	public SettingCode() {
+    public SettingCode() {
 
         super("SeoulTech SE Tetris");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Container settingView = getContentPane();
 
-        //Board display setting.
+        // Board display setting.
         tetrisArea = new JPanel();
 
         tetrisArea.setBackground(Color.BLACK);
-        CompoundBorder border = BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.GRAY, 10),
+        CompoundBorder border = BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.GRAY, 10),
                 BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
         tetrisArea.setBorder(border);
-        //tetrisArea.setPreferredSize(new Dimension(350, 50));
+        // tetrisArea.setPreferredSize(new Dimension(350, 50));
 
         settingTitle.setForeground(Color.WHITE);
         tetrisArea.add(settingTitle);
 
         nextArea = new JPanel();
-        //nextArea.setPreferredSize(new Dimension(250, 400));
+        // nextArea.setPreferredSize(new Dimension(250, 400));
         nextArea.setBackground(grayMade);
         nextArea.setBorder(border);
 
@@ -132,7 +131,7 @@ public class SettingCode extends JFrame {
         screenSizeArea.add(sizeTwo);
         screenSizeArea.add(sizeThree);
         screenSizeArea.add(Box.createVerticalStrut(20));
-        //screenSizeArea.setPreferredSize(new Dimension(250, 70));
+        // screenSizeArea.setPreferredSize(new Dimension(250, 70));
         screenSizeArea.setAlignmentX(LEFT_ALIGNMENT);
         nextArea.add(screenSizeArea);
         screenSizeArea.setBackground(grayMade);
@@ -150,7 +149,7 @@ public class SettingCode extends JFrame {
         keyArea.add(keyOne);
         keyArea.add(keyTwo);
         keyArea.add(Box.createVerticalStrut(20));
-        //keyArea.setPreferredSize(new Dimension(250, 70));
+        // keyArea.setPreferredSize(new Dimension(250, 70));
         keyArea.setAlignmentX(LEFT_ALIGNMENT);
         nextArea.add(keyArea);
         keyArea.setBackground(grayMade);
@@ -195,7 +194,7 @@ public class SettingCode extends JFrame {
         colorBlindArea.add(colorBlindOne);
         colorBlindArea.add(colorBlindTwo);
         colorBlindArea.add(Box.createVerticalStrut(20));
-        //colorBlindArea.setPreferredSize(new Dimension(250, 70));
+        // colorBlindArea.setPreferredSize(new Dimension(250, 70));
         colorBlindArea.setAlignmentX(LEFT_ALIGNMENT);
         nextArea.add(colorBlindArea);
 
@@ -232,94 +231,92 @@ public class SettingCode extends JFrame {
         modeArea.add(modeThree);
         modeArea.add(Box.createVerticalStrut(20));
         modeArea.setLayout(new BoxLayout(modeArea, BoxLayout.Y_AXIS));
-        //modeArea.setPreferredSize(new Dimension(250, 70));
+        // modeArea.setPreferredSize(new Dimension(250, 70));
         modeArea.setAlignmentX(LEFT_ALIGNMENT);
         nextArea.add(modeArea);
 
         scorePanel = new JPanel();
         EtchedBorder scoreBorder = new EtchedBorder();
         scorePanel.setBorder(scoreBorder);
-        //scorePanel.setPreferredSize(new Dimension(80, 100));
+        // scorePanel.setPreferredSize(new Dimension(80, 100));
 
-        System.out.println(scoreReset.getPreferredSize()); //136, 26
-        //scoreReset.setPreferredSize(new Dimension(80, 100));
+        System.out.println(scoreReset.getPreferredSize()); // 136, 26
+        // scoreReset.setPreferredSize(new Dimension(80, 100));
         scoreReset.setAlignmentX(CENTER_ALIGNMENT);
         scorePanel.setLayout(new BoxLayout(scorePanel, BoxLayout.Y_AXIS));
         scorePanel.add(scoreReset);
-        //scorePanel.setPreferredSize(new Dimension(80, 100));
+        // scorePanel.setPreferredSize(new Dimension(80, 100));
 
-        //buttonPanel.setPreferredSize(new Dimension(80, 280));
+        // buttonPanel.setPreferredSize(new Dimension(80, 280));
         EtchedBorder buttonBorder = new EtchedBorder();
         buttonPanel.setBorder(buttonBorder);
-        //BackToGame.setPreferredSize(new Dimension(80, 70));
-        //BackToItemGame.setPreferredSize(new Dimension(80, 70));
-        //BackToStart.setPreferredSize(new Dimension(80, 70));
-        //settingReset.setPreferredSize(new Dimension(80, 70));
+        // BackToGame.setPreferredSize(new Dimension(80, 70));
+        // BackToItemGame.setPreferredSize(new Dimension(80, 70));
+        // BackToStart.setPreferredSize(new Dimension(80, 70));
+        // settingReset.setPreferredSize(new Dimension(80, 70));
 
-        System.out.println(BackToGame.getPreferredSize()); //111, 26
-        System.out.println(BackToItemGame.getPreferredSize()); ///151, 26
-        System.out.println(BackToStart.getPreferredSize()); ///87, 26
-        System.out.println(settingReset.getPreferredSize()); ///96, 26
+        System.out.println(BackToGame.getPreferredSize()); // 111, 26
+        System.out.println(BackToItemGame.getPreferredSize()); /// 151, 26
+        System.out.println(BackToStart.getPreferredSize()); /// 87, 26
+        System.out.println(settingReset.getPreferredSize()); /// 96, 26
 
         BackToGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Board.boardMain.reset();
-                Board.boardMain.timer.restart();
-                Board.boardMain.score = 0;
-                Board.boardMain.level = 0;
-                Board.boardMain.setVisible(true);
-                setVisible(false);
+                Board main = new Board();
+
                 Window = dataCalls.getWindowSetting();
-                changeSize(Window - 1);
-                /*
+
                 if (Window == 0) {
                     main.setSize(400, 600);
+                    main.changeSize(1);
                 } else if (Window == 1) {
                     main.setSize(800, 800);
+                    main.changeSize(2);
                 } else {
                     main.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+                    main.changeSize(3);
                 }
+
                 main.setVisible(true);
 
-                 */
+                setVisible(false);
             }
         });
 
         BackToItemGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ItemBoard.itemBoardMain.reset();
-                ItemBoard.itemBoardMain.timer.restart();
-                ItemBoard.itemBoardMain.score = 0;
-                ItemBoard.itemBoardMain.level = 0;
-                ItemBoard.itemBoardMain.setVisible(true);
-                setVisible(false);
-                changeSize(Window - 1);
-                ItemBoard.level = dataCalls.getLevelSetting();
-/*
+
+                ItemBoard itemBoard = new ItemBoard();
+
+                Window = dataCalls.getWindowSetting();
+
                 if (Window == 0) {
                     itemBoard.setSize(400, 600);
+                    itemBoard.changeSize(1);
                 } else if (Window == 1) {
                     itemBoard.setSize(800, 800);
+                    itemBoard.changeSize(2);
                 } else {
                     itemBoard.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+                    itemBoard.changeSize(3);
                 }
 
                 itemBoard.setVisible(true);
 
- */
+                setVisible(false);
+
             }
         });
 
         BackToStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Start.start.setVisible(true);
-                setVisible(false);
+                Start startView = new Start();
+
                 Window = dataCalls.getWindowSetting();
-                changeSize(Window - 1);
-                /*
+
                 if (Window == 0) {
                     startView.setSize(400, 600);
                 } else if (Window == 1) {
@@ -329,24 +326,28 @@ public class SettingCode extends JFrame {
                 }
 
                 startView.setVisible(true);
+//				Start.start.setVisible(true);
 
-                 */
+                setVisible(false);
             }
         });
 
         settingReset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                dataCalls.UpdateWindowSetting(0);
+                dataCalls.UpdateColorSetting(0);
+                dataCalls.UpdateLevelSetting(0);
+
                 sizeOnefun();
                 keyOnefun();
                 colorBlindOneFun();
                 modeTwofun();
 
-                dataCalls.UpdateWindowSetting(0);
-                dataCalls.UpdateColorSetting(0);
-                dataCalls.UpdateLevelSetting(0);
             }
         });
+
         scoreReset.addActionListener(new ActionListener() {
 
             @Override
@@ -371,7 +372,7 @@ public class SettingCode extends JFrame {
         rightRight.add(buttonPanel);
         rightRight.setAlignmentX(CENTER_ALIGNMENT);
         rightRight.setLayout(new BoxLayout(rightRight, BoxLayout.Y_AXIS));
-        //rightRight.setPreferredSize(new Dimension(100, 200));
+        // rightRight.setPreferredSize(new Dimension(100, 200));
 
         leftPanel = new JPanel();
         leftPanel.add(tetrisArea);
@@ -380,7 +381,7 @@ public class SettingCode extends JFrame {
         rightPanel.add(nextArea);
         rightPanel.add(Box.createVerticalStrut(2));
         rightPanel.add(rightRight);
-        //rightPanel.setPreferredSize(new Dimension(350, 450));
+        // rightPanel.setPreferredSize(new Dimension(350, 450));
         System.out.println(rightPanel.getPreferredSize());
         System.out.println(nextArea.getPreferredSize());
         System.out.println(rightRight.getPreferredSize());
@@ -415,7 +416,7 @@ public class SettingCode extends JFrame {
         BackToStart.setBackground(grayMade);
         settingReset.setBackground(grayMade);
 
-        //Initialize board for the game.
+        // Initialize board for the game.
 
         settingView.addKeyListener(new KeyListener() {
             @Override
@@ -745,8 +746,7 @@ public class SettingCode extends JFrame {
                             KeyCount++;
                             break;
                     }
-                }
-                else if(SettingValues.getInstance().keyChoose == 2) {
+                } else if (SettingValues.getInstance().keyChoose == 2) {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_W:
                             if (KeyFoucus == 1) {
@@ -1063,7 +1063,6 @@ public class SettingCode extends JFrame {
             }
         });
         settingView.setFocusable(true);
-        changeSize(SettingValues.getInstance().sizeNumber);
     }
 
     private void keyTwofun() {
@@ -1081,6 +1080,8 @@ public class SettingCode extends JFrame {
         SettingValues.getInstance().modeChoose = 3;
 
         dataCalls.UpdateLevelSetting(2);
+
+        System.out.println("3번");
 
         modeThree.setSelected(true);
     }
@@ -1146,8 +1147,8 @@ public class SettingCode extends JFrame {
         colorBlindTwo.setSelected(true);
     }
 
-    public void changeSize(int SizeNumber){
-        switch (SettingValues.getInstance().sizeNumber) {
+    public void changeSize(int sizeNumber){
+        switch (sizeNumber) {
             case 1:
                 setSize(400, 600);
                 rightRight.setPreferredSize(new Dimension(100, 450));
@@ -1181,16 +1182,6 @@ public class SettingCode extends JFrame {
                 modeOne.setFont(fontSmall);
                 modeTwo.setFont(fontSmall);
                 modeThree.setFont(fontSmall);
-
-                Start.start.setSize(400, 600);
-                Board.boardMain.setSize(400, 600);
-                Board.boardMain.setSize(20);
-                Board.setRtSize(150, 50);
-                Board.setLbSize(10);
-                ItemBoard.itemBoardMain.setSize(400, 600);
-                ItemBoard.itemBoardMain.setSize(20);
-                ItemBoard.setRtSize(150, 50);
-                ItemBoard.setLbSize(10);
                 sizeOne.setSelected(true);
                 break;
             case 2:
@@ -1226,16 +1217,6 @@ public class SettingCode extends JFrame {
                 modeOne.setFont(fontBig);
                 modeTwo.setFont(fontBig);
                 modeThree.setFont(fontBig);
-
-                Start.start.setSize(800, 800);
-                Board.boardMain.setSize(800, 800);
-                Board.boardMain.setSize(30);
-                Board.setRtSize(300, 55);
-                Board.setLbSize(15);
-                ItemBoard.itemBoardMain.setSize(800, 800);
-                ItemBoard.itemBoardMain.setSize(30);
-                ItemBoard.setRtSize(300, 55);
-                ItemBoard.setLbSize(15);
                 sizeTwo.setSelected(true);
                 break;
             case 3:
@@ -1271,17 +1252,6 @@ public class SettingCode extends JFrame {
                 BackToGame.setFont(fontFull);
                 BackToStart.setFont(fontFull);
                 settingReset.setFont(fontFull);
-
-                Start.start.setSize(screenWidth, screenHeight);
-                Board.boardMain.setSize(screenWidth, screenHeight);
-                SettingValues.getInstance().sizeNumber = 3;
-                Board.boardMain.setSize(30);
-                Board.setRtSize(200, 60);
-                Board.setLbSize(17);
-                ItemBoard.itemBoardMain.setSize(screenWidth, screenHeight);
-                ItemBoard.itemBoardMain.setSize(30);
-                ItemBoard.setRtSize(200, 60);
-                ItemBoard.setLbSize(17);
                 sizeThree.setSelected(true);
                 break;
             default:
@@ -1289,24 +1259,34 @@ public class SettingCode extends JFrame {
                 break;
         }
     }
-/*
-    private void addKeyListener(new KeyListener() {
-
-        @Override
-        public void keyTyped(KeyEvent e) {}
-
-        @Override
-        public void keyReleased(KeyEvent e) {}
-
-        @Override
-        public void keyPressed(KeyEvent e) {}) {
-
-    }
-
- */
+    /*
+     * private void addKeyListener(new KeyListener() {
+     *
+     * @Override public void keyTyped(KeyEvent e) {}
+     *
+     * @Override public void keyReleased(KeyEvent e) {}
+     *
+     * @Override public void keyPressed(KeyEvent e) {}) { }
+     */
 
     public static void main(String[] args) {
         SettingCode setting = new SettingCode();
-
+        int sizeNumber = SettingValues.getInstance().sizeNumber;
+        switch (sizeNumber) {
+            case 1:
+                setting.setSize(400, 600);
+                break;
+            case 2:
+                setting.setSize(800, 1200);
+                break;
+            case 3:
+                setting.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                setting.setUndecorated(true);
+                break;
+            default:
+                setting.setSize(400, 600);
+                break;
+        }
+        setting.setVisible(true);
     }
 }
