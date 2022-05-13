@@ -44,15 +44,18 @@ public class Start extends JFrame {
 	DBCalls dataCalls = new DBCalls();
 
 	int Window = dataCalls.getWindowSetting();
+	SettingCode setting = new SettingCode();
 	public void startStdMode() {
 		Board main = new Board();
-
 		if(Window == 0) {
 			main.setSize(400,600);
+			main.changeSize(1);
 		}else if(Window == 1) {
 			main.setSize(800,800);
+			main.changeSize(2);
 		}else {
 			main.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+			main.changeSize(3);
 		}
 
 		main.setVisible(true);
@@ -65,10 +68,13 @@ public class Start extends JFrame {
 
 		if(Window == 0) {
 			itemBoard.setSize(400,600);
+			itemBoard.changeSize(1);
 		}else if(Window == 1) {
 			itemBoard.setSize(800,800);
+			itemBoard.changeSize(2);
 		}else {
 			itemBoard.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+			itemBoard.changeSize(3);
 		}
 
 		itemBoard.setVisible(true);
@@ -89,13 +95,18 @@ public class Start extends JFrame {
 	}
 
 	public void startSettingMode() {
-		SettingCode setting = new SettingCode();
 		if(Window == 0) {
 			setting.setSize(400,600);
+			setting.sizeOne.setSelected(true);
+			setting.changeSize(1);
 		}else if(Window == 1) {
 			setting.setSize(800,800);
+			setting.sizeTwo.setSelected(true);
+			setting.changeSize(2);
 		}else {
 			setting.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+			setting.sizeThree.setSelected(true);
+			setting.changeSize(3);
 		}
 		setting.setVisible(true);
 		setVisible(false);
@@ -105,10 +116,10 @@ public class Start extends JFrame {
 		System.exit(0);
 	}
 
-	public void startBattleMode() {
+	/*public void startBattleMode() {
 		StartBattle startBattle = new StartBattle();
 		startBattle.setVisible(true);
-	}
+	}*/
 
 	public Start() {
 
@@ -161,14 +172,11 @@ public class Start extends JFrame {
 			Board.boardMain.timer.stop();
 			Board.boardMain.setSize(400, 600);
 		}
-
 		if (ItemBoard.getItemBoard() == null) {
 			ItemBoard.itemBoardMain = new ItemBoard();
 			ItemBoard.itemBoardMain.timer.stop();
 			ItemBoard.itemBoardMain.setSize(400, 600);
 		}
-
-
  */
 		stdBtn.addActionListener(new ActionListener() {
 			@Override
@@ -342,9 +350,9 @@ public class Start extends JFrame {
 					}else if(KeyFoucus ==4) {
 						startExitMode();
 					}
-					else if(KeyFoucus ==5) {
+					/*else if(KeyFoucus ==5) {
 						startBattleMode();
-					}
+					}*/
 				}
 
 			}
