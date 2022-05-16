@@ -31,9 +31,6 @@ public class BattleBoard extends JFrame {
         player1.setName("Player1");
         player2.setName("Player2");
 
-        player1.setAttackBoard(player2.getAttackBoard());
-        player2.setAttackBoard(player1.getAttackBoard());
-
         panel = new JPanel();
 
         panel.add(player1);
