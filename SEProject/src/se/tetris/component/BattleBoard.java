@@ -31,6 +31,9 @@ public class BattleBoard extends JFrame {
         player1.setName("Player1");
         player2.setName("Player2");
 
+        player1.setAttackBoard(player2.getAttackBoard());
+        player2.setAttackBoard(player1.getAttackBoard());
+
         panel = new JPanel();
 
         panel.add(player1);
@@ -42,13 +45,6 @@ public class BattleBoard extends JFrame {
         addKeyListener(playerKeyListener);
         setFocusable(true);
         requestFocus();
-
-		/*
-		while (player1.isGameOver() || player2.isGameOver()) {
-			player1.timer.stop();
-			player2.timer.stop();
-		}
-		*/
     }
 
 
@@ -166,6 +162,38 @@ public class BattleBoard extends JFrame {
         player2Timer.stop();
     }
 
+    public static void drawAttack() {
+        int[][] player1AttackBoard = player1.getAttackBoard();
+        int[][] player2AttackBoard = player2.getAttackBoard();
 
+        StringBuffer sb1 = new StringBuffer();
+        for (int i = 0; i < player1AttackBoard.length; i++) {
+            for (int j = 0; j < player1AttackBoard[i].length; j++) {
+                if (player1AttackBoard[i][j] == 1) {
+                    sb1.append("■");
+                }
+                else {
+                    sb1.append(" ");
+                }
+            }
+            sb1.append("\n");
+        }
+        player2.attackArea.setText(sb1.toString());
+        player2.attackDoc.setParagraphAttributes(0, player2.attackDoc.getLength(), player2.stylesetAk, false);
 
+        StringBuffer sb2 = new StringBuffer();
+        for (int i = 0; i < player2AttackBoard.length; i++) {
+            for (int j = 0; j < player2AttackBoard[i].length; j++) {
+                if (player2AttackBoard[i][j] == 1) {
+                    sb2.append("O");
+                }
+                else {
+                    sb2.append(" ");
+                }
+            }
+            sb2.append("\n");
+        }
+        player1.attackArea.setText(sb2.toString());
+        player1.attackDoc.setParagraphAttributes(0, player1.attackDoc.getLength(), player1.stylesetAk, false);
+    }
 }
