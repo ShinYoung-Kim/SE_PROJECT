@@ -160,37 +160,64 @@ public class BattleBoard extends JFrame {
     }
 
     public static void drawAttack() {
+        if (player1.whoIs == true) {
+            player1.sbByAttack = new StringBuffer();
+            int[][] player1AttackBoard = player1.getAttackBoard();
+            for (int i = 0; i < player1AttackBoard.length; i++) {
+                for (int j = 0; j < player1AttackBoard[i].length; j++) {
+                    if (player1AttackBoard[i][j] == 1) {
+                        player1.sbByAttack.append("■");
+                        player1.attackLineCount = i;
+                    }
+                    else {
+                        player1.sbByAttack.append(" ");
+                    }
+                }
+                player1.sbByAttack.append("\n");
+            }
+            player2.attackArea.setText(player1.sbByAttack.toString());
+            player2.attackDoc.setParagraphAttributes(0, player2.attackDoc.getLength(), player2.stylesetAk, false);
+            player2.whoAttacked = true;
+            player1.whoIs = false;
+        } else if (player2.whoIs == true) {
+            int[][] player2AttackBoard = player2.getAttackBoard();
+            player2.sbByAttack = new StringBuffer();
+            for (int i = 0; i < player2AttackBoard.length; i++) {
+                for (int j = 0; j < player2AttackBoard[i].length; j++) {
+                    if (player2AttackBoard[i][j] == 1) {
+                        player2.sbByAttack.append("■");
+                        player2.attackLineCount = i;
+                    } else {
+                        player2.sbByAttack.append(" ");
+                    }
+                }
+                player2.sbByAttack.append("\n");
+            }
+            player1.attackArea.setText(player2.sbByAttack.toString());
+            player1.attackDoc.setParagraphAttributes(0, player1.attackDoc.getLength(), player1.stylesetAk, false);
+            player1.whoAttacked = true;
+            player2.whoIs = false;
+        }
+    }
+    public static void forAttack() {
+        int[][] player1Board = player1.getBoard();
+        int[][] player2Board = player2.getBoard();
         int[][] player1AttackBoard = player1.getAttackBoard();
         int[][] player2AttackBoard = player2.getAttackBoard();
 
-        StringBuffer sb1 = new StringBuffer();
-        for (int i = 0; i < player1AttackBoard.length; i++) {
-            for (int j = 0; j < player1AttackBoard[i].length; j++) {
-                if (player1AttackBoard[i][j] == 1) {
-                    sb1.append("■");
-                }
-                else {
-                    sb1.append(" ");
+        if (player1.whoAttacked) {
+            for (int a = 0; a < player1.attackLineCount; a++) {
+                for (int b = 0; b < WIDTH; b++) {
+                    player1Board[a][b] = player2AttackBoard[a][b];
                 }
             }
-            sb1.append("\n");
+        } else if (player2.whoAttacked) {
+            for (int a = 0; a < player2.attackLineCount; a++) {
+                for (int b = 0; b < WIDTH; b++) {
+                    player2Board[a][b] = player1AttackBoard[a][b];
+                }
+            }
         }
-        player2.attackArea.setText(sb1.toString());
-        player2.attackDoc.setParagraphAttributes(0, player2.attackDoc.getLength(), player2.stylesetAk, false);
 
-        StringBuffer sb2 = new StringBuffer();
-        for (int i = 0; i < player2AttackBoard.length; i++) {
-            for (int j = 0; j < player2AttackBoard[i].length; j++) {
-                if (player2AttackBoard[i][j] == 1) {
-                    sb2.append("O");
-                }
-                else {
-                    sb2.append(" ");
-                }
-            }
-            sb2.append("\n");
-        }
-        player1.attackArea.setText(sb2.toString());
-        player1.attackDoc.setParagraphAttributes(0, player1.attackDoc.getLength(), player1.stylesetAk, false);
     }
 }

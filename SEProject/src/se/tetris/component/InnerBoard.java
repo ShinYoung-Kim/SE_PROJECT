@@ -106,6 +106,10 @@ public class InnerBoard extends JPanel {
     private JLabel levelLb1 = new JLabel("Level");
     private JLabel levelLb2 = new JLabel(Integer.toString(level));
 
+    boolean whoIs = false;
+    boolean whoAttacked = false;
+    public int attackLineCount = 3;
+    StringBuffer sbByAttack = new StringBuffer();
 
     public InnerBoard() {
         //Board display setting.
@@ -438,6 +442,7 @@ public class InnerBoard extends JPanel {
         if (line.size() > 1) {
             placeAttack(line);
             eraseLast();
+            whoIs = true;
             BattleBoard.drawAttack();
             attackLine.clear();
         }
@@ -455,6 +460,7 @@ public class InnerBoard extends JPanel {
             getScore(eraseCnt, "line");
             setScore();
         }
+
 
 
     }
@@ -507,12 +513,25 @@ public class InnerBoard extends JPanel {
         eraseCurr();
         if (collisionBottom()) {
             collisionOccur();
+            if (whoAttacked) {
+                System.out.println("Clear");
+                for (int a = attackLineCount; a < HEIGHT; a++) {
+                    for (int b = 0; b < WIDTH; b++) {
+                        board[a - attackLineCount][b] = board[a][b];
+                    }
+                }
+                System.out.println(attackLineCount);
+                BattleBoard.forAttack();
+                whoAttacked = false;
+                tetrisArea.repaint();
+            }
         }
         else y++;
         lineRemove();
         if (!isGameOver()) {
             placeBlock();
             drawBoard();
+
         }
     }
 
@@ -527,7 +546,74 @@ public class InnerBoard extends JPanel {
         if(x > 0 && collisionLeft() == false) x--;
         placeBlock();
     }
+/*
+    public void drawBoardByAttack() {
+        for(int t=0; t<WIDTH+2; t++) sbByAttack.append(BORDER_CHAR);
+        sbByAttack.append("\n");
+        for(int i=0; i < board.length; i++) {
+            sbByAttack.append(BORDER_CHAR);
+            for(int j=0; j < board[i].length; j++) {
+                if(board[i][j] > 0) {
+                    sbByAttack.append("■");
+                } else {
+                    sbByAttack.append(" ");
+                }
+            }
+            sbByAttack.append(BORDER_CHAR);
+            sbByAttack.append("\n");
+        }
+        for(int t=0; t<WIDTH+2; t++) sbByAttack.append(BORDER_CHAR);
+        tetrisArea.setText(sbByAttack.toString());
+        boardDoc.setCharacterAttributes(0, boardDoc.getLength(), stylesetBr, false);
 
+        for(int j = 0; j < curr.height(); j++) {
+            int rows = y+j == 0 ? 1 : y+j+1;
+            int offset = rows * (WIDTH+3) + x + 1;
+            for (int i = 0; i < curr.width(); i++) {
+                if (curr.getShape(i, j) == 1) {
+                    colorBlindModeCurrent(offset + i);
+                }
+            }
+        }
+
+        for (int i = 0; i < board.length; i++) {
+            int offset = (i + 1) * (WIDTH + 3) + 1;
+            for (int j = 0; j < board[0].length ; j++) {
+                int block = board[i][j];
+                switch(block) {
+                    case 1:
+                        StyleConstants.setForeground(stylesetCur, Color.CYAN);
+                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                        break;
+                    case 2:
+                        StyleConstants.setForeground(stylesetCur, Color.BLUE);
+                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                        break;
+                    case 3:
+                        StyleConstants.setForeground(stylesetCur, Color.ORANGE);
+                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                        break;
+                    case 4:
+                        StyleConstants.setForeground(stylesetCur, Color.YELLOW);
+                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                        break;
+                    case 5:
+                        StyleConstants.setForeground(stylesetCur, Color.GREEN);
+                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                    case 6:
+                        StyleConstants.setForeground(stylesetCur, Color.MAGENTA);
+                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                        break;
+                    case 7:
+                        StyleConstants.setForeground(stylesetCur, Color.RED);
+                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                        break;
+                }
+
+            }
+        }
+    }
+*/
     public void drawBoard() {
         StringBuffer sb = new StringBuffer();
         for(int t=0; t<WIDTH+2; t++) sb.append(BORDER_CHAR);
@@ -777,9 +863,6 @@ public class InnerBoard extends JPanel {
         placeBlock();
         drawBoard();
     }
-    public static Board getBoard(){
-        return boardMain;
-    }
 
     public void setScore() {
         String scoretxt = Integer.toString(score);
@@ -842,4 +925,12 @@ public class InnerBoard extends JPanel {
         this.attackBoard = attackBoard;
     }
 
+    public int[][] getBoard() {
+        return board;
+    }
+    /*
+    public void setAttackLineCount(int attackLineCount) {
+        this.attackLineCount = attackLineCount;
+    }
+*/
 }
