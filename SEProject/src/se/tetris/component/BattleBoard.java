@@ -188,7 +188,8 @@ public class BattleBoard extends JFrame {
                     player1.attackLine.add(attack.get(i) - player1.lastY);
                 }
                 //int firstY = player1.attackY - player1.attackLineCount;
-                int firstY = player1.attackY - attack.size();
+                player1.attackY -= attack.size();
+                int firstY = player1.attackY;
                 for (int i = 9; i > 9 - attack.size(); i--) {
                     for (int j = 0; j < player1AttackBoard[0].length; j++) {
                         player1AttackBoard[i][j] = 1;
@@ -223,13 +224,13 @@ public class BattleBoard extends JFrame {
                     player2.attackLine.add(attack.get(i) - player2.lastY);
                 }
                 //int firstY = player2.attackY - player2.attackLineCount;
-                int firstY = player2.attackY - attack.size();
+                player2.attackY -= attack.size();
+                int firstY = player2.attackY;
                 for (int i = 9; i > 9 - attack.size(); i--) {
                     for (int j = 0; j < player2AttackBoard[0].length; j++) {
                         player2AttackBoard[i][j] = 1;
                     }
                 }
-                player2.alreadyAttacked = false;
             } else {
                 for (int i = 0; i < attack.size(); i++) {
                     player2.attackLine.add(attack.get(i) - player2.lastY);
