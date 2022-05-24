@@ -514,16 +514,11 @@ public class InnerBoard extends JPanel {
         if (collisionBottom()) {
             collisionOccur();
             if (whoAttacked) {
-                System.out.println("Clear");
-                for (int a = attackLineCount; a < HEIGHT; a++) {
-                    for (int b = 0; b < WIDTH; b++) {
-                        board[a - attackLineCount][b] = board[a][b];
-                    }
-                }
-                System.out.println(attackLineCount);
-                BattleBoard.forAttack();
-                whoAttacked = false;
-                tetrisArea.repaint();
+                attackedFunction();
+                BattleBoard.drawAttack();
+                placeBlock();
+                drawBoard();
+
             }
         }
         else y++;
@@ -533,6 +528,17 @@ public class InnerBoard extends JPanel {
             drawBoard();
 
         }
+    }
+
+    public void attackedFunction() {
+        System.out.println("Clear");
+        for (int a = attackLineCount; a < HEIGHT; a++) {
+            for (int b = 0; b < WIDTH; b++) {
+                board[a - attackLineCount][b] = board[a][b];
+            }
+        }
+        System.out.println(attackLineCount);
+        BattleBoard.forAttack();
     }
 
     protected void moveRight() {
@@ -668,6 +674,7 @@ public class InnerBoard extends JPanel {
                     case 5:
                         StyleConstants.setForeground(stylesetCur, Color.GREEN);
                         boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                        break;
                     case 6:
                         StyleConstants.setForeground(stylesetCur, Color.MAGENTA);
                         boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
@@ -928,9 +935,10 @@ public class InnerBoard extends JPanel {
     public int[][] getBoard() {
         return board;
     }
-    /*
     public void setAttackLineCount(int attackLineCount) {
         this.attackLineCount = attackLineCount;
     }
-*/
+    public int getAttackLineCount() {
+        return attackLineCount;
+    }
 }
