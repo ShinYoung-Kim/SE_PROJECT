@@ -598,7 +598,7 @@ public class InnerBoard extends JPanel {
                         boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                         break;
                     case 3:
-                        StyleConstants.setForeground(stylesetCur, Color.ORANGE);
+                        StyleConstants.setForeground(stylesetCur, Color.PINK);
                         boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                         break;
                     case 4:
