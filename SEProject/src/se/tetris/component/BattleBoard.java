@@ -236,7 +236,7 @@ public class BattleBoard extends JFrame {
             }
             for (int a = 0; a < player2.attackLineCount; a++) {
                 for (int b = 0; b < player1AttackBoard[0].length; b++) {
-                    player2Board[a + player2.HEIGHT - player2.attackLineCount][b] = player1AttackBoard[a + player2.HEIGHT - player2.attackLineCount - 10][b];
+                    player2Board[a + player2.HEIGHT - player2.attackLineCount][b] = player1AttackBoard[a + player2.HEIGHT - player2.attackLineCount - 10][b] * 8;
                 }
             }
             player2.drawBoard();
