@@ -95,6 +95,7 @@ public class InnerBoard extends JPanel {
     //public static int initHardInterval = 500;
     public final SettingValues setting = SettingValues.getInstance();
     public int intervalByMode = setting.intervalNumber;
+    public int intervalByModeForChange = setting.intervalNumber;
 
     //만들어진 블럭 개수 세기
     private int blockNumber = 0;
@@ -552,74 +553,7 @@ public class InnerBoard extends JPanel {
         if(x > 0 && collisionLeft() == false) x--;
         placeBlock();
     }
-/*
-    public void drawBoardByAttack() {
-        for(int t=0; t<WIDTH+2; t++) sbByAttack.append(BORDER_CHAR);
-        sbByAttack.append("\n");
-        for(int i=0; i < board.length; i++) {
-            sbByAttack.append(BORDER_CHAR);
-            for(int j=0; j < board[i].length; j++) {
-                if(board[i][j] > 0) {
-                    sbByAttack.append("■");
-                } else {
-                    sbByAttack.append(" ");
-                }
-            }
-            sbByAttack.append(BORDER_CHAR);
-            sbByAttack.append("\n");
-        }
-        for(int t=0; t<WIDTH+2; t++) sbByAttack.append(BORDER_CHAR);
-        tetrisArea.setText(sbByAttack.toString());
-        boardDoc.setCharacterAttributes(0, boardDoc.getLength(), stylesetBr, false);
 
-        for(int j = 0; j < curr.height(); j++) {
-            int rows = y+j == 0 ? 1 : y+j+1;
-            int offset = rows * (WIDTH+3) + x + 1;
-            for (int i = 0; i < curr.width(); i++) {
-                if (curr.getShape(i, j) == 1) {
-                    colorBlindModeCurrent(offset + i);
-                }
-            }
-        }
-
-        for (int i = 0; i < board.length; i++) {
-            int offset = (i + 1) * (WIDTH + 3) + 1;
-            for (int j = 0; j < board[0].length ; j++) {
-                int block = board[i][j];
-                switch(block) {
-                    case 1:
-                        StyleConstants.setForeground(stylesetCur, Color.CYAN);
-                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        break;
-                    case 2:
-                        StyleConstants.setForeground(stylesetCur, Color.BLUE);
-                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        break;
-                    case 3:
-                        StyleConstants.setForeground(stylesetCur, Color.ORANGE);
-                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        break;
-                    case 4:
-                        StyleConstants.setForeground(stylesetCur, Color.YELLOW);
-                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        break;
-                    case 5:
-                        StyleConstants.setForeground(stylesetCur, Color.GREEN);
-                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                    case 6:
-                        StyleConstants.setForeground(stylesetCur, Color.MAGENTA);
-                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        break;
-                    case 7:
-                        StyleConstants.setForeground(stylesetCur, Color.RED);
-                        boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        break;
-                }
-
-            }
-        }
-    }
-*/
     public void drawBoard() {
         StringBuffer sb = new StringBuffer();
         for(int t=0; t<WIDTH+2; t++) sb.append(BORDER_CHAR);
@@ -751,19 +685,19 @@ public class InnerBoard extends JPanel {
     public int getInterval(int blockNumber, int eraseCnt) {
         if (blockNumber == 30 || blockNumber == 60 || blockNumber == 80 || blockNumber == 100 || blockNumber == 120) {
             if (intervalByMode == 1000) {
-                SettingValues.getInstance().intervalNumber *= 0.9;
+                intervalByModeForChange *= 0.9;
                 getScore(5*eraseCnt, "std");
                 setScore();
                 level++;
                 levelLb2.setText(Integer.toString(level));
             } else if (intervalByMode == 2000) {
-                SettingValues.getInstance().intervalNumber *= 0.92;
+                intervalByModeForChange *= 0.92;
                 getScore(11*eraseCnt, "std");
                 setScore();
                 level++;
                 levelLb2.setText(Integer.toString(level));
             } else if (intervalByMode == 500) {
-                SettingValues.getInstance().intervalNumber *= 0.88;
+                intervalByModeForChange *= 0.88;
                 getScore(20*eraseCnt, "std");
                 setScore();
 
@@ -773,7 +707,7 @@ public class InnerBoard extends JPanel {
         }
         if (eraseCnt == 5 || eraseCnt == 10 || eraseCnt == 15 || eraseCnt == 20 || eraseCnt == 25) {
             if (intervalByMode == 1000) {
-                setting.intervalNumber *= 0.9;
+                intervalByModeForChange *= 0.9;
                 getScore(3*eraseCnt, "std");
                 setScore();
                 level++;
@@ -781,19 +715,19 @@ public class InnerBoard extends JPanel {
             } else if (intervalByMode == 2000) {
                 getScore(9*eraseCnt, "std");
                 setScore();
-                setting.intervalNumber *= 0.92;
+                intervalByModeForChange *= 0.92;
                 level++;
                 levelLb2.setText(Integer.toString(level));
             } else if (intervalByMode == 500) {
-                setting.intervalNumber *= 0.88;
+                intervalByModeForChange *= 0.88;
                 getScore(30*eraseCnt, "std");
                 setScore();
                 level++;
                 levelLb2.setText(Integer.toString(level));
             }
         }
-        System.out.println("Created : " + blockNumber + "   Removed : " + eraseCnt +"   intervalByMode" +intervalByMode + "   interval Number : " + setting.intervalNumber);
-        return setting.intervalNumber;
+        System.out.println("Created : " + blockNumber + "   Removed : " + eraseCnt +"   intervalByMode" +intervalByMode + "   interval Number : " + intervalByModeForChange);
+        return intervalByModeForChange;
     }
 
     public void reset() {
