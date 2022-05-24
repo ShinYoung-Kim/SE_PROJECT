@@ -45,11 +45,11 @@ public class BattleBoard extends JFrame {
         setFocusable(true);
         requestFocus();
 
-        //Timer player1Timer = player1.getTimer();
-        //player1Timer.setDelay(10000);
+        Timer player1Timer = player1.getTimer();
+        player1Timer.setDelay(10000);
 
-        //Timer player2Timer = player2.getTimer();
-        //player2Timer.setDelay(10000);
+        Timer player2Timer = player2.getTimer();
+        player2Timer.setDelay(10000);
     }
 
 
@@ -194,7 +194,7 @@ public class BattleBoard extends JFrame {
                         player1AttackBoard[i][j] = 1;
                     }
                 }
-                player1.alreadyAttacked = false;
+
             } else {
                 for (int i = 0; i < attack.size(); i++) {
                     player1.attackLine.add(attack.get(i) - player1.lastY);
@@ -303,6 +303,7 @@ public class BattleBoard extends JFrame {
 
     public static void forAttack() {
         if (player1.whoAttacked) {
+            player2.alreadyAttacked = false;
             int[][] player2AttackBoard = player2.getAttackBoard();
             int[][] player1Board = player1.getBoard();
             player1.attackLineCount = lineCounter(player2AttackBoard);
@@ -329,6 +330,7 @@ public class BattleBoard extends JFrame {
             //Timer player1Timer = player1.getTimer();
             //player1Timer.setDelay(10000);
         } else if (player2.whoAttacked) {
+            player1.alreadyAttacked = false;
             int[][] player1AttackBoard = player1.getAttackBoard();
             int[][] player2Board = player2.getBoard();
             player2.attackLineCount = lineCounter(player1AttackBoard);
