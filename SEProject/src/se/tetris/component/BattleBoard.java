@@ -47,6 +47,9 @@ public class BattleBoard extends JFrame {
 
         //Timer player1Timer = player1.getTimer();
         //player1Timer.setDelay(10000);
+
+        //Timer player2Timer = player2.getTimer();
+        //player2Timer.setDelay(10000);
     }
 
 
@@ -197,8 +200,8 @@ public class BattleBoard extends JFrame {
                     player1.attackLine.add(attack.get(i) - player1.lastY);
                 }
                 int firstY = player1.attackY;
-                for (int i = firstY; i > firstY - attack.size(); i--) {
-                    for (int j = 0; j < player1AttackBoard[0].length; j++, player1.attackY--) {
+                for (int i = firstY; i > firstY - attack.size(); i--, player1.attackY--) {
+                    for (int j = 0; j < player1AttackBoard[0].length; j++) {
                         player1AttackBoard[i][j] = 1;
                     }
                 }
