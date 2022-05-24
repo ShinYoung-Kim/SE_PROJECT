@@ -111,7 +111,7 @@ public class InnerBoard extends JPanel {
     boolean whoIs = false;
     boolean whoAttacked = false;
     public int attackLineCount = 3;
-    StringBuffer sbByAttack = new StringBuffer();
+    StringBuffer sbByAttack;
     boolean alreadyAttacked = false;
 
     public InnerBoard() {
@@ -382,6 +382,7 @@ public class InnerBoard extends JPanel {
                 notRemove++;
             }
         }
+        attackY = 9;
     }
 
     ArrayList<Integer> line = new ArrayList<Integer>();
