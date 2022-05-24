@@ -10,6 +10,7 @@ import javax.swing.Timer;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import se.tetris.component.*;
@@ -43,6 +44,9 @@ public class BattleBoard extends JFrame {
         addKeyListener(playerKeyListener);
         setFocusable(true);
         requestFocus();
+
+        //Timer player1Timer = player1.getTimer();
+        //player1Timer.setDelay(10000);
     }
 
 
@@ -165,10 +169,83 @@ public class BattleBoard extends JFrame {
         player1Timer.stop();
         player2Timer.stop();
     }
+    public static void placeAttack(ArrayList<Integer> attack) {
+        if (player1.whoIs == true) {
+            int[][] player1AttackBoard = player1.getAttackBoard();
+            if (player1.alreadyAttacked == true) {
+                System.out.println("counted");
+                player1.attackLineCount = lineCounter(player1AttackBoard);
+                System.out.println(player2.attackLineCount);
+                for (int i = attack.size(); i < 10; i++) {
+                    for (int j = 0; j < 10; j++) {
+                        player1AttackBoard[i - attack.size()][j] = player1AttackBoard[i][j];
+                    }
+                }
+                for (int i = 0; i < attack.size(); i++) {
+                    player1.attackLine.add(attack.get(i) - player1.lastY);
+                }
+                //int firstY = player1.attackY - player1.attackLineCount;
+                int firstY = player1.attackY - attack.size();
+                for (int i = 9; i > 9 - attack.size(); i--) {
+                    for (int j = 0; j < player1AttackBoard[0].length; j++) {
+                        player1AttackBoard[i][j] = 1;
+                    }
+                }
+                player1.alreadyAttacked = false;
+            } else {
+                for (int i = 0; i < attack.size(); i++) {
+                    player1.attackLine.add(attack.get(i) - player1.lastY);
+                }
+                int firstY = player1.attackY;
+                for (int i = firstY; i > firstY - attack.size(); i--) {
+                    for (int j = 0; j < player1AttackBoard[0].length; j++, player1.attackY--) {
+                        player1AttackBoard[i][j] = 1;
+                    }
+                }
+                player1.alreadyAttacked = true;
+            }
+        }
+        if (player2.whoIs == true) {
+            int[][] player2AttackBoard = player2.getAttackBoard();
+            if (player2.alreadyAttacked == true) {
+                System.out.println("counted");
+                player2.attackLineCount = lineCounter(player2AttackBoard);
+                System.out.println(player2.attackLineCount);
+                for (int i = attack.size(); i < 10; i++) {
+                    for (int j = 0; j < 10; j++) {
+                        player2AttackBoard[i - attack.size()][j] = player2AttackBoard[i][j];
+                    }
+                }
+                for (int i = 0; i < attack.size(); i++) {
+                    player2.attackLine.add(attack.get(i) - player2.lastY);
+                }
+                //int firstY = player2.attackY - player2.attackLineCount;
+                int firstY = player2.attackY - attack.size();
+                for (int i = 9; i > 9 - attack.size(); i--) {
+                    for (int j = 0; j < player2AttackBoard[0].length; j++) {
+                        player2AttackBoard[i][j] = 1;
+                    }
+                }
+                player2.alreadyAttacked = false;
+            } else {
+                for (int i = 0; i < attack.size(); i++) {
+                    player2.attackLine.add(attack.get(i) - player2.lastY);
+                }
+                int firstY = player2.attackY;
+                for (int i = firstY; i > firstY - attack.size(); i--, player2.attackY--) {
+                    for (int j = 0; j < player2AttackBoard[0].length; j++) {
+                        player2AttackBoard[i][j] = 1;
+                    }
+                }
+                player2.alreadyAttacked = true;
+            }
+        }
+        //drawAttack();
+    }
 
     public static void drawAttack() {
         if (player1.whoIs == true) {
-            //player1.sbByAttack = new StringBuffer();
+            player1.sbByAttack = new StringBuffer();
             int[][] player1AttackBoard = player1.getAttackBoard();
             for (int i = 0; i < player1AttackBoard.length; i++) {
                 for (int j = 0; j < player1AttackBoard[i].length; j++) {
@@ -184,9 +261,10 @@ public class BattleBoard extends JFrame {
             player2.attackArea.setText(player1.sbByAttack.toString());
             player2.attackDoc.setParagraphAttributes(0, player2.attackDoc.getLength(), player2.stylesetAk, false);
             player2.whoAttacked = true;
-            player2.attackLineCount = lineCounter(player1AttackBoard);
+            lineCountByPlayer();
             player1.whoIs = false;
         } else if (player2.whoIs == true) {
+            player2.sbByAttack = new StringBuffer();
             int[][] player2AttackBoard = player2.getAttackBoard();
             for (int i = 0; i < player2AttackBoard.length; i++) {
                 for (int j = 0; j < player2AttackBoard[i].length; j++) {
@@ -201,10 +279,25 @@ public class BattleBoard extends JFrame {
             player1.attackArea.setText(player2.sbByAttack.toString());
             player1.attackDoc.setParagraphAttributes(0, player1.attackDoc.getLength(), player1.stylesetAk, false);
             player1.whoAttacked = true;
-            player1.attackLineCount = lineCounter(player2AttackBoard);
+            lineCountByPlayer();
             player2.whoIs = false;
         }
     }
+
+    public static int lineCountByPlayer() {
+        if (player1.whoIs == true) {
+            int[][] player1AttackBoard = player1.getAttackBoard();
+            player2.attackLineCount = lineCounter(player1AttackBoard);
+            return player2.attackLineCount;
+        }
+        if (player2.whoIs == true) {
+            int[][] player2AttackBoard = player2.getAttackBoard();
+            player1.attackLineCount = lineCounter(player2AttackBoard);
+            return player1.attackLineCount;
+        }
+        return 0;
+    }
+
     public static void forAttack() {
         if (player1.whoAttacked) {
             int[][] player2AttackBoard = player2.getAttackBoard();
@@ -222,9 +315,16 @@ public class BattleBoard extends JFrame {
             }
             player1.drawBoard();
             player2.sbByAttack.delete(0, player2.sbByAttack.toString().length());
+            for (int a = 0; a < 10; a++) {
+                for (int b = 0; b < 10; b++) {
+                    player2AttackBoard[a][b] = 0;
+                }
+            }
             player1.attackArea.setText(player2.sbByAttack.toString());
             player1.attackDoc.setParagraphAttributes(0, player1.attackDoc.getLength(), player1.stylesetAk, false);
             player1.whoAttacked = false;
+            //Timer player1Timer = player1.getTimer();
+            //player1Timer.setDelay(10000);
         } else if (player2.whoAttacked) {
             int[][] player1AttackBoard = player1.getAttackBoard();
             int[][] player2Board = player2.getBoard();
@@ -241,6 +341,11 @@ public class BattleBoard extends JFrame {
             }
             player2.drawBoard();
             player1.sbByAttack.delete(0, player1.sbByAttack.toString().length());
+            for (int a = 0; a < 10; a++) {
+                for (int b = 0; b < 10; b++) {
+                    player1AttackBoard[a][b] = 0;
+                }
+            }
             player2.attackArea.setText(player1.sbByAttack.toString());
             player2.attackDoc.setParagraphAttributes(0, player2.attackDoc.getLength(), player2.stylesetAk, false);
             player2.whoAttacked = false;

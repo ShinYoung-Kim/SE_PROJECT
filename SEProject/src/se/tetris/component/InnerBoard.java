@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -75,8 +76,8 @@ public class InnerBoard extends JPanel {
     private Block next;
     private Block lastBlock;
     private int lastX;
-    private int lastY;
-    private int attackY = 9;
+    public int lastY;
+    public int attackY = 9;
     private int x = 3; //Default Position.
     public int y = 0;
     int nextX = 1;
@@ -84,7 +85,7 @@ public class InnerBoard extends JPanel {
     private int score = 0;
     private int level = 0;
     private String name = "player";
-    private ArrayList<Integer> attackLine;
+    public ArrayList<Integer> attackLine;
 
     public static int mode = 0;
     int eraseCnt = 0;
@@ -111,6 +112,7 @@ public class InnerBoard extends JPanel {
     boolean whoAttacked = false;
     public int attackLineCount = 3;
     StringBuffer sbByAttack = new StringBuffer();
+    boolean alreadyAttacked = false;
 
     public InnerBoard() {
         //Board display setting.
@@ -257,6 +259,7 @@ public class InnerBoard extends JPanel {
                 else
                 {
                     rnd = new Random(System.currentTimeMillis());
+                    //block = (((int)(Math.random()*1000000000)%10)) % 6;
                     block = rnd.nextInt(6);
                     switch(block) {
                         case 0:
@@ -275,7 +278,8 @@ public class InnerBoard extends JPanel {
                 }
             case 2:
                 rnd = new Random(System.currentTimeMillis());
-                block = rnd.nextInt(7);
+                //block = (((int)(Math.random()*1000000000)%10)) % 6;
+                block = rnd.nextInt(6);
                 switch(block) {
                     case 0:
                         return new IBlock();
@@ -301,6 +305,7 @@ public class InnerBoard extends JPanel {
                 else
                 {
                     rnd = new Random(System.currentTimeMillis());
+                    //block = (((int)(Math.random()*1000000000)%10)) % 6;
                     block = rnd.nextInt(6);
                     switch(block) {
                         case 0:
@@ -342,17 +347,7 @@ public class InnerBoard extends JPanel {
         }
     }
 
-    public void placeAttack(ArrayList<Integer> attack) {
-        for (int i = 0; i < attack.size(); i++) {
-            attackLine.add(attack.get(i) - lastY);
-        }
-        int firstY = attackY;
-        for (int i = firstY; i > firstY - attack.size(); i--, attackY--) {
-            for (int j = 0; j < attackBoard[0].length; j++) {
-                attackBoard[i][j] = 1;
-            }
-        }
-    }
+
 
     public void eraseCurr() {
         for(int i=x; i<x+curr.width(); i++) {
@@ -372,6 +367,7 @@ public class InnerBoard extends JPanel {
     }
 
     private void eraseLast() {
+        //int y = attackY + 1;
         int y = attackY + 1;
         int notRemove = 0;
         for (int i = y; i < y + lastBlock.height(); i++) {
@@ -441,9 +437,9 @@ public class InnerBoard extends JPanel {
     void lineRemove() {
         line = lineCheck();
         if (line.size() > 1) {
-            placeAttack(line);
-            eraseLast();
             whoIs = true;
+            BattleBoard.placeAttack(line);
+            eraseLast();
             BattleBoard.drawAttack();
             attackLine.clear();
         }
@@ -519,7 +515,6 @@ public class InnerBoard extends JPanel {
                 BattleBoard.drawAttack();
                 placeBlock();
                 drawBoard();
-
             }
         }
         else y++;
@@ -646,24 +641,6 @@ public class InnerBoard extends JPanel {
         nextArea.setText(sb.toString());
         colorBlindModeNext();
     }
-/*
-    public void drawAttack() {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < attackBoard.length; i++) {
-            for (int j = 0; j < attackBoard[i].length; j++) {
-                if (attackBoard[i][j] == 1) {
-                    sb.append("■");
-                }
-                else {
-                    sb.append(" ");
-                }
-            }
-            sb.append("\n");
-        }
-        attackArea.setText(sb.toString());
-        attackDoc.setParagraphAttributes(0, attackDoc.getLength(), stylesetAk, false);
-    }
-*/
 
     private void colorBlindMode(SimpleAttributeSet styleSet, Block block) {
         if (setting.colorBlindModeCheck == 1) {
