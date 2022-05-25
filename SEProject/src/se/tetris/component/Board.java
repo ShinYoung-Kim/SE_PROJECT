@@ -608,6 +608,7 @@ public class Board extends JFrame {
 
 	//interval 함수
 	public int getInterval(int blockNumber, int eraseCnt) {
+		//생성
 		if (blockNumber == 30 || blockNumber == 60 || blockNumber == 80 || blockNumber == 100 || blockNumber == 120) {
 			if (intervalByMode == 1000) {
 				getScore(5*eraseCnt, "std");
@@ -626,6 +627,7 @@ public class Board extends JFrame {
 				levelLb2.setText(Integer.toString(level));
 			}
 		}
+		//삭제
 		if (intervalByMode == 1000) {
 			if (eraseCnt < 5 && eraseCnt >= 0) {
 				setting.intervalNumber = 1000;
