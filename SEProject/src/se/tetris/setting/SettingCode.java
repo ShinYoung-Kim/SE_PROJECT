@@ -15,6 +15,7 @@ import java.awt.event.KeyEvent;
 
 import static java.awt.event.KeyEvent.VK_UP;
 
+import se.tetris.component.StartBattle;
 import se.tetris.data.*;
 
 public class SettingCode extends JFrame {
@@ -44,6 +45,7 @@ public class SettingCode extends JFrame {
     JButton BackToGame = new JButton("<html><body style='text-align:center;'>일반<br>게임으로</body></html>");
     JButton BackToItemGame = new JButton("<html><body style='text-align:center;'>아이템 모드<br>게임으로</body></html>");
     JButton BackToStart = new JButton("<html><body style='text-align:center;'>시작 메뉴</body></html>");
+    JButton BackToBattle = new JButton("<html><body style='text-align:center;'>대전 모드</body></html>");
     JButton settingReset = new JButton("<html><body style='text-align:center;'>설정<br>초기화</body></html>");
 
     JLabel screenSizeTitle = new JLabel("화면 크기 조절");
@@ -284,6 +286,23 @@ public class SettingCode extends JFrame {
             }
         });
 
+        BackToBattle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StartBattle battleMode = new StartBattle();
+                Window = dataCalls.getWindowSetting();
+                if(Window == 0) {
+                    battleMode.setSize(400,600);
+                }else if(Window == 1) {
+                    battleMode.setSize(800,800);
+                }else {
+                    battleMode.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+                }
+                battleMode.setVisible(true);
+                setVisible(false);
+            }
+        });
+
         BackToItemGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -361,6 +380,7 @@ public class SettingCode extends JFrame {
 
         buttonPanel.add(BackToGame);
         buttonPanel.add(BackToItemGame);
+        buttonPanel.add(BackToBattle);
         buttonPanel.add(BackToStart);
         buttonPanel.add(settingReset);
 
@@ -403,6 +423,7 @@ public class SettingCode extends JFrame {
         buttonPanel.setPreferredSize(new Dimension(80, 300));
         BackToItemGame.setPreferredSize(new Dimension(80, 75));
         BackToGame.setPreferredSize(new Dimension(80, 75));
+        BackToBattle.setPreferredSize(new Dimension(80, 75));
         BackToStart.setPreferredSize(new Dimension(80, 75));
         settingReset.setPreferredSize(new Dimension(80, 75));
         screenSizeArea.setPreferredSize(new Dimension(250, 110));
@@ -412,6 +433,7 @@ public class SettingCode extends JFrame {
 
         scoreReset.setBackground(grayMade);
         BackToGame.setBackground(grayMade);
+        BackToBattle.setBackground(grayMade);
         BackToItemGame.setBackground(grayMade);
         BackToStart.setBackground(grayMade);
         settingReset.setBackground(grayMade);
@@ -484,7 +506,7 @@ public class SettingCode extends JFrame {
                             } else if (KeyFoucus == 11) {
                                 settingReset.setBackground(Color.gray);
                                 scoreReset.setBackground(grayMade);
-                                KeyFoucus = 15;
+                                KeyFoucus = 16;
                             } else if (KeyFoucus == 12) {
                                 scoreReset.setBackground(Color.gray);
                                 BackToGame.setBackground(grayMade);
@@ -495,12 +517,16 @@ public class SettingCode extends JFrame {
                                 KeyFoucus = 12;
                             } else if (KeyFoucus == 14) {
                                 BackToItemGame.setBackground(Color.gray);
-                                BackToStart.setBackground(grayMade);
+                                BackToBattle.setBackground(grayMade);
                                 KeyFoucus = 13;
                             } else if (KeyFoucus == 15) {
+                                BackToBattle.setBackground(Color.gray);
+                                BackToStart.setBackground(grayMade);
+                                KeyFoucus = 14;
+                            } else if (KeyFoucus == 16) {
                                 BackToStart.setBackground(Color.gray);
                                 settingReset.setBackground(grayMade);
-                                KeyFoucus = 14;
+                                KeyFoucus = 15;
                             }
                             KeyCount++;
                             break;
@@ -555,13 +581,17 @@ public class SettingCode extends JFrame {
                                 KeyFoucus = 13;
                             } else if (KeyFoucus == 13) {
                                 BackToItemGame.setBackground(grayMade);
-                                BackToStart.setBackground(Color.gray);
+                                BackToBattle.setBackground(Color.gray);
                                 KeyFoucus = 14;
                             } else if (KeyFoucus == 14) {
-                                BackToStart.setBackground(grayMade);
-                                settingReset.setBackground(Color.gray);
+                                BackToBattle.setBackground(grayMade);
+                                BackToStart.setBackground(Color.gray);
                                 KeyFoucus = 15;
                             } else if (KeyFoucus == 15) {
+                                BackToStart.setBackground(grayMade);
+                                settingReset.setBackground(Color.gray);
+                                KeyFoucus = 16;
+                            } else if (KeyFoucus == 16) {
                                 settingReset.setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
@@ -622,10 +652,14 @@ public class SettingCode extends JFrame {
                                 sizeOne.setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 14) {
-                                BackToStart.setBackground(grayMade);
+                                BackToBattle.setBackground(grayMade);
                                 sizeOne.setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 15) {
+                                BackToStart.setBackground(grayMade);
+                                sizeOne.setBackground(Color.gray);
+                                KeyFoucus = 1;
+                            } else if (KeyFoucus == 16) {
                                 settingReset.setBackground(grayMade);
                                 sizeOne.setBackground(Color.gray);
                                 KeyFoucus = 1;
@@ -686,10 +720,14 @@ public class SettingCode extends JFrame {
                                 sizeOne.setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 14) {
-                                BackToStart.setBackground(grayMade);
+                                BackToBattle.setBackground(grayMade);
                                 sizeOne.setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 15) {
+                                BackToStart.setBackground(grayMade);
+                                sizeOne.setBackground(Color.gray);
+                                KeyFoucus = 1;
+                            } else if (KeyFoucus == 16) {
                                 settingReset.setBackground(grayMade);
                                 sizeOne.setBackground(Color.gray);
                                 KeyFoucus = 1;
@@ -738,9 +776,12 @@ public class SettingCode extends JFrame {
                                 BackToItemGame.doClick();
                             }
                             if (KeyFoucus == 14) {
-                                BackToStart.doClick();
+                                BackToBattle.doClick();
                             }
                             if (KeyFoucus == 15) {
+                                BackToStart.doClick();
+                            }
+                            if (KeyFoucus == 16) {
                                 settingReset.doClick();
                             }
                             KeyCount++;
@@ -792,7 +833,7 @@ public class SettingCode extends JFrame {
                             } else if (KeyFoucus == 11) {
                                 settingReset.setBackground(Color.gray);
                                 scoreReset.setBackground(grayMade);
-                                KeyFoucus = 15;
+                                KeyFoucus = 16;
                             } else if (KeyFoucus == 12) {
                                 scoreReset.setBackground(Color.gray);
                                 BackToGame.setBackground(grayMade);
@@ -803,12 +844,16 @@ public class SettingCode extends JFrame {
                                 KeyFoucus = 12;
                             } else if (KeyFoucus == 14) {
                                 BackToItemGame.setBackground(Color.gray);
-                                BackToStart.setBackground(grayMade);
+                                BackToBattle.setBackground(grayMade);
                                 KeyFoucus = 13;
                             } else if (KeyFoucus == 15) {
+                                BackToBattle.setBackground(Color.gray);
+                                BackToStart.setBackground(grayMade);
+                                KeyFoucus = 14;
+                            } else if (KeyFoucus == 16) {
                                 BackToStart.setBackground(Color.gray);
                                 settingReset.setBackground(grayMade);
-                                KeyFoucus = 14;
+                                KeyFoucus = 15;
                             }
                             KeyCount++;
                             break;
@@ -863,13 +908,17 @@ public class SettingCode extends JFrame {
                                 KeyFoucus = 13;
                             } else if (KeyFoucus == 13) {
                                 BackToItemGame.setBackground(grayMade);
-                                BackToStart.setBackground(Color.gray);
+                                BackToBattle.setBackground(Color.gray);
                                 KeyFoucus = 14;
                             } else if (KeyFoucus == 14) {
-                                BackToStart.setBackground(grayMade);
-                                settingReset.setBackground(Color.gray);
+                                BackToBattle.setBackground(grayMade);
+                                BackToStart.setBackground(Color.gray);
                                 KeyFoucus = 15;
                             } else if (KeyFoucus == 15) {
+                                BackToStart.setBackground(grayMade);
+                                settingReset.setBackground(Color.gray);
+                                KeyFoucus = 16;
+                            } else if (KeyFoucus == 16) {
                                 settingReset.setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
@@ -930,10 +979,14 @@ public class SettingCode extends JFrame {
                                 sizeOne.setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 14) {
-                                BackToStart.setBackground(grayMade);
+                                BackToBattle.setBackground(grayMade);
                                 sizeOne.setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 15) {
+                                BackToStart.setBackground(grayMade);
+                                sizeOne.setBackground(Color.gray);
+                                KeyFoucus = 1;
+                            } else if (KeyFoucus == 16) {
                                 settingReset.setBackground(grayMade);
                                 sizeOne.setBackground(Color.gray);
                                 KeyFoucus = 1;
@@ -994,10 +1047,14 @@ public class SettingCode extends JFrame {
                                 sizeOne.setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 14) {
-                                BackToStart.setBackground(grayMade);
+                                BackToBattle.setBackground(grayMade);
                                 sizeOne.setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 15) {
+                                BackToStart.setBackground(grayMade);
+                                sizeOne.setBackground(Color.gray);
+                                KeyFoucus = 1;
+                            } else if (KeyFoucus == 16) {
                                 settingReset.setBackground(grayMade);
                                 sizeOne.setBackground(Color.gray);
                                 KeyFoucus = 1;
@@ -1046,9 +1103,12 @@ public class SettingCode extends JFrame {
                                 BackToItemGame.doClick();
                             }
                             if (KeyFoucus == 14) {
-                                BackToStart.doClick();
+                                BackToBattle.doClick();
                             }
                             if (KeyFoucus == 15) {
+                                BackToStart.doClick();
+                            }
+                            if (KeyFoucus == 16) {
                                 settingReset.doClick();
                             }
                             KeyCount++;
@@ -1158,6 +1218,7 @@ public class SettingCode extends JFrame {
                 buttonPanel.setPreferredSize(new Dimension(80, 300));
                 BackToItemGame.setPreferredSize(new Dimension(80, 75));
                 BackToGame.setPreferredSize(new Dimension(80, 75));
+                BackToBattle.setPreferredSize(new Dimension(80, 75));
                 BackToStart.setPreferredSize(new Dimension(80, 75));
                 settingReset.setPreferredSize(new Dimension(80, 75));
 
@@ -1169,6 +1230,7 @@ public class SettingCode extends JFrame {
                 scoreReset.setFont(fontSmall);
                 BackToItemGame.setFont(fontSmall);
                 BackToGame.setFont(fontSmall);
+                BackToBattle.setFont(fontSmall);
                 BackToStart.setFont(fontSmall);
                 settingReset.setFont(fontSmall);
 
@@ -1193,6 +1255,7 @@ public class SettingCode extends JFrame {
                 scoreReset.setPreferredSize(new Dimension(160, 100));
                 BackToItemGame.setPreferredSize(new Dimension(160, 100));
                 BackToGame.setPreferredSize(new Dimension(160, 100));
+                BackToBattle.setPreferredSize(new Dimension(160, 100));
                 BackToStart.setPreferredSize(new Dimension(160, 100));
                 settingReset.setPreferredSize(new Dimension(160, 100));
 
@@ -1204,6 +1267,7 @@ public class SettingCode extends JFrame {
                 scoreReset.setFont(fontBig);
                 BackToItemGame.setFont(fontBig);
                 BackToGame.setFont(fontBig);
+                BackToBattle.setFont(fontBig);
                 BackToStart.setFont(fontBig);
                 settingReset.setFont(fontBig);
 
@@ -1228,6 +1292,7 @@ public class SettingCode extends JFrame {
                 scoreReset.setPreferredSize(new Dimension(screenWidth / 4, 1 * screenHeight / 4));
                 BackToItemGame.setPreferredSize(new Dimension(screenWidth / 4, 1 * screenHeight / 8));
                 BackToGame.setPreferredSize(new Dimension(screenWidth / 4, 1 * screenHeight / 8));
+                BackToBattle.setPreferredSize(new Dimension(screenWidth / 4, 1 * screenHeight / 8));
                 BackToStart.setPreferredSize(new Dimension(screenWidth / 4, 1 * screenHeight / 8));
                 settingReset.setPreferredSize(new Dimension(screenWidth / 4, 1 * screenHeight / 8));
 
@@ -1250,6 +1315,7 @@ public class SettingCode extends JFrame {
                 scoreReset.setFont(fontFull);
                 BackToItemGame.setFont(fontFull);
                 BackToGame.setFont(fontFull);
+                BackToBattle.setFont(fontFull);
                 BackToStart.setFont(fontFull);
                 settingReset.setFont(fontFull);
                 sizeThree.setSelected(true);
