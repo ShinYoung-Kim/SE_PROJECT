@@ -445,6 +445,8 @@ public class Board extends JFrame {
 			placeBlock();
 			drawBoard();
 		}
+		getScore(eraseCnt, "block");
+		setScore();
 	}
 
 	protected void moveRight() {
@@ -983,7 +985,12 @@ public class Board extends JFrame {
 
 	public void getScore(int lines, String mode) {
 		int scorePre = lines;
-		updateSroce(scorePre, mode);
+		if(mode == "line") {
+			updateSroce(scorePre, mode);
+		}else if(mode=="block") {
+			updateSroce(1, mode);
+		}
+
 	}
 
 	public int getNowScore() {
@@ -1006,7 +1013,7 @@ public class Board extends JFrame {
 			if(sc%11 ==0) {
 				this.score += 11;
 			}
-		}else {
+		}else if(mode=="block") {
 			this.score += sc;
 		}
 

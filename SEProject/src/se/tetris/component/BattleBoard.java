@@ -24,6 +24,8 @@ public class BattleBoard extends JFrame {
         player1 = new InnerBoard();
         player2 = new InnerBoard();
 
+        InnerBoard.BattleMode = "Battle";
+
         player1.setName("Player1");
         player2.setName("Player2");
 
@@ -40,11 +42,11 @@ public class BattleBoard extends JFrame {
         setFocusTraversalKeysEnabled(false);
         requestFocus();
 
-        Timer player1Timer = player1.getTimer();
-        player1Timer.setDelay(10000);
+        //Timer player1Timer = player1.getTimer();
+        //player1Timer.setDelay(10000);
 
-        Timer player2Timer = player2.getTimer();
-        player2Timer.setDelay(10000);
+        //Timer player2Timer = player2.getTimer();
+        //player2Timer.setDelay(10000);
 
     }
 
