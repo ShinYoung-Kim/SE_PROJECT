@@ -613,109 +613,103 @@ public class Board extends JFrame {
 			if (intervalByMode == 1000) {
 				getScore(5*eraseCnt, "std");
 				setScore();
-				level++;
-				levelLb2.setText(Integer.toString(level));
 			} else if (intervalByMode == 2000) {
 				getScore(11*eraseCnt, "std");
 				setScore();
-				level++;
-				levelLb2.setText(Integer.toString(level));
 			} else if (intervalByMode == 800) {
 				getScore(20*eraseCnt, "std");
 				setScore();
-				level++;
-				levelLb2.setText(Integer.toString(level));
 			}
 		}
 		//삭제
 		if (intervalByMode == 1000) {
 			if (eraseCnt < 5 && eraseCnt >= 0) {
 				setting.intervalNumber = 1000;
-				level++;
+				level = 1;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 10 && eraseCnt >= 5) {
 				setting.intervalNumber = (int) (1000 * 0.9);
-				level++;
+				level = 2;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 15 && eraseCnt >= 10) {
 				setting.intervalNumber = (int) (1000 * 0.9 * 0.9);
-				level++;
+				level = 3;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 20 && eraseCnt >= 15) {
 				setting.intervalNumber = (int) (1000 * 0.9 * 0.9 * 0.9);
-				level++;
+				level = 4;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 25 && eraseCnt >= 20) {
 				setting.intervalNumber = (int) (1000 * 0.9 * 0.9 * 0.9 * 0.9);
-				level++;
+				level = 5;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 30 && eraseCnt >= 25) {
 				setting.intervalNumber = (int) (1000 * 0.9 * 0.9 * 0.9 * 0.9 * 0.9);
-				level++;
+				level = 6;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt >= 30) {
 				setting.intervalNumber = (int) (1000 * 0.9 * 0.9 * 0.9 * 0.9 * 0.9 * 0.9);
-				level++;
+				level = 7;
 				levelLb2.setText(Integer.toString(level));
 			}
 		} else if (intervalByMode == 2000) {
 			if (eraseCnt < 5 && eraseCnt >= 0) {
 				setting.intervalNumber = 2000;
-				level++;
+				level = 1;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 10 && eraseCnt >= 5) {
 				setting.intervalNumber = (int) (2000 * 0.92);
-				level++;
+				level = 2;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 15 && eraseCnt >= 10) {
 				setting.intervalNumber = (int) (2000 * 0.92 * 0.92);
-				level++;
+				level = 3;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 20 && eraseCnt >= 15) {
 				setting.intervalNumber = (int) (2000 * 0.92 * 0.92 * 0.92);
-				level++;
+				level = 4;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 25 && eraseCnt >= 20) {
 				setting.intervalNumber = (int) (2000 * 0.92 * 0.92 * 0.92 * 0.92);
-				level++;
+				level = 5;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 30 && eraseCnt >= 25) {
 				setting.intervalNumber = (int) (2000 * 0.92 * 0.92 * 0.92 * 0.92 * 0.92);
-				level++;
+				level = 6;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt >= 30) {
 				setting.intervalNumber = (int) (2000 * 0.92 * 0.92 * 0.92 * 0.92 * 0.92 * 0.92);
-				level++;
+				level = 7;
 				levelLb2.setText(Integer.toString(level));
 			}
 		} else if (intervalByMode == 800) {
 			if (eraseCnt < 5 && eraseCnt >= 0) {
 				setting.intervalNumber = 800;
-				level++;
+				level = 1;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 10 && eraseCnt >= 5) {
 				setting.intervalNumber = (int) (800 * 0.88);
-				level++;
+				level = 2;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 15 && eraseCnt >= 10) {
 				setting.intervalNumber = (int) (800 * 0.88 * 0.88);
-				level++;
+				level = 3;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 20 && eraseCnt >= 15) {
 				setting.intervalNumber = (int) (800 * 0.88 * 0.88 * 0.88);
-				level++;
+				level = 4;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 25 && eraseCnt >= 20) {
 				setting.intervalNumber = (int) (800 * 0.88 * 0.88 * 0.88 * 0.88);
-				level++;
+				level = 5;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt < 30 && eraseCnt >= 25) {
 				setting.intervalNumber = (int) (800 * 0.88 * 0.88 * 0.88 * 0.88 * 0.88);
-				level++;
+				level = 6;
 				levelLb2.setText(Integer.toString(level));
 			} else if (eraseCnt >= 30) {
 				setting.intervalNumber = (int) (800 * 0.88 * 0.88 * 0.88 * 0.88 * 0.88 * 0.88);
-				level++;
+				level = 7;
 				levelLb2.setText(Integer.toString(level));
 			}
 		}
