@@ -43,7 +43,6 @@ import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
 public class Board extends JFrame {
-
 	public static Board boardMain;
 	private static final long serialVersionUID = 2434035659171694595L;
 
@@ -105,7 +104,6 @@ public class Board extends JFrame {
 	static JLabel levelLb1 = new JLabel("Level");
 	static JLabel levelLb2 = new JLabel(Integer.toString(level));
 
-    StringBuffer sb = new StringBuffer();
 
 	public Board() {
 
@@ -226,7 +224,7 @@ public class Board extends JFrame {
 		timer.start();
 	}
 
-	public Block getRandomBlock(int modeChoose) {
+	private Block getRandomBlock(int modeChoose) {
 		switch (modeChoose) {
 			case 1:
 				min = 1;
@@ -236,7 +234,7 @@ public class Board extends JFrame {
 					return new IBlock();
 				else
 				{
-                    block = (int)(Math.random() * 6);
+					block = (int)(Math.random() * 6);
 					switch(block) {
 						case 0:
 							return new JBlock();
@@ -253,7 +251,7 @@ public class Board extends JFrame {
 					}
 				}
 			case 2:
-                block = (int)(Math.random() * 7);
+				block = (int)(Math.random() * 7);
 				switch(block) {
 					case 0:
 						return new IBlock();
@@ -278,7 +276,7 @@ public class Board extends JFrame {
 					return new IBlock();
 				else
 				{
-                    block = (int)(Math.random() * 6);
+					block = (int)(Math.random() * 6);
 					switch(block) {
 						case 0:
 							return new JBlock();
@@ -305,8 +303,8 @@ public class Board extends JFrame {
 	private void placeBlock() {
 		for(int j=0; j<curr.height(); j++) {
 			for(int i=0; i<curr.width(); i++) {
-				if (curr.getShape(i, j) == 1)
-					board[y+j][x+i] = curr.getBlockNum();
+				if (curr.getShape(i, j) > 0)
+					board[y+j][x+i] = curr.getShape(i, j);
 			}
 		}
 	}
@@ -322,7 +320,7 @@ public class Board extends JFrame {
 	private void eraseCurr() {
 		for(int i=x; i<x+curr.width(); i++) {
 			for(int j=y; j<y+curr.height(); j++) {
-				if(curr.getShape(i-x,j-y) == 1)
+				if(curr.getShape(i-x,j-y) > 0)
 					board[j][i] = 0;
 			}
 		}
@@ -376,22 +374,6 @@ public class Board extends JFrame {
 
 	void lineRemove() {
 		line = lineCheck();
-		/*
-        for (int i = 0; i < line.size(); i++) {
-            int lineNumber = line.get(i);
-
-            for(int j =10; j < 0; j--) {
-                board[lineNumber][j] = 0;
-                try {
-                    timer.wait(500);
-                } catch (InterruptedException e) {
-
-                }
-            }
-
-        }
-        */
-
 		Iterator<Integer> iter = line.iterator();
 		int index = 0;
 		while(iter.hasNext()) {
@@ -412,7 +394,7 @@ public class Board extends JFrame {
 		for (int i = 0; i < curr.height(); i++) {
 			for (int j = 0; j < curr.width(); j++) {
 				if (y >= HEIGHT - curr.height()) return true;
-				if (curr.getShape(j, i) == 1 && i + y < 19) {
+				if (curr.getShape(j, i) > 0 && i + y < 19) {
 					int checkBottom = board[i + y + 1][j + x];
 					if (checkBottom > 0) {
 						return true;
@@ -427,7 +409,7 @@ public class Board extends JFrame {
 	public boolean collisionRight() {
 		for (int i = 0; i < curr.height(); i++) {
 			for (int j = 0; j < curr.width(); j++) {
-				if (curr.getShape(j, i) == 1 && j + x < 9) {
+				if (curr.getShape(j, i) > 0 && j + x < 9) {
 					int checkRight = board[i + y][j + x + 1];
 					if(checkRight > 0) {
 						return true;
@@ -441,7 +423,7 @@ public class Board extends JFrame {
 	public boolean collisionLeft() {
 		for (int i = 0; i < curr.height(); i++) {
 			for (int j = 0; j < curr.width(); j++) {
-				if (curr.getShape(j, i) == 1 && j + x > 0) {
+				if (curr.getShape(j, i) > 0 && j + x > 0) {
 					int checkLeft = board[i + y][j + x - 1];
 					if(checkLeft > 0) {
 						return true;
@@ -501,7 +483,7 @@ public class Board extends JFrame {
 			int rows = y+j == 0 ? 1 : y+j+1;
 			int offset = rows * (WIDTH+3) + x + 1;
 			for (int i = 0; i < curr.width(); i++) {
-				if (curr.getShape(i, j) == 1) {
+				if (curr.getShape(i, j) > 0) {
 					colorBlindModeCurrent(offset + i);
 				}
 			}
@@ -513,37 +495,79 @@ public class Board extends JFrame {
 				int block = board[i][j];
 				switch(block) {
 					case 1:
-						StyleConstants.setForeground(stylesetCur, Color.CYAN);
-						boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						if (setting.colorBlindModeCheck == 1) {
+							StyleConstants.setForeground(stylesetCur, new Color(0, 58, 97));
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
+						else {
+							StyleConstants.setForeground(stylesetCur, Color.CYAN);
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
 						break;
 					case 2:
-						StyleConstants.setForeground(stylesetCur, Color.BLUE);
-						boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						if (setting.colorBlindModeCheck == 1) {
+							StyleConstants.setForeground(stylesetCur, new Color(126, 98, 61));
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
+						else {
+							StyleConstants.setForeground(stylesetCur, Color.BLUE);
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
 						break;
 					case 3:
-						StyleConstants.setForeground(stylesetCur, Color.ORANGE);
-						boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						if (setting.colorBlindModeCheck == 1) {
+							StyleConstants.setForeground(stylesetCur, new Color(165, 148, 159));
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
+						else {
+							StyleConstants.setForeground(stylesetCur, Color.PINK);
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
 						break;
 					case 4:
-						StyleConstants.setForeground(stylesetCur, Color.YELLOW);
-						boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						if (setting.colorBlindModeCheck == 1) {
+							StyleConstants.setForeground(stylesetCur, new Color(187, 190, 242));
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
+						else {
+							StyleConstants.setForeground(stylesetCur, Color.YELLOW);
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
 						break;
 					case 5:
-						StyleConstants.setForeground(stylesetCur, Color.GREEN);
-						boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						if (setting.colorBlindModeCheck == 1) {
+							StyleConstants.setForeground(stylesetCur, new Color(247, 193, 121));
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
+						else {
+							StyleConstants.setForeground(stylesetCur, Color.GREEN);
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
 						break;
 					case 6:
-						StyleConstants.setForeground(stylesetCur, Color.MAGENTA);
-						boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						if (setting.colorBlindModeCheck == 1) {
+							StyleConstants.setForeground(stylesetCur, new Color(154, 127, 112));
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
+						else {
+							StyleConstants.setForeground(stylesetCur, Color.MAGENTA);
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
 						break;
 					case 7:
-						StyleConstants.setForeground(stylesetCur, Color.RED);
-						boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						if (setting.colorBlindModeCheck == 1) {
+							StyleConstants.setForeground(stylesetCur, new Color(99, 106, 141));
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
+						else {
+							StyleConstants.setForeground(stylesetCur, Color.RED);
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+						}
 						break;
 				}
-
 			}
 		}
+
 	}
 
 	//blockNumber 증가 + timer 변경
@@ -554,7 +578,7 @@ public class Board extends JFrame {
 		timer.setDelay(getInterval(blockNumber, eraseCnt));
 		for(int i=0; i < nextBoard.length; i++) {
 			for(int j=0; j < nextBoard[i].length; j++) {
-				if(nextBoard[i][j] == 1) {
+				if(nextBoard[i][j] > 0) {
 					sb.append("■");
 				} else {
 					sb.append(" ");
@@ -714,7 +738,7 @@ public class Board extends JFrame {
 	public boolean startCheck() {
 		for (int i = 0; i < curr.height(); i++) {
 			for (int j = 0; j < curr.width(); j++)
-				if(curr.getShape(j,i) != 0 && board[y + i][x + j] > 0)
+				if(curr.getShape(j,i) > 0 && board[y + i][x + j] > 0)
 					return true;
 		}
 		return false;
@@ -732,8 +756,8 @@ public class Board extends JFrame {
 	public void saveBoard() {
 		for (int i = 0; i < curr.height(); i++)
 			for (int j = 0; j < curr.width(); j++)
-				if (curr.getShape(j, i) == 1)
-					board[y + i][j + x] = curr.getBlockNum();
+				if (curr.getShape(j, i) > 0)
+					board[y + i][j + x] = curr.getShape(j, i);
 	}
 
 
