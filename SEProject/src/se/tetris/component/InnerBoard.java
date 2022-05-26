@@ -38,7 +38,7 @@ import static se.tetris.setting.SettingCode.screenWidth;
 
 public class InnerBoard extends JPanel {
 
-	public static String BattleMode;
+    public static String BattleMode;
 
     public static Board innerBoardMain;
     private static final long serialVersionUID = 2434035659171694595L;
@@ -447,15 +447,15 @@ public class InnerBoard extends JPanel {
             else
                 winner = "Player1";
 
-        	if(BattleMode == "Battle") {
-        		BattleBoard.gameStop();
-        	}else if(BattleMode == "TimeBattle") {
-        		TimeBattleBoard.gameStop();
-        		TimeBattleBoard.collisionStop();
+            if(BattleMode == "Battle") {
+                BattleBoard.gameStop();
+            }else if(BattleMode == "TimeBattle") {
+                TimeBattleBoard.gameStop();
+                TimeBattleBoard.collisionStop();
 
-        		TimeBattleBoard.ColPlayer = winner;
-        		return;
-        	}
+                TimeBattleBoard.ColPlayer = winner;
+                return;
+            }
 
             String[] overOption = {"종료하기", "다시하기"};
 
@@ -465,14 +465,14 @@ public class InnerBoard extends JPanel {
 
             int over = JOptionPane.showOptionDialog(null, winner + "이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
 
-        	if(BattleMode == "Battle") {
+            if(BattleMode == "Battle") {
                 if (over == 0) {
-                	BattleBoard.gameClose();
+                    BattleBoard.gameClose();
                 }
                 if (over == 1) {
                     BattleBoard.gameReset();
                 }
-        	}
+            }
         }
         else {
             eraseNext();
@@ -521,7 +521,6 @@ public class InnerBoard extends JPanel {
                 }
             }
         }
-
         return false;
     }
 
@@ -556,20 +555,22 @@ public class InnerBoard extends JPanel {
     public void moveDown() {
         eraseCurr();
 
-		getScore(eraseCnt, "block");
-		setScore();
+        getScore(eraseCnt, "block");
+        setScore();
 
         if (collisionBottom()) {
+            lineRemove();
             collisionOccur();
             if (whoAttacked) {
                 attackedFunction();
-                BattleBoard.drawAttack();
+                BattleBoard.drawEmptyAttack();
                 placeBlock();
                 drawBoard();
             }
+        } else {
+            y++;
+            lineRemove();
         }
-        else y++;
-        lineRemove();
         if (!isGameOver()) {
             placeBlock();
             drawBoard();
@@ -945,49 +946,49 @@ public class InnerBoard extends JPanel {
         drawBoard();
     }
 
-	public void setScore() {
-		String scoretxt = Integer.toString(score);
-		String prescoretxt = scoreLb2.getText();
-		scoreLb2.setText(scoretxt);
-	}
+    public void setScore() {
+        String scoretxt = Integer.toString(score);
+        String prescoretxt = scoreLb2.getText();
+        scoreLb2.setText(scoretxt);
+    }
 
-	public void getScore(int lines, String mode) {
-		int scorePre = lines;
-		if(mode == "line") {
-			updateSroce(scorePre, mode);
-		}else if(mode=="block") {
-			updateSroce(1, mode);
-		}
+    public void getScore(int lines, String mode) {
+        int scorePre = lines;
+        if(mode == "line") {
+            updateSroce(scorePre, mode);
+        }else if(mode=="block") {
+            updateSroce(1, mode);
+        }
 
-	}
+    }
 
-	public int getNowScore() {
-		int score = this.score;
-		return score;
-	}
+    public int getNowScore() {
+        int score = this.score;
+        return score;
+    }
 
-	public int updateSroce(int sc, String mode) {
-		if(mode =="line") {
-			if(sc>0 && sc<=5) {
-				this.score += 10;
-			}else if(sc>5 && sc<=10) {
-				this.score += 15;
-			}else {
-				this.score += 20;
-			}
-			if(sc%3 ==0) {
-				this.score += 3*sc;
-			}
-			if(sc%11 ==0) {
-				this.score += 11;
-			}
-		}else if(mode=="block") {
-			this.score += sc;
-		}
+    public int updateSroce(int sc, String mode) {
+        if(mode =="line") {
+            if(sc>0 && sc<=5) {
+                this.score += 10;
+            }else if(sc>5 && sc<=10) {
+                this.score += 15;
+            }else {
+                this.score += 20;
+            }
+            if(sc%3 ==0) {
+                this.score += 3*sc;
+            }
+            if(sc%11 ==0) {
+                this.score += 11;
+            }
+        }else if(mode=="block") {
+            this.score += sc;
+        }
 
-		setScore();
-		return score;
-	}
+        setScore();
+        return score;
+    }
 
     public void gameStop() {
         timer.stop();
