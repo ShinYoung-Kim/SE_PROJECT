@@ -554,7 +554,7 @@ public class ItemBoard extends JFrame {
 		}
 		for(int t=0; t<WIDTH+2; t++) sb.append(BORDER_CHAR);
 		tetrisArea.setText(sb.toString());
-		boardDoc.setParagraphAttributes(1, boardDoc.getLength() - 1, stylesetBr, false);
+		boardDoc.setParagraphAttributes(0, boardDoc.getLength(), stylesetBr, false);
 
 
 		for(int j = 0; j < curr.height(); j++) {
@@ -575,71 +575,71 @@ public class ItemBoard extends JFrame {
                     case 1:
                     	if (setting.colorBlindModeCheck == 1) {
                     		StyleConstants.setForeground(stylesetCur, new Color(0, 58, 97));
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	else {
                     		StyleConstants.setForeground(stylesetCur, Color.CYAN);
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                     	}
                         break;
                     case 2:
                         if (setting.colorBlindModeCheck == 1) {
                         	StyleConstants.setForeground(stylesetCur, new Color(126, 98, 61));
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+							boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                         }
                         else {
                         	StyleConstants.setForeground(stylesetCur, Color.BLUE);
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                         }
                         break;
                     case 3:
                     	if (setting.colorBlindModeCheck == 1) {
                     		StyleConstants.setForeground(stylesetCur, new Color(165, 148, 159));
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	else {
                     		StyleConstants.setForeground(stylesetCur, Color.PINK);
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                     	}
                         break;
                     case 4:
                     	if (setting.colorBlindModeCheck == 1) {
                     		StyleConstants.setForeground(stylesetCur, new Color(187, 190, 242));
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	else {
                     		StyleConstants.setForeground(stylesetCur, Color.YELLOW);
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                     	}
                         break;
                     case 5:
                     	if (setting.colorBlindModeCheck == 1) {
                     		StyleConstants.setForeground(stylesetCur, new Color(247, 193, 121));
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	else {
                     		StyleConstants.setForeground(stylesetCur, Color.GREEN);
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	break;
                     case 6:
                     	if (setting.colorBlindModeCheck == 1) {
                     		StyleConstants.setForeground(stylesetCur, new Color(154, 127, 112));
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	else {
                     		StyleConstants.setForeground(stylesetCur, Color.MAGENTA);
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                     	}
                         break;
                     case 7:
                     	if (setting.colorBlindModeCheck == 1) {
                     		StyleConstants.setForeground(stylesetCur, new Color(99, 106, 141));
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	else {
                     		StyleConstants.setForeground(stylesetCur, Color.RED);
-                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
                     	}
                         break;
                 }
