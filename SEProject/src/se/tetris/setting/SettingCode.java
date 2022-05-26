@@ -53,19 +53,19 @@ public class SettingCode extends JFrame {
     JLabel colorBlindTitle = new JLabel("색맹모드");
     JLabel modeTitle = new JLabel("모드 선택");
 
-    public JRadioButton sizeOne = new JRadioButton("표준(400 * 600)");
-    public JRadioButton sizeTwo = new JRadioButton("크게(800 * 800)");
+    public JRadioButton sizeOne = new JRadioButton("표준");
+    public JRadioButton sizeTwo = new JRadioButton("크게");
     public JRadioButton sizeThree = new JRadioButton("전체 화면 모드");
 
     JRadioButton keyOne = new JRadioButton("방향키");
     JRadioButton keyTwo = new JRadioButton("WASD");
 
-    JRadioButton colorBlindOne = new JRadioButton("Off");
-    JRadioButton colorBlindTwo = new JRadioButton("On");
+    public JRadioButton colorBlindOne = new JRadioButton("Off");
+    public JRadioButton colorBlindTwo = new JRadioButton("On");
 
-    JRadioButton modeOne = new JRadioButton("Easy");
-    JRadioButton modeTwo = new JRadioButton("Normal");
-    JRadioButton modeThree = new JRadioButton("Hard");
+    public JRadioButton modeOne = new JRadioButton("Easy");
+    public JRadioButton modeTwo = new JRadioButton("Normal");
+    public JRadioButton modeThree = new JRadioButton("Hard");
 
     int KeyCount = 0;
     int KeyFoucus = 0;
@@ -1139,7 +1139,7 @@ public class SettingCode extends JFrame {
         SettingValues.getInstance().intervalNumber = 800;
         SettingValues.getInstance().modeChoose = 3;
 
-        dataCalls.UpdateLevelSetting(2);
+        dataCalls.UpdateLevelSetting(SettingValues.getInstance().modeChoose - 1);
 
         System.out.println("3번");
 
@@ -1150,7 +1150,7 @@ public class SettingCode extends JFrame {
         SettingValues.getInstance().intervalNumber = 1000;
         SettingValues.getInstance().modeChoose = 2;
 
-        dataCalls.UpdateLevelSetting(0);
+        dataCalls.UpdateLevelSetting(SettingValues.getInstance().modeChoose - 1);
 
         modeTwo.setSelected(true);
     }
@@ -1159,7 +1159,7 @@ public class SettingCode extends JFrame {
         SettingValues.getInstance().intervalNumber = 2000;
         SettingValues.getInstance().modeChoose = 1;
 
-        dataCalls.UpdateLevelSetting(1);
+        dataCalls.UpdateLevelSetting(SettingValues.getInstance().modeChoose - 1);
 
         modeOne.setSelected(true);
     }
@@ -1322,6 +1322,40 @@ public class SettingCode extends JFrame {
                 break;
             default:
                 setSize(400, 600);
+                rightRight.setPreferredSize(new Dimension(100, 450));
+                nextArea.setPreferredSize(new Dimension(250, 450));
+                scoreReset.setPreferredSize(new Dimension(80, 75));
+                scorePanel.setPreferredSize(new Dimension(80, 75));
+                buttonPanel.setPreferredSize(new Dimension(80, 300));
+                BackToItemGame.setPreferredSize(new Dimension(80, 75));
+                BackToGame.setPreferredSize(new Dimension(80, 75));
+                BackToBattle.setPreferredSize(new Dimension(80, 75));
+                BackToStart.setPreferredSize(new Dimension(80, 75));
+                settingReset.setPreferredSize(new Dimension(80, 75));
+
+                screenSizeTitle.setFont(fontSmall);
+                keyTitle.setFont(fontSmall);
+                colorBlindTitle.setFont(fontSmall);
+                modeTitle.setFont(fontSmall);
+
+                scoreReset.setFont(fontSmall);
+                BackToItemGame.setFont(fontSmall);
+                BackToGame.setFont(fontSmall);
+                BackToBattle.setFont(fontSmall);
+                BackToStart.setFont(fontSmall);
+                settingReset.setFont(fontSmall);
+
+                sizeOne.setFont(fontSmall);
+                sizeTwo.setFont(fontSmall);
+                sizeThree.setFont(fontSmall);
+                keyOne.setFont(fontSmall);
+                keyTwo.setFont(fontSmall);
+                colorBlindOne.setFont(fontSmall);
+                colorBlindTwo.setFont(fontSmall);
+                modeOne.setFont(fontSmall);
+                modeTwo.setFont(fontSmall);
+                modeThree.setFont(fontSmall);
+                sizeOne.setSelected(true);
                 break;
         }
     }
