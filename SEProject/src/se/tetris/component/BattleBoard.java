@@ -24,6 +24,7 @@ public class BattleBoard extends JFrame {
     private static InnerBoard player2;
     private JPanel panel;
     private KeyListener playerKeyListener;
+    private static boolean restart;
 
     final SettingValues setting = SettingValues.getInstance();
 
@@ -153,12 +154,13 @@ public class BattleBoard extends JFrame {
                 case KeyEvent.VK_ESCAPE:
                     player1.timer.stop();
                     player2.timer.stop();
-                    int choice = JOptionPane.showConfirmDialog(null, "게임을 종료하시겠습니까?", "게임 종료", JOptionPane.YES_NO_CANCEL_OPTION);
+                    String[] stopOption = {"재시작", "계속", "종료"};
+                    int choice = JOptionPane.showOptionDialog(null, "무엇을 선택하시겠습니까?", "일시정지", 0, 0, null, stopOption,stopOption[1]);
                     switch(choice) {
                         case 0:
-                            int confirm = JOptionPane.showConfirmDialog(null, "정말 종료하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
-                            if (confirm == 0) {
-                                dispose();
+                        	int confirm1 = JOptionPane.showConfirmDialog(null, "정말 게임을 재시작 하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
+                            if (confirm1 == 0) {
+                                gameReset();
                             }
                             else {
                                 player1.timer.restart();
@@ -170,8 +172,15 @@ public class BattleBoard extends JFrame {
                             player2.timer.restart();
                             break;
                         case 2:
-                            player1.timer.restart();
-                            player2.timer.restart();
+                        	int confirm2 = JOptionPane.showConfirmDialog(null, "정말 게임을 종료하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
+                            if (confirm2 == 0) {
+                            	dispose();
+                            }
+                            else {
+                            	player1.timer.restart();
+                            	player2.timer.restart();
+                            }
+                            break;
                     }
             }
         }
@@ -190,12 +199,19 @@ public class BattleBoard extends JFrame {
     }
 
     public static void gameReset() {
-        player1.reset();
-        player2.reset();
-        Timer player1Timer = player1.getTimer();
+    	player1.reset();
+    	player2.reset();
+    	Timer player1Timer = player1.getTimer();
         Timer player2Timer = player2.getTimer();
         player1Timer.restart();
         player2Timer.restart();
+        player1.whoIs = false;
+        player2.whoIs = false;
+        player1.whoAttacked = false;
+        player2.whoAttacked = false;
+        restart = true;
+        drawAttack();
+        restart = false;
     }
 
     public static void gameClose() {
@@ -349,6 +365,25 @@ public class BattleBoard extends JFrame {
     }
 
     public static void drawAttack() {
+        if (restart) {
+            int [][] attackP1 = player1.getAttackBoard();
+            int [][] attackP2 = player2.getAttackBoard();
+            player1.sbByAttack = new StringBuffer();
+            player2.sbByAttack = new StringBuffer();
+            for( int i = 0; i < 10; i++) {
+                for (int j = 0; j < 10; j++) {
+                    attackP1[i][j] = 0;
+                    attackP2[i][j] = 0;
+                    player1.sbByAttack.append(" ");
+                    player2.sbByAttack.append(" ");
+                }
+                player1.sbByAttack.append("\n");
+                player2.sbByAttack.append("\n");
+            }
+            player2.attackArea.setText(player1.sbByAttack.toString());
+            player1.attackArea.setText(player2.sbByAttack.toString());
+
+        }
         if (player1.whoIs == true) {
             player1.sbByAttack = new StringBuffer();
             int[][] player1AttackBoard = player1.getAttackBoard();

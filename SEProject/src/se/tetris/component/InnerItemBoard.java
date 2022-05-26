@@ -1095,7 +1095,12 @@ public class InnerItemBoard extends JPanel{
         drawNext();
         this.score = 0;
         this.setScore();
+        level = 0;
+        blockNumber = 0;
+        eraseCnt = 0;
+        intervalByMode = setting.intervalNumber;
         this.board = new int[20][10];
+        this.attackBoard = new int[10][10];
         blockFix = false;
     	notMove = false;
     	itemFlag = false;
