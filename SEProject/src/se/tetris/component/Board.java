@@ -118,11 +118,15 @@ public class Board extends JFrame {
 				BorderFactory.createLineBorder(Color.GRAY, 10),
 				BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
 		tetrisArea.setBorder(border);
+		tetrisArea.setAlignmentX(CENTER_ALIGNMENT);
+		tetrisArea.setAlignmentY(CENTER_ALIGNMENT);
 
 		nextArea = new JTextPane();
 		nextArea.setEditable(false);
 		nextArea.setBackground(Color.BLACK);
 		nextArea.setBorder(border);
+		nextArea.setAlignmentX(CENTER_ALIGNMENT);
+		nextArea.setAlignmentY(CENTER_ALIGNMENT);
 		nextArea.setPreferredSize(new Dimension(150, 200));
 
 		scorePanel = new JPanel();
@@ -204,18 +208,21 @@ public class Board extends JFrame {
 		StyleConstants.setBold(stylesetBr, true);
 		StyleConstants.setForeground(stylesetBr, Color.WHITE);
 		StyleConstants.setAlignment(stylesetBr, StyleConstants.ALIGN_CENTER);
+		StyleConstants.setLineSpacing(stylesetBr, -0.45f);
 
 		stylesetCur = new SimpleAttributeSet();
 		StyleConstants.setFontSize(stylesetCur, 20);
 		StyleConstants.setFontFamily(stylesetCur, "Courier New");
 		StyleConstants.setBold(stylesetCur, true);
 		StyleConstants.setAlignment(stylesetCur, StyleConstants.ALIGN_CENTER);
+		StyleConstants.setLineSpacing(stylesetCur, -0.45f);
 
 		stylesetNx = new SimpleAttributeSet();
 		StyleConstants.setFontSize(stylesetNx, 25);
 		StyleConstants.setFontFamily(stylesetNx, "Courier New");
 		StyleConstants.setBold(stylesetNx, true);
 		StyleConstants.setAlignment(stylesetNx, StyleConstants.ALIGN_CENTER);
+		StyleConstants.setLineSpacing(stylesetNx, -0.45f);
 
 		boardDoc = tetrisArea.getStyledDocument();
 		nextDoc = nextArea.getStyledDocument();
@@ -483,7 +490,7 @@ public class Board extends JFrame {
 		}
 		for(int t=0; t<WIDTH+2; t++) sb.append(BORDER_CHAR);
 		tetrisArea.setText(sb.toString());
-		boardDoc.setCharacterAttributes(0, boardDoc.getLength(), stylesetBr, false);
+		boardDoc.setParagraphAttributes(1, boardDoc.getLength() - 1, stylesetBr, false);
 
 		for(int j = 0; j < curr.height(); j++) {
 			int rows = y+j == 0 ? 1 : y+j+1;
@@ -951,10 +958,10 @@ public class Board extends JFrame {
 	}
 
 	//max - 30, default - 20,
-	public void setSize(int size) {
-		StyleConstants.setFontSize(stylesetBr, size);
-		StyleConstants.setFontSize(stylesetCur, size);
-		StyleConstants.setFontSize(stylesetNx, size+5);
+	public void setStylesetSize(int size1, int size2) {
+		StyleConstants.setFontSize(stylesetBr, size1);
+		StyleConstants.setFontSize(stylesetCur, size1);
+		StyleConstants.setFontSize(stylesetNx, size2);
 		drawBoard();
 		drawNext();
 	}
@@ -963,7 +970,7 @@ public class Board extends JFrame {
 	public static void setRtSize(int xSize, int ySize) {
 		scorePanel.setPreferredSize(new Dimension(xSize, ySize));
 		levelPanel.setPreferredSize(new Dimension(xSize, ySize));
-		nextArea.setPreferredSize(new Dimension(xSize, ySize * 4));
+		nextArea.setPreferredSize(new Dimension(xSize, xSize));
 	}
 
 	//max - 17, default - nothing,
@@ -1028,24 +1035,27 @@ public class Board extends JFrame {
 		switch (sizeNumber) {
 			case 1:
 				setSize(400, 600);
-				setSize(20);
-				setRtSize(150, 50);
+				setStylesetSize(30, 25);
+				setRtSize(120, 50);
 				setLbSize(10);
 				break;
 			case 2:
 				setSize(800, 800);
-				setSize(30);
-				setRtSize(300, 55);
+				setStylesetSize(50, 50);
+				setRtSize(250, 55);
 				setLbSize(15);
 				break;
 			case 3:
 				setSize(screenWidth, screenHeight);
-				setSize(30);
-				setRtSize(200, 60);
+				setStylesetSize(50, 50);
+				setRtSize(250, 60);
 				setLbSize(17);
 				break;
 			default:
 				setSize(400, 600);
+				setStylesetSize(30, 25);
+				setRtSize(120, 50);
+				setLbSize(10);
 				break;
 		}
 	}
