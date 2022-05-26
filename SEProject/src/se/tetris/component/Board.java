@@ -987,10 +987,8 @@ public class Board extends JFrame {
 	}
 
 	public void setScore() {
-		String scoretxt = Integer.toString(score);
-//				String.valueOf(score);
+		String scoretxt = Integer.toString(score);;
 		String prescoretxt = scoreLb2.getText();
-		System.out.println("점수 변경" + prescoretxt+"...>"+ scoretxt);
 		scoreLb2.setText(scoretxt);
 	}
 

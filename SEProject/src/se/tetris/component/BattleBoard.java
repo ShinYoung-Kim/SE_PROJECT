@@ -97,13 +97,16 @@ public class BattleBoard extends JFrame {
                                 drawAttack();
                             }
                             player1.lineRemove();
-                            player1.placeBlock();
-                            player1.drawBoard();
+                            if (!player1.isGameOver()) {
+                                player1.placeBlock();
+                                player1.drawBoard();
+                            }
                             break;
                         }
                         else {
                             player1.y++;
                         }
+                        player1.lineRemove();
                         player1.placeBlock();
                         player1.drawBoard();
                     }
@@ -134,13 +137,16 @@ public class BattleBoard extends JFrame {
                                 drawAttack();
                             }
                             player2.lineRemove();
-                            player2.placeBlock();
-                            player2.drawBoard();
+                            if (!player2.isGameOver()) {
+                                player2.placeBlock();
+                                player2.drawBoard();
+                            }
                             break;
                         }
                         else {
                             player2.y++;
                         }
+                        player2.lineRemove();
                         player2.placeBlock();
                         player2.drawBoard();
                     }

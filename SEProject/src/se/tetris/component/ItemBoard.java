@@ -456,6 +456,10 @@ public class ItemBoard extends JFrame {
 
 	protected void moveDown() {
 		eraseCurr();
+
+		getScore(eraseCnt, "block");
+		setScore();
+
 		if (itemDrop && itemType == 12) {
 			if (collisionLeft() || collisionRight() || collisionBottom()) {
 				notMove = true;
@@ -526,7 +530,8 @@ public class ItemBoard extends JFrame {
 				case 4:
 				case 5:
 				case 6:
-				case 7, 13:
+				case 7:
+				case 13:
 					sb.append("■");
 					break;
 				case 8:
@@ -662,7 +667,8 @@ public class ItemBoard extends JFrame {
 				case 4:
 				case 5:
 				case 6:
-				case 7, 13:
+				case 7:
+				case 13:
 					sb.append("■");
 					break;
 				case 8:
