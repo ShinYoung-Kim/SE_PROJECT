@@ -73,6 +73,9 @@ public class SettingCode extends JFrame {
     DBCalls dataCalls = new DBCalls();
 
     int Window = dataCalls.getWindowSetting();
+    int setColor = dataCalls.getColorSetting();
+    int setKey = dataCalls.getKeySetting();
+    int setLevel = dataCalls.getLevelSetting();
 
     public SettingCode() {
 
@@ -125,6 +128,7 @@ public class SettingCode extends JFrame {
                 sizeThreefun();
             }
         });
+
         sizeOne.setSelected(true);
         sizeGroup.add(sizeOne);
         sizeGroup.add(sizeTwo);
@@ -291,11 +295,11 @@ public class SettingCode extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 StartBattle battleMode = new StartBattle();
                 Window = dataCalls.getWindowSetting();
-                if(Window == 0) {
-                    battleMode.setSize(400,600);
-                }else if(Window == 1) {
-                    battleMode.setSize(800,800);
-                }else {
+                if (Window == 0) {
+                    battleMode.setSize(400, 600);
+                } else if (Window == 1) {
+                    battleMode.setSize(800, 800);
+                } else {
                     battleMode.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
                 }
                 battleMode.setVisible(true);
@@ -1123,15 +1127,60 @@ public class SettingCode extends JFrame {
             }
         });
         settingView.setFocusable(true);
+
+        //기존 화면 설정 가져오기
+        if (Window == 0) {
+            sizeOnefun();
+        } else if (Window == 1) {
+            sizeTwofun();
+        } else if (Window == 2) {
+            sizeThreefun();
+        }
+
+        //기존 난이도 설정 가져오기
+        if (setLevel == 0) {
+            //Normal
+            modeTwofun();
+        } else if (setLevel == 1) {
+            //Easy
+            modeOnefun();
+        } else if (setLevel == 2) {
+            //Hard
+            modeThreefun();
+        }
+
+        //기존 색상 설정 가져오기
+        if (setColor == 0) {
+            //Off
+            colorBlindOneFun();
+        } else if (setColor == 1) {
+            //On
+            colorBlindTwoFun();
+        }
+
+        //기존 키보드 설정 가져오기
+        if (setKey == 0) {
+            //방향키
+            keyOnefun();
+        } else if (setKey == 1) {
+            //WASD
+            keyTwofun();
+        }
     }
 
     private void keyTwofun() {
         SettingValues.getInstance().keyChoose = 2;
+
+        dataCalls.UpdateKeySetting(1);
+
         keyTwo.setSelected(true);
     }
 
     private void keyOnefun() {
         SettingValues.getInstance().keyChoose = 1;
+
+        dataCalls.UpdateKeySetting(0);
+
         keyOne.setSelected(true);
     }
 
@@ -1139,7 +1188,7 @@ public class SettingCode extends JFrame {
         SettingValues.getInstance().intervalNumber = 800;
         SettingValues.getInstance().modeChoose = 3;
 
-        dataCalls.UpdateLevelSetting(SettingValues.getInstance().modeChoose - 1);
+        dataCalls.UpdateLevelSetting(2);
 
         System.out.println("3번");
 
@@ -1150,7 +1199,7 @@ public class SettingCode extends JFrame {
         SettingValues.getInstance().intervalNumber = 1000;
         SettingValues.getInstance().modeChoose = 2;
 
-        dataCalls.UpdateLevelSetting(SettingValues.getInstance().modeChoose - 1);
+        dataCalls.UpdateLevelSetting(0);
 
         modeTwo.setSelected(true);
     }
@@ -1159,7 +1208,7 @@ public class SettingCode extends JFrame {
         SettingValues.getInstance().intervalNumber = 2000;
         SettingValues.getInstance().modeChoose = 1;
 
-        dataCalls.UpdateLevelSetting(SettingValues.getInstance().modeChoose - 1);
+        dataCalls.UpdateLevelSetting(1);
 
         modeOne.setSelected(true);
     }
@@ -1207,7 +1256,7 @@ public class SettingCode extends JFrame {
         colorBlindTwo.setSelected(true);
     }
 
-    public void changeSize(int sizeNumber){
+    public void changeSize(int sizeNumber) {
         switch (sizeNumber) {
             case 1:
                 setSize(400, 600);

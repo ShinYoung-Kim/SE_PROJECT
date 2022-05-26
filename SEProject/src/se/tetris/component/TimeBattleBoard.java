@@ -1,7 +1,5 @@
 package se.tetris.component;
 
-import se.tetris.data.DBCalls;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -19,6 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import java.util.TimerTask;
+
+import se.tetris.component.*;
+import se.tetris.data.DBCalls;
 
 public class TimeBattleBoard extends JFrame {
 
@@ -77,10 +78,10 @@ public class TimeBattleBoard extends JFrame {
         setFocusTraversalKeysEnabled(false);
         requestFocus();
 
-		// 카운트 다운 쓰레드 실행
+        // 카운트 다운 쓰레드 실행
         IsCollision = false;
         startGameTimer();
-		//inputCheck = true;
+        //inputCheck = true;
 
     }
 
@@ -90,8 +91,8 @@ public class TimeBattleBoard extends JFrame {
     }
 
     public static void stopGameTimer() {
-    	GameT.stop = true;
-    	GameT.setStop(true);
+        GameT.stop = true;
+        GameT.setStop(true);
     }
 
 
@@ -203,8 +204,8 @@ public class TimeBattleBoard extends JFrame {
     }
 
     public static void collisionStop() {
-    	IsCollision = true;
-    	stopGameTimer();
+        IsCollision = true;
+        stopGameTimer();
     }
 
     public static void gameStop() {
@@ -215,9 +216,9 @@ public class TimeBattleBoard extends JFrame {
     }
 
     public static void gameReset() {
-    	player1.reset();
-    	player2.reset();
-    	Timer player1Timer = player1.getTimer();
+        player1.reset();
+        player2.reset();
+        Timer player1Timer = player1.getTimer();
         Timer player2Timer = player2.getTimer();
         player1Timer.restart();
         player2Timer.restart();
@@ -436,62 +437,62 @@ public class TimeBattleBoard extends JFrame {
             this.stop = stop;
         }
 
-    	@Override
-    	public void run() {
+        @Override
+        public void run() {
 
-    		for(int i=90; i>=0; i--){
-				if(stop) {
-					break;
-				}
+            for(int i=90; i>=0; i--){
+                if(stop) {
+                    break;
+                }
 
-    			int Min = i/60;
-    			int Sec = i%60;
+                int Min = i/60;
+                int Sec = i%60;
 
-    			String timerTxt = Min >= 10 ? Integer.toString(Min) : "0" + Integer.toString(Min);
-        		timerTxt += " : "+ (Sec >= 10 ? Integer.toString(Sec): "0" + Integer.toString(Sec));
+                String timerTxt = Min >= 10 ? Integer.toString(Min) : "0" + Integer.toString(Min);
+                timerTxt += " : "+ (Sec >= 10 ? Integer.toString(Sec): "0" + Integer.toString(Sec));
 
-        		if(Min == 0) {
-        			timerCount.setForeground(Color.RED);
-        		}
+                if(Min == 0) {
+                    timerCount.setForeground(Color.RED);
+                }
 
-    			timerCount.setText(timerTxt);
+                timerCount.setText(timerTxt);
 
-    			try {
-    				Thread.sleep(1000);
-    			} catch (InterruptedException e) {
-    				e.printStackTrace();
-    			}
-    		}
-    		stopGameTimer();
-    		gameStop();
-
-
-    		String[] overOption = {"종료하기", "다시하기"};
-    		int over = 0;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            stopGameTimer();
+            gameStop();
 
 
-    		if(IsCollision) {
-    			//블록 더이상 쌓을 수 없음
-    			over = JOptionPane.showOptionDialog(null, ColPlayer +" 이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
-    		}else {
-    			//점수 비교
-        		if(player1.getNowScore() > player2.getNowScore()) {
-        			over = JOptionPane.showOptionDialog(null, "Player1 이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
-        		}else if(player1.getNowScore() == player2.getNowScore()) {
-        			over = JOptionPane.showOptionDialog(null, "무승부입니다!", "종료", 0, 0, null, overOption, overOption[0]);
-        		}else {
-        			over = JOptionPane.showOptionDialog(null, "Player2 이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
-        		}
-    		}
+            String[] overOption = {"종료하기", "다시하기"};
+            int over = 0;
+
+
+            if(IsCollision) {
+                //블록 더이상 쌓을 수 없음
+                over = JOptionPane.showOptionDialog(null, ColPlayer +" 이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
+            }else {
+                //점수 비교
+                if(player1.getNowScore() > player2.getNowScore()) {
+                    over = JOptionPane.showOptionDialog(null, "Player1 이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
+                }else if(player1.getNowScore() == player2.getNowScore()) {
+                    over = JOptionPane.showOptionDialog(null, "무승부입니다!", "종료", 0, 0, null, overOption, overOption[0]);
+                }else {
+                    over = JOptionPane.showOptionDialog(null, "Player2 이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
+                }
+            }
 
             if (over == 0) {
-            	gameClose();
+                gameClose();
             }
             if (over == 1) {
-            	startGameTimer();
-            	gameReset();
+                startGameTimer();
+                gameReset();
             }
 
-    	}
+        }
     }
 }

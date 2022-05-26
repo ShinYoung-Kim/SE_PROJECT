@@ -753,7 +753,6 @@ public class InnerBoard extends JPanel {
     }
 
     //interval 함수
-    //interval 함수
     public int getInterval(int blockNumber, int eraseCnt) {
         //생성
         if (blockNumber == 30 || blockNumber == 60 || blockNumber == 80 || blockNumber == 100 || blockNumber == 120) {
@@ -883,7 +882,8 @@ public class InnerBoard extends JPanel {
     public boolean startCheck() {
         for (int i = 0; i < curr.height(); i++) {
             for (int j = 0; j < curr.width(); j++)
-                if(curr.getShape(j,i) > 0 && board[y + i][x + j] > 0)
+                if(curr.getShape(j,i) != 0 && board[y + i][x + j] > 0)
+                    //if(curr.getShape(j,i) > 0 && board[y + i][x + j] > 0)
                     return true;
         }
         return false;
