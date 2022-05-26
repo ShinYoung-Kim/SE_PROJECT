@@ -130,7 +130,11 @@ public class ItemBoard extends JFrame {
 		scorePanel.setPreferredSize(new Dimension(150, 50));
 
 		scoreLb1.setForeground(Color.darkGray);
+		//정렬
 		scoreLb1.setAlignmentX(CENTER_ALIGNMENT);
+		scoreLb2.setAlignmentX(CENTER_ALIGNMENT);
+		levelLb1.setAlignmentX(CENTER_ALIGNMENT);
+		levelLb2.setAlignmentX(CENTER_ALIGNMENT);
 
 		scoreLb2.setForeground(Color.RED);
 
