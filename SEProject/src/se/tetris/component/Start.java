@@ -1,5 +1,8 @@
 package se.tetris.component;
 
+import static se.tetris.setting.SettingCode.screenHeight;
+import static se.tetris.setting.SettingCode.screenWidth;
+
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;

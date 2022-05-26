@@ -108,7 +108,7 @@ public class ScoreItem {
         if(Window == 0) {
             scoreView.setSize(400,600);
         }else if(Window == 1) {
-            scoreView.setSize(800,1200);
+            scoreView.setSize(800,800);
         }else {
             scoreView.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
         }
@@ -117,10 +117,17 @@ public class ScoreItem {
 
     public void getScoreInfo(int sc, int mode, int level) {
         String name = JOptionPane.showInputDialog(null, "점수에 기록될 닉네임을 입력해주세요.","스코어 기록",JOptionPane.OK_CANCEL_OPTION);
-//		System.out.println("이름 : " +name);
-//		System.out.println("점수 : " +sc);
-//		System.out.println("모드 : " +mode);
-//		System.out.println("레벨 : " +level);
+
+
+        String modeTxt ="";
+
+        if(level == 0) {
+            modeTxt ="Normal";
+        }else if(level == 1) {
+            modeTxt = "Easy";
+        }else {
+            modeTxt = "Hard";
+        }
 
         //String name, int score, int type, int mode
 
@@ -132,12 +139,12 @@ public class ScoreItem {
 
             if(mode == 0) {
                 CODE_RECENT = 1;
-                STD_SCORE_RECENT[0] = String.valueOf(level);
+                STD_SCORE_RECENT[0] = modeTxt;
                 STD_SCORE_RECENT[1] = name;
                 STD_SCORE_RECENT[2] = String.valueOf(sc);
             }else {
                 CODE_RECENT = 2;
-                ITEM_SCORE_RECENT[0] = String.valueOf(level);
+                ITEM_SCORE_RECENT[0] = modeTxt;
                 ITEM_SCORE_RECENT[1] = name;
                 ITEM_SCORE_RECENT[2] = String.valueOf(sc);
             }
