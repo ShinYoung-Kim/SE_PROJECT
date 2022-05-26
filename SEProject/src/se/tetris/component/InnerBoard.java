@@ -185,7 +185,7 @@ public class InnerBoard extends JPanel {
         attackArea.setBorder(attackBorder);
         attackArea.setAlignmentX(CENTER_ALIGNMENT);
         attackArea.setAlignmentY(CENTER_ALIGNMENT);
-        attackArea.setPreferredSize(new Dimension(150, 150));
+        //attackArea.setPreferredSize(new Dimension(150, 150));
 
         leftPanel = new JPanel();
         leftPanel.add(tetrisArea);
@@ -1028,11 +1028,11 @@ public class InnerBoard extends JPanel {
     }
 
     //max - (200, 60), default - (150, 50)
-    public void setRtSize(int xSize, int ySize) {
+    public void setRtSize(int xSize, int ySize, int ySize2) {
         scorePanel.setPreferredSize(new Dimension(xSize, ySize));
         levelPanel.setPreferredSize(new Dimension(xSize, ySize));
         nextArea.setPreferredSize(new Dimension(xSize, xSize));
-        attackArea.setPreferredSize(new Dimension(xSize, xSize));
+        attackArea.setPreferredSize(new Dimension(ySize2, ySize2));
     }
 
     //max - 17, default - nothing,
@@ -1045,27 +1045,28 @@ public class InnerBoard extends JPanel {
     public void changeSize(int sizeNumber){
         switch (sizeNumber) {
             case 1:
-                setStylesetSize(25, 10);
-                setRtSize(120, 50);
+                setStylesetSize(25, 13);
+                setRtSize(120, 50, 120);
                 setLbSize(10);
                 tetrisArea.setPreferredSize(new Dimension(220, 400));
                 break;
             case 2:
-                setStylesetSize(40, 15);
-                setRtSize(200, 55);
+                setStylesetSize(40, 22);
+                setRtSize(200, 55, 200);
                 setLbSize(15);
                 tetrisArea.setPreferredSize(new Dimension(330, 625));
                 break;
             case 3:
-                setStylesetSize(47, 15);
-                setRtSize(200, 60);
+                setStylesetSize(47, 22);
+                setRtSize(200, 55, 200);
                 setLbSize(17);
                 tetrisArea.setPreferredSize(new Dimension(380, 720));
                 break;
             default:
-                setStylesetSize(20, 10);
-                setRtSize(150, 50);
+                setStylesetSize(25, 13);
+                setRtSize(120, 50, 120);
                 setLbSize(10);
+                tetrisArea.setPreferredSize(new Dimension(220, 400));
                 break;
         }
     }
