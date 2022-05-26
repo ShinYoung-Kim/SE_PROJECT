@@ -1125,7 +1125,6 @@ public class ItemBoard extends JFrame {
 		drawNext();
 	}
 
-
 	//max - (200, 60), default - (150, 50)
 	public static void setRtSize(int xSize, int ySize) {
 		scorePanel.setPreferredSize(new Dimension(xSize, ySize));
@@ -1190,26 +1189,30 @@ public class ItemBoard extends JFrame {
 			case 1:
 				setSize(400, 600);
 				setStylesetSize(30, 25);
-				setRtSize(120, 50);
+				setRtSize(110, 50);
 				setLbSize(10);
+				tetrisArea.setPreferredSize(new Dimension(250, 460));
 				break;
 			case 2:
 				setSize(800, 800);
 				setStylesetSize(50, 50);
 				setRtSize(250, 55);
 				setLbSize(15);
+				tetrisArea.setPreferredSize(new Dimension(400, 750));
 				break;
 			case 3:
 				setSize(screenWidth, screenHeight);
 				setStylesetSize(50, 50);
 				setRtSize(250, 60);
 				setLbSize(17);
+				tetrisArea.setPreferredSize(new Dimension(400, 750));
 				break;
 			default:
 				setSize(400, 600);
 				setStylesetSize(30, 25);
 				setRtSize(120, 50);
 				setLbSize(10);
+				tetrisArea.setPreferredSize(new Dimension(220, 400));
 				break;
 		}
 	}

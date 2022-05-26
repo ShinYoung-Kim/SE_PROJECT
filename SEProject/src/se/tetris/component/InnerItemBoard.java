@@ -1,7 +1,6 @@
 package se.tetris.component;
 
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -113,7 +112,7 @@ public class InnerItemBoard extends JPanel{
     StringBuffer sbByAttack;
     boolean alreadyAttacked = false;
 
-    public InnerItemBoard() {
+    public InnerItemBoard(int sizeNumber) {
         tetrisArea = new JTextPane();
         tetrisArea.setEditable(false);
         tetrisArea.setBackground(Color.BLACK);
@@ -121,6 +120,8 @@ public class InnerItemBoard extends JPanel{
                 BorderFactory.createLineBorder(Color.GRAY, 10),
                 BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
         tetrisArea.setBorder(border);
+        tetrisArea.setAlignmentX(CENTER_ALIGNMENT);
+        tetrisArea.setAlignmentY(CENTER_ALIGNMENT);
 
         nextArea = new JTextPane();
         nextArea.setEditable(false);
@@ -216,18 +217,21 @@ public class InnerItemBoard extends JPanel{
         StyleConstants.setBold(stylesetBr, true);
         StyleConstants.setForeground(stylesetBr, Color.WHITE);
         StyleConstants.setAlignment(stylesetBr, StyleConstants.ALIGN_CENTER);
+        StyleConstants.setLineSpacing(stylesetBr, -0.45f);
 
         stylesetCur = new SimpleAttributeSet();
         StyleConstants.setFontSize(stylesetCur, 20);
         StyleConstants.setFontFamily(stylesetCur, "Courier New");
         StyleConstants.setBold(stylesetCur, true);
         StyleConstants.setAlignment(stylesetCur, StyleConstants.ALIGN_CENTER);
+        StyleConstants.setLineSpacing(stylesetCur, -0.45f);
 
         stylesetNx = new SimpleAttributeSet();
         StyleConstants.setFontSize(stylesetNx, 25);
         StyleConstants.setFontFamily(stylesetNx, "Courier New");
         StyleConstants.setBold(stylesetNx, true);
         StyleConstants.setAlignment(stylesetNx, StyleConstants.ALIGN_CENTER);
+        StyleConstants.setLineSpacing(stylesetNx, -0.45f);
 
         stylesetAk = new SimpleAttributeSet();
         StyleConstants.setFontSize(stylesetAk, 10);
@@ -235,6 +239,7 @@ public class InnerItemBoard extends JPanel{
         StyleConstants.setBold(stylesetAk, true);
         StyleConstants.setForeground(stylesetAk, Color.GRAY);
         StyleConstants.setAlignment(stylesetAk, StyleConstants.ALIGN_CENTER);
+        StyleConstants.setLineSpacing(stylesetAk, -0.45f);
 
         boardDoc = tetrisArea.getStyledDocument();
         nextDoc = nextArea.getStyledDocument();
@@ -248,6 +253,9 @@ public class InnerItemBoard extends JPanel{
         drawNext();
 
         timer.start();
+
+        changeSize(sizeNumber);
+        System.out.println(sizeNumber);
     }
 
     public Block getRandomBlock(int modeChoose) {
@@ -667,7 +675,8 @@ public class InnerItemBoard extends JPanel{
 
         for(int t=0; t<WIDTH+2; t++) sb.append(BORDER_CHAR);
         tetrisArea.setText(sb.toString());
-        boardDoc.setParagraphAttributes(0, boardDoc.getLength(), stylesetBr, false);
+        boardDoc.setParagraphAttributes(1, boardDoc.getLength() - 1, stylesetBr, false);
+        boardDoc.setCharacterAttributes(0, boardDoc.getLength(), stylesetBr, false);
 
         for(int j = 0; j < curr.height(); j++) {
             int rows = y+j == 0 ? 1 : y+j+1;
@@ -1146,5 +1155,56 @@ public class InnerItemBoard extends JPanel{
     }
     public int getAttackLineCount() {
         return attackLineCount;
+    }
+    public void setStylesetSize(int size1, int size2) {
+        StyleConstants.setFontSize(stylesetBr, size1);
+        StyleConstants.setFontSize(stylesetCur, size1);
+        StyleConstants.setFontSize(stylesetNx, size1);
+        StyleConstants.setFontSize(stylesetAk, size2);
+        drawBoard();
+        drawNext();
+    }
+
+    //max - (200, 60), default - (150, 50)
+    public void setRtSize(int xSize, int ySize) {
+        scorePanel.setPreferredSize(new Dimension(xSize, ySize));
+        levelPanel.setPreferredSize(new Dimension(xSize, ySize));
+        nextArea.setPreferredSize(new Dimension(xSize, xSize));
+        attackArea.setPreferredSize(new Dimension(xSize, xSize));
+    }
+
+    //max - 17, default - nothing,
+    public void setLbSize(int size) {
+        scoreLb1.setFont(new Font(null, Font.BOLD, size));
+        scoreLb2.setFont(new Font(null, Font.BOLD, size));
+        levelLb1.setFont(new Font(null, Font.BOLD, size));
+        levelLb2.setFont(new Font(null, Font.BOLD, size));
+    }
+    public void changeSize(int sizeNumber){
+        switch (sizeNumber) {
+            case 1:
+                setStylesetSize(25, 10);
+                setRtSize(120, 50);
+                setLbSize(10);
+                tetrisArea.setPreferredSize(new Dimension(220, 400));
+                break;
+            case 2:
+                setStylesetSize(40, 10);
+                setRtSize(200, 55);
+                setLbSize(15);
+                tetrisArea.setPreferredSize(new Dimension(330, 625));
+                break;
+            case 3:
+                setStylesetSize(47, 15);
+                setRtSize(200, 60);
+                setLbSize(17);
+                tetrisArea.setPreferredSize(new Dimension(380, 720));
+                break;
+            default:
+                setStylesetSize(20, 10);
+                setRtSize(150, 50);
+                setLbSize(10);
+                break;
+        }
     }
 }
