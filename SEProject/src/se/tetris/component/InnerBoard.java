@@ -138,7 +138,7 @@ public class InnerBoard extends JPanel {
         nextArea.setBorder(border);
         nextArea.setAlignmentX(CENTER_ALIGNMENT);
         nextArea.setAlignmentY(CENTER_ALIGNMENT);
-        nextArea.setPreferredSize(new Dimension(150, 150));
+        //nextArea.setPreferredSize(new Dimension(150, 150));
 
         scorePanel = new JPanel();
         EtchedBorder scoreBorder = new EtchedBorder();
@@ -237,7 +237,7 @@ public class InnerBoard extends JPanel {
         StyleConstants.setFontFamily(stylesetCur, "Courier New");
         StyleConstants.setBold(stylesetCur, true);
         StyleConstants.setAlignment(stylesetCur, StyleConstants.ALIGN_CENTER);
-        StyleConstants.setLineSpacing(stylesetCur, -0.45f);
+        //StyleConstants.setLineSpacing(stylesetCur, -0.45f);
 
         stylesetNx = new SimpleAttributeSet();
         StyleConstants.setFontSize(stylesetNx, 25);
@@ -620,6 +620,7 @@ public class InnerBoard extends JPanel {
         for(int t=0; t<WIDTH+2; t++) sb.append(BORDER_CHAR);
         tetrisArea.setText(sb.toString());
         boardDoc.setParagraphAttributes(1, boardDoc.getLength() - 1, stylesetBr, false);
+        boardDoc.setCharacterAttributes(1, boardDoc.getLength() - 1, stylesetBr, false);
 
         for(int j = 0; j < curr.height(); j++) {
             int rows = y+j == 0 ? 1 : y+j+1;
@@ -717,8 +718,9 @@ public class InnerBoard extends JPanel {
     //blockNumber 증가 + timer 변경
     public void drawNext() {
         StringBuffer sb = new StringBuffer();
-        sb.append("\n");
         blockNumber++;
+        sb.append("\n");
+        sb.append("\n");
         timer.setDelay(getInterval(blockNumber, eraseCnt));
         for(int i=0; i < nextBoard.length; i++) {
             for(int j=0; j < nextBoard[i].length; j++) {
@@ -1018,10 +1020,10 @@ public class InnerBoard extends JPanel {
         return attackLineCount;
     }
 
-    public void setStylesetSize(int size1, int size2) {
+    public void setStylesetSize(int size1, int size2, int size3) {
         StyleConstants.setFontSize(stylesetBr, size1);
         StyleConstants.setFontSize(stylesetCur, size1);
-        StyleConstants.setFontSize(stylesetNx, size1);
+        StyleConstants.setFontSize(stylesetNx, size3);
         StyleConstants.setFontSize(stylesetAk, size2);
         drawBoard();
         drawNext();
@@ -1045,25 +1047,25 @@ public class InnerBoard extends JPanel {
     public void changeSize(int sizeNumber){
         switch (sizeNumber) {
             case 1:
-                setStylesetSize(25, 13);
+                setStylesetSize(20, 13, 20);
                 setRtSize(120, 50, 120);
                 setLbSize(10);
-                tetrisArea.setPreferredSize(new Dimension(220, 400));
+                tetrisArea.setPreferredSize(new Dimension(180, 330));
                 break;
             case 2:
-                setStylesetSize(40, 22);
+                setStylesetSize(40, 22, 36);
                 setRtSize(200, 55, 200);
                 setLbSize(15);
                 tetrisArea.setPreferredSize(new Dimension(330, 625));
                 break;
             case 3:
-                setStylesetSize(47, 22);
+                setStylesetSize(40, 22, 36);
                 setRtSize(200, 55, 200);
                 setLbSize(17);
-                tetrisArea.setPreferredSize(new Dimension(380, 720));
+                tetrisArea.setPreferredSize(new Dimension(330, 625));
                 break;
             default:
-                setStylesetSize(25, 13);
+                setStylesetSize(25, 13, 20);
                 setRtSize(120, 50, 120);
                 setLbSize(10);
                 tetrisArea.setPreferredSize(new Dimension(220, 400));

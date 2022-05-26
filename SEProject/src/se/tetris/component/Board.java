@@ -958,10 +958,10 @@ public class Board extends JFrame {
 	}
 
 	//max - 30, default - 20,
-	public void setStylesetSize(int size1, int size2) {
+	public void setStylesetSize(int size1, int size2, int size3) {
 		StyleConstants.setFontSize(stylesetBr, size1);
 		StyleConstants.setFontSize(stylesetCur, size1);
-		StyleConstants.setFontSize(stylesetNx, size2);
+		StyleConstants.setFontSize(stylesetNx, size3);
 		drawBoard();
 		drawNext();
 	}
@@ -1035,28 +1035,28 @@ public class Board extends JFrame {
 		switch (sizeNumber) {
 			case 1:
 				setSize(400, 600);
-				setStylesetSize(30, 25);
+				setStylesetSize(30, 25, 20);
 				setRtSize(110, 50);
 				setLbSize(10);
 				tetrisArea.setPreferredSize(new Dimension(250, 460));
 				break;
 			case 2:
 				setSize(800, 800);
-				setStylesetSize(50, 50);
+				setStylesetSize(50, 50, 45);
 				setRtSize(250, 55);
 				setLbSize(15);
 				tetrisArea.setPreferredSize(new Dimension(400, 750));
 				break;
 			case 3:
 				setSize(screenWidth, screenHeight);
-				setStylesetSize(50, 50);
+				setStylesetSize(50, 50, 45);
 				setRtSize(250, 60);
 				setLbSize(17);
 				tetrisArea.setPreferredSize(new Dimension(400, 750));
 				break;
 			default:
 				setSize(400, 600);
-				setStylesetSize(30, 25);
+				setStylesetSize(30, 25, 25);
 				setRtSize(120, 50);
 				setLbSize(10);
 				tetrisArea.setPreferredSize(new Dimension(220, 400));

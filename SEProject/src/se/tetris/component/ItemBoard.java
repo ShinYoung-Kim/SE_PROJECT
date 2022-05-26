@@ -556,6 +556,7 @@ public class ItemBoard extends JFrame {
 		tetrisArea.setText(sb.toString());
 		boardDoc.setParagraphAttributes(1, boardDoc.getLength() - 1, stylesetBr, false);
 
+
 		for(int j = 0; j < curr.height(); j++) {
             int rows = y+j == 0 ? 1 : y+j+1;
             int offset = rows * (WIDTH+3) + x + 1;
@@ -574,71 +575,71 @@ public class ItemBoard extends JFrame {
                     case 1:
                     	if (setting.colorBlindModeCheck == 1) {
                     		StyleConstants.setForeground(stylesetCur, new Color(0, 58, 97));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	else {
                     		StyleConstants.setForeground(stylesetCur, Color.CYAN);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                     	}
                         break;
                     case 2:
                         if (setting.colorBlindModeCheck == 1) {
                         	StyleConstants.setForeground(stylesetCur, new Color(126, 98, 61));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                         }
                         else {
                         	StyleConstants.setForeground(stylesetCur, Color.BLUE);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                         }
                         break;
                     case 3:
                     	if (setting.colorBlindModeCheck == 1) {
                     		StyleConstants.setForeground(stylesetCur, new Color(165, 148, 159));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	else {
                     		StyleConstants.setForeground(stylesetCur, Color.PINK);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                     	}
                         break;
                     case 4:
                     	if (setting.colorBlindModeCheck == 1) {
                     		StyleConstants.setForeground(stylesetCur, new Color(187, 190, 242));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	else {
                     		StyleConstants.setForeground(stylesetCur, Color.YELLOW);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                     	}
                         break;
                     case 5:
                     	if (setting.colorBlindModeCheck == 1) {
                     		StyleConstants.setForeground(stylesetCur, new Color(247, 193, 121));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	else {
                     		StyleConstants.setForeground(stylesetCur, Color.GREEN);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	break;
                     case 6:
                     	if (setting.colorBlindModeCheck == 1) {
                     		StyleConstants.setForeground(stylesetCur, new Color(154, 127, 112));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	else {
                     		StyleConstants.setForeground(stylesetCur, Color.MAGENTA);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                     	}
                         break;
                     case 7:
                     	if (setting.colorBlindModeCheck == 1) {
                     		StyleConstants.setForeground(stylesetCur, new Color(99, 106, 141));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                     	}
                     	else {
                     		StyleConstants.setForeground(stylesetCur, Color.RED);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
+                            boardDoc.setParagraphAttributes(offset + j, 1, stylesetCur, true);
                     	}
                         break;
                 }
@@ -1263,10 +1264,10 @@ public class ItemBoard extends JFrame {
 	}
 
 	//max - 30, default - 20,
-	public void setStylesetSize(int size1, int size2) {
+	public void setStylesetSize(int size1, int size2, int size3) {
 		StyleConstants.setFontSize(stylesetBr, size1);
 		StyleConstants.setFontSize(stylesetCur, size1);
-		StyleConstants.setFontSize(stylesetNx, size2);
+		StyleConstants.setFontSize(stylesetNx, size3);
 		drawBoard();
 		drawNext();
 	}
@@ -1334,28 +1335,28 @@ public class ItemBoard extends JFrame {
 		switch (sizeNumber) {
 			case 1:
 				setSize(400, 600);
-				setStylesetSize(30, 25);
+				setStylesetSize(30, 25, 20);
 				setRtSize(110, 50);
 				setLbSize(10);
 				tetrisArea.setPreferredSize(new Dimension(250, 460));
 				break;
 			case 2:
 				setSize(800, 800);
-				setStylesetSize(50, 50);
+				setStylesetSize(50, 50, 45);
 				setRtSize(250, 55);
 				setLbSize(15);
 				tetrisArea.setPreferredSize(new Dimension(400, 750));
 				break;
 			case 3:
 				setSize(screenWidth, screenHeight);
-				setStylesetSize(50, 50);
+				setStylesetSize(50, 50, 45);
 				setRtSize(250, 60);
 				setLbSize(17);
 				tetrisArea.setPreferredSize(new Dimension(400, 750));
 				break;
 			default:
 				setSize(400, 600);
-				setStylesetSize(30, 25);
+				setStylesetSize(30, 25, 25);
 				setRtSize(120, 50);
 				setLbSize(10);
 				tetrisArea.setPreferredSize(new Dimension(220, 400));

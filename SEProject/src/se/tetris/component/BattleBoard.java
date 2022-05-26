@@ -365,6 +365,7 @@ public class BattleBoard extends JFrame {
             player1.whoIs = false;
         } else if (player2.whoIs == true) {
             player2.sbByAttack = new StringBuffer();
+            player2.sbByAttack.append("\n");
             int[][] player2AttackBoard = player2.getAttackBoard();
             for (int i = 0; i < player2AttackBoard.length; i++) {
                 for (int j = 0; j < player2AttackBoard[i].length; j++) {
