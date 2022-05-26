@@ -439,8 +439,7 @@ public class InnerBoard extends JPanel {
         x = 3;
         y = 0;
         if (isGameOver() == true) {
-
-            String winner;
+        	String winner;
             if (name == "Player1") {
                 winner = "Player2";
             }
@@ -500,7 +499,6 @@ public class InnerBoard extends JPanel {
                     board[i][j] = board[i-1][j];
                 }
             }
-            index = 0;
             eraseCnt++;
             getScore(eraseCnt, "line");
             setScore();
@@ -883,8 +881,7 @@ public class InnerBoard extends JPanel {
     public boolean startCheck() {
         for (int i = 0; i < curr.height(); i++) {
             for (int j = 0; j < curr.width(); j++)
-                if(curr.getShape(j,i) != 0 && board[y + i][x + j] > 0)
-                    //if(curr.getShape(j,i) > 0 && board[y + i][x + j] > 0)
+                if(curr.getShape(j,i) > 0 && board[y + i][x + j] > 0)
                     return true;
         }
         return false;

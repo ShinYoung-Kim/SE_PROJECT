@@ -1131,7 +1131,7 @@ public class ItemBoard extends JFrame {
 					case KeyEvent.VK_ESCAPE:
 						timer.stop();
 						String[] stopOption = {"재시작", "계속", "종료"};
-						int choice = JOptionPane.showOptionDialog(null, "무엇을 선택하시겠습니까?", "일시중지", 0, 0, null, stopOption,stopOption[1]);
+						int choice = JOptionPane.showOptionDialog(null, "무엇을 선택하시겠습니까?", "일시정지", 0, 0, null, stopOption,stopOption[1]);
 						switch(choice) {
 							case 0:
 								int confirm1 = JOptionPane.showConfirmDialog(null, "정말 게임을 재시작 하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);

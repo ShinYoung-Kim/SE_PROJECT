@@ -383,6 +383,23 @@ public class Board extends JFrame {
 		}
 	}
 
+	void hey() {
+		line = lineCheck();
+		Iterator<Integer> iter = line.iterator();
+		int index = 0;
+
+		while(iter.hasNext()) {
+			index = iter.next();
+			lineRemoveDelay(index);
+			index = 0;
+		}
+		Timer delayTimer;
+		int aniDelay = 20;
+		delayTimer = new Timer(aniDelay, e -> placeBlock());
+		delayTimer.setRepeats(false);
+		delayTimer.start();
+	}
+
 	void lineRemove() {
 		line = lineCheck();
 		Iterator<Integer> iter = line.iterator();
@@ -400,6 +417,30 @@ public class Board extends JFrame {
 			setScore();
 		}
 	}
+
+	private void lineRemoveDelay(int line) {
+       Timer aniTimer;
+       int aniDelay = 20;
+       for (int cnt = 0; cnt < 10; cnt++) {
+           if (cnt % 2 == 0)
+               aniTimer = new Timer(cnt * aniDelay, e -> removedLinePaint(line, Color.ORANGE));
+           else
+               aniTimer = new Timer(cnt * aniDelay, e -> removedLinePaint(line, Color.BLACK));
+           aniTimer.setRepeats(false);
+           aniTimer.start();
+       }
+	}
+
+    private void removedLinePaint(int line, Color color) {
+    	SimpleAttributeSet removedLineDoc = new SimpleAttributeSet();
+        StyleConstants.setForeground(removedLineDoc, color);
+        StyleConstants.setFontSize(removedLineDoc, 30);
+        StyleConstants.setFontFamily(removedLineDoc, "Courier New");
+		StyleConstants.setBold(removedLineDoc, true);
+		StyleConstants.setAlignment(removedLineDoc, StyleConstants.ALIGN_CENTER);
+		boardDoc.setCharacterAttributes((line + 1) * (WIDTH+3)+1, WIDTH, removedLineDoc, true);
+		lineRemove();
+    }
 
 	public boolean collisionBottom() {
 		for (int i = 0; i < curr.height(); i++) {
@@ -451,11 +492,13 @@ public class Board extends JFrame {
 			collisionOccur();
 		}
 		else y++;
-		lineRemove();
+
 		if (!isGameOver()) {
 			placeBlock();
 			drawBoard();
 		}
+
+		hey();
 		getScore(eraseCnt, "block");
 		setScore();
 	}
@@ -840,25 +883,26 @@ public class Board extends JFrame {
 							eraseCurr();
 							if(collisionBottom()) {
 								collisionOccur();
-								lineRemove();
-								placeBlock();
+								hey();
+								//placeBlock();
 								drawBoard();
 								break;
 							}
 							else {
 								y++;
+								hey();
 							}
-							placeBlock();
+							//placeBlock();
 							drawBoard();
 						}
 						break;
 					case KeyEvent.VK_ESCAPE:
 						timer.stop();
-						String[] stopOption = {"Restart", "Play", "Exit"};
-						int choice = JOptionPane.showOptionDialog(null, "What Do You Want?", "Stop", 0, 0, null, stopOption, stopOption[1]);
+						String[] stopOption = {"재시작", "계속", "종료"};
+						int choice = JOptionPane.showOptionDialog(null, "무엇을 선택하시겠습니까?", "일시정지", 0, 0, null, stopOption, stopOption[1]);
 						switch (choice) {
 							case 0:
-								int confirm1 = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
+								int confirm1 = JOptionPane.showConfirmDialog(null, "정말 게임을 재시작 하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
 								if (confirm1 == 0) {
 									reset();
 									score = 0;
@@ -872,7 +916,7 @@ public class Board extends JFrame {
 								timer.start();
 								break;
 							case 2:
-								int confirm2 = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
+								int confirm2 = JOptionPane.showConfirmDialog(null, "정말 게임을 종료하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
 								if (confirm2 == 0) {
 									dispose(); //or save score and move to score board.
 								} else {
@@ -881,75 +925,76 @@ public class Board extends JFrame {
 								break;
 						}
 						break;
+					}
 				}
-			}
-			else if(SettingValues.getInstance().keyChoose == 2) {
-				switch(e.getKeyCode()) {
-					case KeyEvent.VK_S:
-						moveDown();
-						drawBoard();
-						break;
-					case KeyEvent.VK_D:
-						moveRight();
-						drawBoard();
-						break;
-					case KeyEvent.VK_A:
-						moveLeft();
-						drawBoard();
-						break;
-					case KeyEvent.VK_W:
-						blockRotate();
-						drawBoard();
-						break;
-					case KeyEvent.VK_SPACE:
-						while(true){
-							eraseCurr();
-							if(collisionBottom()) {
-								collisionOccur();
-								lineRemove();
-								placeBlock();
-								drawBoard();
-								break;
-							}
-							else {
-								y++;
-							}
-							placeBlock();
+				else if(SettingValues.getInstance().keyChoose == 2) {
+					switch(e.getKeyCode()) {
+						case KeyEvent.VK_S:
+							moveDown();
 							drawBoard();
-						}
-						break;
-					case KeyEvent.VK_ESCAPE:
-						timer.stop();
-						String[] stopOption = {"Restart", "Play", "Exit"};
-						int choice = JOptionPane.showOptionDialog(null, "What Do You Want?", "Stop", 0, 0, null, stopOption, stopOption[1]);
-						switch (choice) {
-							case 0:
-								int confirm1 = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
-								if (confirm1 == 0) {
-									reset();
-									score = 0;
-									level = 0;
-									timer.restart();
-								} else {
-									timer.start();
+							break;
+						case KeyEvent.VK_D:
+							moveRight();
+							drawBoard();
+							break;
+						case KeyEvent.VK_A:
+							moveLeft();
+							drawBoard();
+							break;
+						case KeyEvent.VK_W:
+							blockRotate();
+							drawBoard();
+							break;
+						case KeyEvent.VK_SPACE:
+							while(true){
+								eraseCurr();
+								if(collisionBottom()) {
+									collisionOccur();
+									hey();
+									//placeBlock();
+									drawBoard();
+									break;
 								}
-								break;
-							case 1:
-								timer.start();
-								break;
-							case 2:
-								int confirm2 = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
-								if (confirm2 == 0) {
-									dispose(); //or save score and move to score board.
-								} else {
-									timer.start();
+								else {
+									y++;
+									hey();
 								}
-								break;
-						}
-						break;
+								//placeBlock();
+								drawBoard();
+							}
+							break;
+						case KeyEvent.VK_ESCAPE:
+							timer.stop();
+							String[] stopOption = {"Restart", "Play", "Exit"};
+							int choice = JOptionPane.showOptionDialog(null, "What Do You Want?", "Stop", 0, 0, null, stopOption, stopOption[1]);
+							switch (choice) {
+								case 0:
+									int confirm1 = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
+									if (confirm1 == 0) {
+										reset();
+										score = 0;
+										level = 0;
+										timer.restart();
+									} else {
+										timer.start();
+									}
+									break;
+								case 1:
+									timer.start();
+									break;
+								case 2:
+									int confirm2 = JOptionPane.showConfirmDialog(null, "Are you sure?", "Confirm", JOptionPane.YES_NO_OPTION);
+									if (confirm2 == 0) {
+										dispose(); //or save score and move to score board.
+									} else {
+										timer.start();
+									}
+									break;
+							}
+							break;
+					}
 				}
 			}
-		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
@@ -987,7 +1032,7 @@ public class Board extends JFrame {
 	}
 
 	public void setScore() {
-		String scoretxt = Integer.toString(score);;
+		String scoretxt = Integer.toString(score);
 		String prescoretxt = scoreLb2.getText();
 		scoreLb2.setText(scoretxt);
 	}
