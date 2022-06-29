@@ -247,16 +247,16 @@ public class Start extends JFrame {
 
 		if (Window == 0) {
 			setting.setSize(400, 600);
-			setting.sizeOne.setSelected(true);
-			setting.sizeOne.doClick();
+			setting.screenSizeArea.sizeOne.setSelected(true);
+			setting.screenSizeArea.sizeOne.doClick();
 		} else if (Window == 1) {
 			setting.setSize(800, 800);
-			setting.sizeTwo.setSelected(true);
-			setting.sizeTwo.doClick();
+			setting.screenSizeArea.sizeTwo.setSelected(true);
+			setting.screenSizeArea.sizeTwo.doClick();
 		} else {
 			setting.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
-			setting.sizeThree.setSelected(true);
-			setting.sizeThree.doClick();
+			setting.screenSizeArea.sizeThree.setSelected(true);
+			setting.screenSizeArea.sizeThree.doClick();
 		}
 		if (colorMode == 0) {
 			setting.colorBlindOne.setSelected(true);
