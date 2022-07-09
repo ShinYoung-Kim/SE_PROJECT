@@ -30,6 +30,9 @@ public class SettingCode extends JFrame {
     private JPanel rightPanel;
     public JPanel scorePanel;
     public ScreenSizeSettingPanel screenSizeArea;
+    public ColorBlindnessSettingPanel colorBlindnessSettingPanel;
+    public DifficultySettingPanel difficultySettingPanel;
+    public KeySettingPanel keySettingPanel;
 
     JPanel rightRight = new JPanel();
     JPanel buttonPanel = new JPanel();
@@ -48,20 +51,6 @@ public class SettingCode extends JFrame {
     JButton BackToStart = new JButton("<html><body style='text-align:center;'>시작 메뉴</body></html>");
     JButton BackToBattle = new JButton("<html><body style='text-align:center;'>대전 모드</body></html>");
     JButton settingReset = new JButton("<html><body style='text-align:center;'>설정<br>초기화</body></html>");
-
-    JLabel keyTitle = new JLabel("방향키 선택");
-    JLabel colorBlindTitle = new JLabel("색맹모드");
-    JLabel modeTitle = new JLabel("모드 선택");
-
-    JRadioButton keyOne = new JRadioButton("방향키");
-    JRadioButton keyTwo = new JRadioButton("WASD");
-
-    public JRadioButton colorBlindOne = new JRadioButton("Off");
-    public JRadioButton colorBlindTwo = new JRadioButton("On");
-
-    public JRadioButton modeOne = new JRadioButton("Easy");
-    public JRadioButton modeTwo = new JRadioButton("Normal");
-    public JRadioButton modeThree = new JRadioButton("Hard");
 
     int KeyCount = 0;
     int KeyFoucus = 0;
@@ -105,106 +94,16 @@ public class SettingCode extends JFrame {
             }
         });
 
-
         nextArea.add(screenSizeArea);
 
-        JPanel keyArea = new JPanel();
-        keyTitle.setForeground(Color.black);
-        keyArea.add(keyTitle);
-        keyArea.add(Box.createVerticalStrut(20));
-        keyArea.setLayout(new BoxLayout(keyArea, BoxLayout.Y_AXIS));
-        ButtonGroup keyGroup = new ButtonGroup();
-        keyOne.setSelected(true);
-        keyGroup.add(keyOne);
-        keyGroup.add(keyTwo);
-        keyArea.add(keyOne);
-        keyArea.add(keyTwo);
-        keyArea.add(Box.createVerticalStrut(20));
-        // keyArea.setPreferredSize(new Dimension(250, 70));
-        keyArea.setAlignmentX(LEFT_ALIGNMENT);
-        nextArea.add(keyArea);
-        keyArea.setBackground(grayMade);
+        keySettingPanel = new KeySettingPanel();
+        nextArea.add(keySettingPanel);
 
-        keyOne.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                keyOnefun();
-            }
-        });
+        colorBlindnessSettingPanel = new ColorBlindnessSettingPanel();
+        nextArea.add(colorBlindnessSettingPanel);
 
-        keyTwo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                keyTwofun();
-            }
-        });
-
-        JPanel colorBlindArea = new JPanel();
-        colorBlindTitle.setForeground(Color.black);
-        colorBlindArea.add(colorBlindTitle);
-        colorBlindArea.add(Box.createVerticalStrut(20));
-        colorBlindArea.setBackground(grayMade);
-        colorBlindArea.setLayout(new BoxLayout(colorBlindArea, BoxLayout.Y_AXIS));
-
-        ButtonGroup colorBlindGroup = new ButtonGroup();
-        colorBlindOne.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                colorBlindOneFun();
-            }
-        });
-        colorBlindTwo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                colorBlindTwoFun();
-            }
-        });
-        colorBlindOne.setSelected(true);
-        colorBlindGroup.add(colorBlindOne);
-        colorBlindGroup.add(colorBlindTwo);
-        colorBlindArea.add(colorBlindOne);
-        colorBlindArea.add(colorBlindTwo);
-        colorBlindArea.add(Box.createVerticalStrut(20));
-        // colorBlindArea.setPreferredSize(new Dimension(250, 70));
-        colorBlindArea.setAlignmentX(LEFT_ALIGNMENT);
-        nextArea.add(colorBlindArea);
-
-        JPanel modeArea = new JPanel();
-        modeTitle.setForeground(Color.black);
-        modeArea.add(modeTitle);
-        modeArea.add(Box.createVerticalStrut(20));
-        modeArea.setBackground(grayMade);
-        ButtonGroup modeGroup = new ButtonGroup();
-        modeOne.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                modeOnefun();
-            }
-        });
-        modeTwo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                modeTwofun();
-            }
-        });
-        modeThree.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                modeThreefun();
-            }
-        });
-        modeTwo.setSelected(true);
-        modeGroup.add(modeOne);
-        modeGroup.add(modeTwo);
-        modeGroup.add(modeThree);
-        modeArea.add(modeOne);
-        modeArea.add(modeTwo);
-        modeArea.add(modeThree);
-        modeArea.add(Box.createVerticalStrut(20));
-        modeArea.setLayout(new BoxLayout(modeArea, BoxLayout.Y_AXIS));
-        // modeArea.setPreferredSize(new Dimension(250, 70));
-        modeArea.setAlignmentX(LEFT_ALIGNMENT);
-        nextArea.add(modeArea);
+        difficultySettingPanel = new DifficultySettingPanel();
+        nextArea.add(difficultySettingPanel);
 
         scorePanel = new JPanel();
         EtchedBorder scoreBorder = new EtchedBorder();
@@ -225,6 +124,7 @@ public class SettingCode extends JFrame {
         // BackToItemGame.setPreferredSize(new Dimension(80, 70));
         // BackToStart.setPreferredSize(new Dimension(80, 70));
         // settingReset.setPreferredSize(new Dimension(80, 70));
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
         System.out.println(BackToGame.getPreferredSize()); // 111, 26
         System.out.println(BackToItemGame.getPreferredSize()); /// 151, 26
@@ -325,13 +225,14 @@ public class SettingCode extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 dataCalls.UpdateWindowSetting(0);
+                dataCalls.UpdateKeySetting(0);
                 dataCalls.UpdateColorSetting(0);
                 dataCalls.UpdateLevelSetting(0);
 
                 screenSizeArea.sizeOnefun();
-                keyOnefun();
-                colorBlindOneFun();
-                modeTwofun();
+                keySettingPanel.keyOnefun();
+                colorBlindnessSettingPanel.colorBlindOneFun();
+                difficultySettingPanel.modeTwofun();
 
             }
         });
@@ -385,6 +286,7 @@ public class SettingCode extends JFrame {
 
         add(panel);
 
+        tetrisArea.setPreferredSize(new Dimension(350, 50));
         rightRight.setPreferredSize(new Dimension(100, 450));
         nextArea.setPreferredSize(new Dimension(250, 450));
         scoreReset.setPreferredSize(new Dimension(80, 75));
@@ -396,9 +298,9 @@ public class SettingCode extends JFrame {
         BackToStart.setPreferredSize(new Dimension(80, 75));
         settingReset.setPreferredSize(new Dimension(80, 75));
         screenSizeArea.setPreferredSize(new Dimension(250, 110));
-        keyArea.setPreferredSize(new Dimension(250, 110));
-        colorBlindArea.setPreferredSize(new Dimension(250, 110));
-        modeArea.setPreferredSize(new Dimension(250, 110));
+        keySettingPanel.setPreferredSize(new Dimension(250, 110));
+        colorBlindnessSettingPanel.setPreferredSize(new Dimension(250, 110));
+        difficultySettingPanel.setPreferredSize(new Dimension(250, 110));
 
         scoreReset.setBackground(grayMade);
         BackToGame.setBackground(grayMade);
@@ -433,44 +335,44 @@ public class SettingCode extends JFrame {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_UP:
                             if (KeyFoucus == 1) {
-                                modeThree.setBackground(Color.gray);
-                                screenSizeArea.sizeOne.setBackground(grayMade);
+                                difficultySettingPanel.getModeThree().setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(grayMade);
                                 KeyFoucus = 10;
                             } else if (KeyFoucus == 2) {
-                                screenSizeArea.sizeTwo.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeTwo().setBackground(grayMade);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 3) {
-                                screenSizeArea.sizeThree.setBackground(grayMade);
-                                screenSizeArea.sizeTwo.setBackground(Color.gray);
+                                screenSizeArea.getSizeThree().setBackground(grayMade);
+                                screenSizeArea.getSizeTwo().setBackground(Color.gray);
                                 KeyFoucus = 2;
                             } else if (KeyFoucus == 4) {
-                                keyOne.setBackground(grayMade);
-                                screenSizeArea.sizeThree.setBackground(Color.gray);
+                                keySettingPanel.getKeyOne().setBackground(grayMade);
+                                screenSizeArea.getSizeThree().setBackground(Color.gray);
                                 KeyFoucus = 3;
                             } else if (KeyFoucus == 5) {
-                                keyTwo.setBackground(grayMade);
-                                keyOne.setBackground(Color.gray);
+                                keySettingPanel.getKeyTwo().setBackground(grayMade);
+                                keySettingPanel.getKeyOne().setBackground(Color.gray);
                                 KeyFoucus = 4;
                             } else if (KeyFoucus == 6) {
-                                colorBlindOne.setBackground(grayMade);
-                                keyTwo.setBackground(Color.gray);
+                                colorBlindnessSettingPanel.getColorBlindOne().setBackground(grayMade);
+                                keySettingPanel.getKeyTwo().setBackground(Color.gray);
                                 KeyFoucus = 5;
                             } else if (KeyFoucus == 7) {
-                                colorBlindTwo.setBackground(grayMade);
-                                colorBlindOne.setBackground(Color.gray);
+                                colorBlindnessSettingPanel.getColorBlindTwo().setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindOne().setBackground(Color.gray);
                                 KeyFoucus = 6;
                             } else if (KeyFoucus == 8) {
-                                modeOne.setBackground(grayMade);
-                                colorBlindTwo.setBackground(Color.gray);
+                                difficultySettingPanel.getModeOne().setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindTwo().setBackground(Color.gray);
                                 KeyFoucus = 7;
                             } else if (KeyFoucus == 9) {
-                                modeTwo.setBackground(grayMade);
-                                modeOne.setBackground(Color.gray);
+                                difficultySettingPanel.getModeTwo().setBackground(grayMade);
+                                difficultySettingPanel.getModeOne().setBackground(Color.gray);
                                 KeyFoucus = 8;
                             } else if (KeyFoucus == 10) {
-                                modeThree.setBackground(grayMade);
-                                modeTwo.setBackground(Color.gray);
+                                difficultySettingPanel.getModeThree().setBackground(grayMade);
+                                difficultySettingPanel.getModeTwo().setBackground(Color.gray);
                                 KeyFoucus = 9;
                             } else if (KeyFoucus == 11) {
                                 settingReset.setBackground(Color.gray);
@@ -501,44 +403,44 @@ public class SettingCode extends JFrame {
                             break;
                         case KeyEvent.VK_DOWN:
                             if (KeyFoucus == 1) {
-                                screenSizeArea.sizeOne.setBackground(grayMade);
-                                screenSizeArea.sizeTwo.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(grayMade);
+                                screenSizeArea.getSizeTwo().setBackground(Color.gray);
                                 KeyFoucus = 2;
                             } else if (KeyFoucus == 2) {
-                                screenSizeArea.sizeTwo.setBackground(grayMade);
-                                screenSizeArea.sizeThree.setBackground(Color.gray);
+                                screenSizeArea.getSizeTwo().setBackground(grayMade);
+                                screenSizeArea.getSizeThree().setBackground(Color.gray);
                                 KeyFoucus = 3;
                             } else if (KeyFoucus == 3) {
-                                keyOne.setBackground(Color.gray);
-                                screenSizeArea.sizeThree.setBackground(grayMade);
+                                keySettingPanel.getKeyOne().setBackground(Color.gray);
+                                screenSizeArea.getSizeThree().setBackground(grayMade);
                                 KeyFoucus = 4;
                             } else if (KeyFoucus == 4) {
-                                keyOne.setBackground(grayMade);
-                                keyTwo.setBackground(Color.gray);
+                                keySettingPanel.getKeyOne().setBackground(grayMade);
+                                keySettingPanel.getKeyTwo().setBackground(Color.gray);
                                 KeyFoucus = 5;
                             } else if (KeyFoucus == 5) {
-                                keyTwo.setBackground(grayMade);
-                                colorBlindOne.setBackground(Color.gray);
+                                keySettingPanel.getKeyTwo().setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindOne().setBackground(Color.gray);
                                 KeyFoucus = 6;
                             } else if (KeyFoucus == 6) {
-                                colorBlindOne.setBackground(grayMade);
-                                colorBlindTwo.setBackground(Color.gray);
+                                colorBlindnessSettingPanel.getColorBlindOne().setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindTwo().setBackground(Color.gray);
                                 KeyFoucus = 7;
                             } else if (KeyFoucus == 7) {
-                                colorBlindTwo.setBackground(grayMade);
-                                modeOne.setBackground(Color.gray);
+                                colorBlindnessSettingPanel.getColorBlindTwo().setBackground(grayMade);
+                                difficultySettingPanel.getModeOne().setBackground(Color.gray);
                                 KeyFoucus = 8;
                             } else if (KeyFoucus == 8) {
-                                modeOne.setBackground(grayMade);
-                                modeTwo.setBackground(Color.gray);
+                                difficultySettingPanel.getModeOne().setBackground(grayMade);
+                                difficultySettingPanel.getModeTwo().setBackground(Color.gray);
                                 KeyFoucus = 9;
                             } else if (KeyFoucus == 9) {
-                                modeTwo.setBackground(grayMade);
-                                modeThree.setBackground(Color.gray);
+                                difficultySettingPanel.getModeTwo().setBackground(grayMade);
+                                difficultySettingPanel.getModeThree().setBackground(Color.gray);
                                 KeyFoucus = 10;
                             } else if (KeyFoucus == 10) {
-                                modeThree.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                difficultySettingPanel.getModeThree().setBackground(grayMade);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 11) {
                                 scoreReset.setBackground(grayMade);
@@ -569,136 +471,136 @@ public class SettingCode extends JFrame {
                             break;
                         case KeyEvent.VK_LEFT:
                             if (KeyFoucus == 1) {
-                                screenSizeArea.sizeOne.setBackground(grayMade);
+                                screenSizeArea.getSizeOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 2) {
-                                screenSizeArea.sizeTwo.setBackground(grayMade);
+                                screenSizeArea.getSizeTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 3) {
-                                screenSizeArea.sizeThree.setBackground(grayMade);
+                                screenSizeArea.getSizeThree().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 4) {
-                                keyOne.setBackground(grayMade);
+                                keySettingPanel.getKeyOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 5) {
-                                keyTwo.setBackground(grayMade);
+                                keySettingPanel.getKeyTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 6) {
-                                colorBlindOne.setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 7) {
-                                colorBlindTwo.setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 8) {
-                                modeOne.setBackground(grayMade);
+                                difficultySettingPanel.getModeOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 9) {
-                                modeTwo.setBackground(grayMade);
+                                difficultySettingPanel.getModeTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 10) {
-                                modeThree.setBackground(grayMade);
+                                difficultySettingPanel.getModeThree().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 11) {
                                 scoreReset.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 12) {
                                 BackToGame.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 13) {
                                 BackToItemGame.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 14) {
                                 BackToBattle.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 15) {
                                 BackToStart.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 16) {
                                 settingReset.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             }
                             KeyCount++;
                             break;
                         case KeyEvent.VK_RIGHT:
                             if (KeyFoucus == 1) {
-                                screenSizeArea.sizeOne.setBackground(grayMade);
+                                screenSizeArea.getSizeOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 2) {
-                                screenSizeArea.sizeTwo.setBackground(grayMade);
+                                screenSizeArea.getSizeTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 3) {
-                                screenSizeArea.sizeThree.setBackground(grayMade);
+                                screenSizeArea.getSizeThree().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 4) {
-                                keyOne.setBackground(grayMade);
+                                keySettingPanel.getKeyOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 5) {
-                                keyTwo.setBackground(grayMade);
+                                keySettingPanel.getKeyTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 6) {
-                                colorBlindOne.setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 7) {
-                                colorBlindTwo.setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 8) {
-                                modeOne.setBackground(grayMade);
+                                difficultySettingPanel.getModeOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 9) {
-                                modeTwo.setBackground(grayMade);
+                                difficultySettingPanel.getModeTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 10) {
-                                modeThree.setBackground(grayMade);
+                                difficultySettingPanel.getModeThree().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 11) {
                                 scoreReset.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 12) {
                                 BackToGame.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 13) {
                                 BackToItemGame.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 14) {
                                 BackToBattle.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 15) {
                                 BackToStart.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 16) {
                                 settingReset.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             }
                             KeyCount++;
@@ -714,25 +616,25 @@ public class SettingCode extends JFrame {
                                 screenSizeArea.sizeThreefun();
                             }
                             if (KeyFoucus == 4) {
-                                keyOnefun();
+                                keySettingPanel.keyOnefun();
                             }
                             if (KeyFoucus == 5) {
-                                keyTwofun();
+                                keySettingPanel.keyTwofun();
                             }
                             if (KeyFoucus == 6) {
-                                colorBlindOneFun();
+                                colorBlindnessSettingPanel.colorBlindOneFun();
                             }
                             if (KeyFoucus == 7) {
-                                colorBlindTwoFun();
+                                colorBlindnessSettingPanel.colorBlindTwoFun();
                             }
                             if (KeyFoucus == 8) {
-                                modeOnefun();
+                                difficultySettingPanel.modeOnefun();
                             }
                             if (KeyFoucus == 9) {
-                                modeTwofun();
+                                difficultySettingPanel.modeTwofun();
                             }
                             if (KeyFoucus == 10) {
-                                modeThreefun();
+                                difficultySettingPanel.modeThreefun();
                             }
 
                             if (KeyFoucus == 11) {
@@ -760,44 +662,44 @@ public class SettingCode extends JFrame {
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_W:
                             if (KeyFoucus == 1) {
-                                modeThree.setBackground(Color.gray);
-                                screenSizeArea.sizeOne.setBackground(grayMade);
+                                difficultySettingPanel.getModeThree().setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(grayMade);
                                 KeyFoucus = 10;
                             } else if (KeyFoucus == 2) {
-                                screenSizeArea.sizeTwo.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeTwo().setBackground(grayMade);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 3) {
-                                screenSizeArea.sizeThree.setBackground(grayMade);
-                                screenSizeArea.sizeTwo.setBackground(Color.gray);
+                                screenSizeArea.getSizeThree().setBackground(grayMade);
+                                screenSizeArea.getSizeTwo().setBackground(Color.gray);
                                 KeyFoucus = 2;
                             } else if (KeyFoucus == 4) {
-                                keyOne.setBackground(grayMade);
-                                screenSizeArea.sizeThree.setBackground(Color.gray);
+                                keySettingPanel.getKeyOne().setBackground(grayMade);
+                                screenSizeArea.getSizeThree().setBackground(Color.gray);
                                 KeyFoucus = 3;
                             } else if (KeyFoucus == 5) {
-                                keyTwo.setBackground(grayMade);
-                                keyOne.setBackground(Color.gray);
+                                keySettingPanel.getKeyTwo().setBackground(grayMade);
+                                keySettingPanel.getKeyOne().setBackground(Color.gray);
                                 KeyFoucus = 4;
                             } else if (KeyFoucus == 6) {
-                                colorBlindOne.setBackground(grayMade);
-                                keyTwo.setBackground(Color.gray);
+                                colorBlindnessSettingPanel.getColorBlindOne().setBackground(grayMade);
+                                keySettingPanel.getKeyTwo().setBackground(Color.gray);
                                 KeyFoucus = 5;
                             } else if (KeyFoucus == 7) {
-                                colorBlindTwo.setBackground(grayMade);
-                                colorBlindOne.setBackground(Color.gray);
+                                colorBlindnessSettingPanel.getColorBlindTwo().setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindOne().setBackground(Color.gray);
                                 KeyFoucus = 6;
                             } else if (KeyFoucus == 8) {
-                                modeOne.setBackground(grayMade);
-                                colorBlindTwo.setBackground(Color.gray);
+                                difficultySettingPanel.getModeOne().setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindTwo().setBackground(Color.gray);
                                 KeyFoucus = 7;
                             } else if (KeyFoucus == 9) {
-                                modeTwo.setBackground(grayMade);
-                                modeOne.setBackground(Color.gray);
+                                difficultySettingPanel.getModeTwo().setBackground(grayMade);
+                                difficultySettingPanel.getModeOne().setBackground(Color.gray);
                                 KeyFoucus = 8;
                             } else if (KeyFoucus == 10) {
-                                modeThree.setBackground(grayMade);
-                                modeTwo.setBackground(Color.gray);
+                                difficultySettingPanel.getModeThree().setBackground(grayMade);
+                                difficultySettingPanel.getModeTwo().setBackground(Color.gray);
                                 KeyFoucus = 9;
                             } else if (KeyFoucus == 11) {
                                 settingReset.setBackground(Color.gray);
@@ -828,44 +730,44 @@ public class SettingCode extends JFrame {
                             break;
                         case KeyEvent.VK_S:
                             if (KeyFoucus == 1) {
-                                screenSizeArea.sizeOne.setBackground(grayMade);
-                                screenSizeArea.sizeTwo.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(grayMade);
+                                screenSizeArea.getSizeTwo().setBackground(Color.gray);
                                 KeyFoucus = 2;
                             } else if (KeyFoucus == 2) {
-                                screenSizeArea.sizeTwo.setBackground(grayMade);
-                                screenSizeArea.sizeThree.setBackground(Color.gray);
+                                screenSizeArea.getSizeTwo().setBackground(grayMade);
+                                screenSizeArea.getSizeThree().setBackground(Color.gray);
                                 KeyFoucus = 3;
                             } else if (KeyFoucus == 3) {
-                                keyOne.setBackground(Color.gray);
-                                screenSizeArea.sizeThree.setBackground(grayMade);
+                                keySettingPanel.getKeyOne().setBackground(Color.gray);
+                                screenSizeArea.getSizeThree().setBackground(grayMade);
                                 KeyFoucus = 4;
                             } else if (KeyFoucus == 4) {
-                                keyOne.setBackground(grayMade);
-                                keyTwo.setBackground(Color.gray);
+                                keySettingPanel.getKeyOne().setBackground(grayMade);
+                                keySettingPanel.getKeyTwo().setBackground(Color.gray);
                                 KeyFoucus = 5;
                             } else if (KeyFoucus == 5) {
-                                keyTwo.setBackground(grayMade);
-                                colorBlindOne.setBackground(Color.gray);
+                                keySettingPanel.getKeyTwo().setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindOne().setBackground(Color.gray);
                                 KeyFoucus = 6;
                             } else if (KeyFoucus == 6) {
-                                colorBlindOne.setBackground(grayMade);
-                                colorBlindTwo.setBackground(Color.gray);
+                                colorBlindnessSettingPanel.getColorBlindOne().setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindTwo().setBackground(Color.gray);
                                 KeyFoucus = 7;
                             } else if (KeyFoucus == 7) {
-                                colorBlindTwo.setBackground(grayMade);
-                                modeOne.setBackground(Color.gray);
+                                colorBlindnessSettingPanel.getColorBlindTwo().setBackground(grayMade);
+                                difficultySettingPanel.getModeOne().setBackground(Color.gray);
                                 KeyFoucus = 8;
                             } else if (KeyFoucus == 8) {
-                                modeOne.setBackground(grayMade);
-                                modeTwo.setBackground(Color.gray);
+                                difficultySettingPanel.getModeOne().setBackground(grayMade);
+                                difficultySettingPanel.getModeTwo().setBackground(Color.gray);
                                 KeyFoucus = 9;
                             } else if (KeyFoucus == 9) {
-                                modeTwo.setBackground(grayMade);
-                                modeThree.setBackground(Color.gray);
+                                difficultySettingPanel.getModeTwo().setBackground(grayMade);
+                                difficultySettingPanel.getModeThree().setBackground(Color.gray);
                                 KeyFoucus = 10;
                             } else if (KeyFoucus == 10) {
-                                modeThree.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                difficultySettingPanel.getModeThree().setBackground(grayMade);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 11) {
                                 scoreReset.setBackground(grayMade);
@@ -896,136 +798,136 @@ public class SettingCode extends JFrame {
                             break;
                         case KeyEvent.VK_A:
                             if (KeyFoucus == 1) {
-                                screenSizeArea.sizeOne.setBackground(grayMade);
+                                screenSizeArea.getSizeOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 2) {
-                                screenSizeArea.sizeTwo.setBackground(grayMade);
+                                screenSizeArea.getSizeTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 3) {
-                                screenSizeArea.sizeThree.setBackground(grayMade);
+                                screenSizeArea.getSizeThree().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 4) {
-                                keyOne.setBackground(grayMade);
+                                keySettingPanel.getKeyOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 5) {
-                                keyTwo.setBackground(grayMade);
+                                keySettingPanel.getKeyTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 6) {
-                                colorBlindOne.setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 7) {
-                                colorBlindTwo.setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 8) {
-                                modeOne.setBackground(grayMade);
+                                difficultySettingPanel.getModeOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 9) {
-                                modeTwo.setBackground(grayMade);
+                                difficultySettingPanel.getModeTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 10) {
-                                modeThree.setBackground(grayMade);
+                                difficultySettingPanel.getModeThree().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 11) {
                                 scoreReset.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 12) {
                                 BackToGame.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 13) {
                                 BackToItemGame.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 14) {
                                 BackToBattle.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 15) {
                                 BackToStart.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 16) {
                                 settingReset.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             }
                             KeyCount++;
                             break;
                         case KeyEvent.VK_D:
                             if (KeyFoucus == 1) {
-                                screenSizeArea.sizeOne.setBackground(grayMade);
+                                screenSizeArea.getSizeOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 2) {
-                                screenSizeArea.sizeTwo.setBackground(grayMade);
+                                screenSizeArea.getSizeTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 3) {
-                                screenSizeArea.sizeThree.setBackground(grayMade);
+                                screenSizeArea.getSizeThree().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 4) {
-                                keyOne.setBackground(grayMade);
+                                keySettingPanel.getKeyOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 5) {
-                                keyTwo.setBackground(grayMade);
+                                keySettingPanel.getKeyTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 6) {
-                                colorBlindOne.setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 7) {
-                                colorBlindTwo.setBackground(grayMade);
+                                colorBlindnessSettingPanel.getColorBlindTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 8) {
-                                modeOne.setBackground(grayMade);
+                                difficultySettingPanel.getModeOne().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 9) {
-                                modeTwo.setBackground(grayMade);
+                                difficultySettingPanel.getModeTwo().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 10) {
-                                modeThree.setBackground(grayMade);
+                                difficultySettingPanel.getModeThree().setBackground(grayMade);
                                 scoreReset.setBackground(Color.gray);
                                 KeyFoucus = 11;
                             } else if (KeyFoucus == 11) {
                                 scoreReset.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 12) {
                                 BackToGame.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 13) {
                                 BackToItemGame.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 14) {
                                 BackToBattle.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 15) {
                                 BackToStart.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             } else if (KeyFoucus == 16) {
                                 settingReset.setBackground(grayMade);
-                                screenSizeArea.sizeOne.setBackground(Color.gray);
+                                screenSizeArea.getSizeOne().setBackground(Color.gray);
                                 KeyFoucus = 1;
                             }
                             KeyCount++;
@@ -1041,25 +943,25 @@ public class SettingCode extends JFrame {
                                 screenSizeArea.sizeThreefun();
                             }
                             if (KeyFoucus == 4) {
-                                keyOnefun();
+                                keySettingPanel.keyOnefun();
                             }
                             if (KeyFoucus == 5) {
-                                keyTwofun();
+                                keySettingPanel.keyTwofun();
                             }
                             if (KeyFoucus == 6) {
-                                colorBlindOneFun();
+                                colorBlindnessSettingPanel.colorBlindOneFun();
                             }
                             if (KeyFoucus == 7) {
-                                colorBlindTwoFun();
+                                colorBlindnessSettingPanel.colorBlindTwoFun();
                             }
                             if (KeyFoucus == 8) {
-                                modeOnefun();
+                                difficultySettingPanel.modeOnefun();
                             }
                             if (KeyFoucus == 9) {
-                                modeTwofun();
+                                difficultySettingPanel.modeTwofun();
                             }
                             if (KeyFoucus == 10) {
-                                modeThreefun();
+                                difficultySettingPanel.modeThreefun();
                             }
 
                             if (KeyFoucus == 11) {
@@ -1094,110 +996,23 @@ public class SettingCode extends JFrame {
         settingView.setFocusable(true);
 
         //기존 화면 설정 가져오기
-        if (Window == 0) {
-            screenSizeArea.sizeOnefun();
-        } else if (Window == 1) {
-            screenSizeArea.sizeTwofun();
-        } else if (Window == 2) {
-            screenSizeArea.sizeThreefun();
-        }
+        screenSizeArea.reload();
 
         //기존 난이도 설정 가져오기
-        if (setLevel == 0) {
-            //Normal
-            modeTwofun();
-        } else if (setLevel == 1) {
-            //Easy
-            modeOnefun();
-        } else if (setLevel == 2) {
-            //Hard
-            modeThreefun();
-        }
+        difficultySettingPanel.reload();
 
         //기존 색상 설정 가져오기
-        if (setColor == 0) {
-            //Off
-            colorBlindOneFun();
-        } else if (setColor == 1) {
-            //On
-            colorBlindTwoFun();
-        }
+        colorBlindnessSettingPanel.reload();
 
         //기존 키보드 설정 가져오기
-        if (setKey == 0) {
-            //방향키
-            keyOnefun();
-        } else if (setKey == 1) {
-            //WASD
-            keyTwofun();
-        }
-    }
-
-    private void keyTwofun() {
-        SettingValues.getInstance().keyChoose = 2;
-
-        dataCalls.UpdateKeySetting(1);
-
-        keyTwo.setSelected(true);
-    }
-
-    private void keyOnefun() {
-        SettingValues.getInstance().keyChoose = 1;
-
-        dataCalls.UpdateKeySetting(0);
-
-        keyOne.setSelected(true);
-    }
-
-    private void modeThreefun() {
-        SettingValues.getInstance().intervalNumber = 800;
-        SettingValues.getInstance().modeChoose = 3;
-
-        dataCalls.UpdateLevelSetting(2);
-
-        System.out.println("3번");
-
-        modeThree.setSelected(true);
-    }
-
-    private void modeTwofun() {
-        SettingValues.getInstance().intervalNumber = 1000;
-        SettingValues.getInstance().modeChoose = 2;
-
-        dataCalls.UpdateLevelSetting(0);
-
-        modeTwo.setSelected(true);
-    }
-
-    private void modeOnefun() {
-        SettingValues.getInstance().intervalNumber = 2000;
-        SettingValues.getInstance().modeChoose = 1;
-
-        dataCalls.UpdateLevelSetting(1);
-
-        modeOne.setSelected(true);
-    }
-
-    private void colorBlindOneFun() {
-        SettingValues.getInstance().colorBlindModeCheck = 0;
-
-        dataCalls.UpdateColorSetting(SettingValues.getInstance().colorBlindModeCheck);
-
-        colorBlindOne.setSelected(true);
-    }
-
-    private void colorBlindTwoFun() {
-        SettingValues.getInstance().colorBlindModeCheck = 1;
-
-        dataCalls.UpdateColorSetting(SettingValues.getInstance().colorBlindModeCheck);
-
-        colorBlindTwo.setSelected(true);
+        keySettingPanel.reload();
     }
 
     public void changeSize(ScreenSizeSettingPanel.Resolution resolution) {
         switch (resolution.ordinal()) {
             case 2:
                 setSize(resolution.width, resolution.height);
+                tetrisArea.setPreferredSize(new Dimension(350, 50));
                 rightRight.setPreferredSize(new Dimension(200, 600));
                 nextArea.setPreferredSize(new Dimension(600, 600));
                 scorePanel.setPreferredSize(new Dimension(160, 100));
@@ -1210,9 +1025,9 @@ public class SettingCode extends JFrame {
                 settingReset.setPreferredSize(new Dimension(160, 100));
 
                 screenSizeArea.screenSizeTitle.setFont(fontBig);
-                keyTitle.setFont(fontBig);
-                colorBlindTitle.setFont(fontBig);
-                modeTitle.setFont(fontBig);
+                keySettingPanel.keyTitle.setFont(fontBig);
+                colorBlindnessSettingPanel.colorBlindTitle.setFont(fontBig);
+                difficultySettingPanel.modeTitle.setFont(fontBig);
 
                 scoreReset.setFont(fontBig);
                 BackToItemGame.setFont(fontBig);
@@ -1221,20 +1036,21 @@ public class SettingCode extends JFrame {
                 BackToStart.setFont(fontBig);
                 settingReset.setFont(fontBig);
 
-                screenSizeArea.sizeOne.setFont(fontBig);
-                screenSizeArea.sizeTwo.setFont(fontBig);
-                screenSizeArea.sizeThree.setFont(fontBig);
-                keyOne.setFont(fontBig);
-                keyTwo.setFont(fontBig);
-                colorBlindOne.setFont(fontBig);
-                colorBlindTwo.setFont(fontBig);
-                modeOne.setFont(fontBig);
-                modeTwo.setFont(fontBig);
-                modeThree.setFont(fontBig);
-                screenSizeArea.sizeTwo.setSelected(true);
+                screenSizeArea.getSizeOne().setFont(fontBig);
+                screenSizeArea.getSizeTwo().setFont(fontBig);
+                screenSizeArea.getSizeThree().setFont(fontBig);
+                keySettingPanel.getKeyOne().setFont(fontBig);
+                keySettingPanel.getKeyTwo().setFont(fontBig);
+                colorBlindnessSettingPanel.getColorBlindOne().setFont(fontBig);
+                colorBlindnessSettingPanel.getColorBlindTwo().setFont(fontBig);
+                difficultySettingPanel.getModeOne().setFont(fontBig);
+                difficultySettingPanel.getModeTwo().setFont(fontBig);
+                difficultySettingPanel.getModeThree().setFont(fontBig);
+                screenSizeArea.getSizeTwo().setSelected(true);
                 break;
             case 3:
                 setSize(resolution.width, resolution.height);
+                tetrisArea.setPreferredSize(new Dimension(350, 50));
                 rightRight.setPreferredSize(new Dimension(screenWidth / 4, 3 * screenHeight / 4));
                 nextArea.setPreferredSize(new Dimension(3 * screenWidth / 4, 3 * screenHeight / 4));
                 scorePanel.setPreferredSize(new Dimension(screenWidth / 4, 1 * screenHeight / 4));
@@ -1247,20 +1063,20 @@ public class SettingCode extends JFrame {
                 settingReset.setPreferredSize(new Dimension(screenWidth / 4, 1 * screenHeight / 8));
 
                 screenSizeArea.screenSizeTitle.setFont(fontFull);
-                keyTitle.setFont(fontFull);
-                colorBlindTitle.setFont(fontFull);
-                modeTitle.setFont(fontFull);
+                keySettingPanel.keyTitle.setFont(fontFull);
+                colorBlindnessSettingPanel.colorBlindTitle.setFont(fontFull);
+                difficultySettingPanel.modeTitle.setFont(fontFull);
 
-                screenSizeArea.sizeOne.setFont(fontFull);
-                screenSizeArea.sizeTwo.setFont(fontFull);
-                screenSizeArea.sizeThree.setFont(fontFull);
-                keyOne.setFont(fontFull);
-                keyTwo.setFont(fontFull);
-                colorBlindOne.setFont(fontFull);
-                colorBlindTwo.setFont(fontFull);
-                modeOne.setFont(fontFull);
-                modeTwo.setFont(fontFull);
-                modeThree.setFont(fontFull);
+                screenSizeArea.getSizeOne().setFont(fontFull);
+                screenSizeArea.getSizeTwo().setFont(fontFull);
+                screenSizeArea.getSizeThree().setFont(fontFull);
+                keySettingPanel.getKeyOne().setFont(fontFull);
+                keySettingPanel.getKeyTwo().setFont(fontFull);
+                colorBlindnessSettingPanel.getColorBlindOne().setFont(fontFull);
+                colorBlindnessSettingPanel.getColorBlindTwo().setFont(fontFull);
+                difficultySettingPanel.getModeOne().setFont(fontFull);
+                difficultySettingPanel.getModeTwo().setFont(fontFull);
+                difficultySettingPanel.getModeThree().setFont(fontFull);
 
                 scoreReset.setFont(fontFull);
                 BackToItemGame.setFont(fontFull);
@@ -1268,11 +1084,12 @@ public class SettingCode extends JFrame {
                 BackToBattle.setFont(fontFull);
                 BackToStart.setFont(fontFull);
                 settingReset.setFont(fontFull);
-                screenSizeArea.sizeThree.setSelected(true);
+                screenSizeArea.getSizeThree().setSelected(true);
                 break;
             case 1:
             default:
                 setSize(resolution.width, resolution.height);
+                tetrisArea.setPreferredSize(new Dimension(350, 50));
                 rightRight.setPreferredSize(new Dimension(100, 450));
                 nextArea.setPreferredSize(new Dimension(250, 450));
                 scoreReset.setPreferredSize(new Dimension(80, 75));
@@ -1285,9 +1102,9 @@ public class SettingCode extends JFrame {
                 settingReset.setPreferredSize(new Dimension(80, 75));
 
                 screenSizeArea.screenSizeTitle.setFont(fontSmall);
-                keyTitle.setFont(fontSmall);
-                colorBlindTitle.setFont(fontSmall);
-                modeTitle.setFont(fontSmall);
+                keySettingPanel.keyTitle.setFont(fontSmall);
+                colorBlindnessSettingPanel.colorBlindTitle.setFont(fontSmall);
+                difficultySettingPanel.modeTitle.setFont(fontSmall);
 
                 scoreReset.setFont(fontSmall);
                 BackToItemGame.setFont(fontSmall);
@@ -1296,17 +1113,17 @@ public class SettingCode extends JFrame {
                 BackToStart.setFont(fontSmall);
                 settingReset.setFont(fontSmall);
 
-                screenSizeArea.sizeOne.setFont(fontSmall);
-                screenSizeArea.sizeTwo.setFont(fontSmall);
-                screenSizeArea.sizeThree.setFont(fontSmall);
-                keyOne.setFont(fontSmall);
-                keyTwo.setFont(fontSmall);
-                colorBlindOne.setFont(fontSmall);
-                colorBlindTwo.setFont(fontSmall);
-                modeOne.setFont(fontSmall);
-                modeTwo.setFont(fontSmall);
-                modeThree.setFont(fontSmall);
-                screenSizeArea.sizeOne.setSelected(true);
+                screenSizeArea.getSizeOne().setFont(fontSmall);
+                screenSizeArea.getSizeTwo().setFont(fontSmall);
+                screenSizeArea.getSizeThree().setFont(fontSmall);
+                keySettingPanel.getKeyOne().setFont(fontSmall);
+                keySettingPanel.getKeyTwo().setFont(fontSmall);
+                colorBlindnessSettingPanel.getColorBlindOne().setFont(fontSmall);
+                colorBlindnessSettingPanel.getColorBlindTwo().setFont(fontSmall);
+                difficultySettingPanel.getModeOne().setFont(fontSmall);
+                difficultySettingPanel.getModeTwo().setFont(fontSmall);
+                difficultySettingPanel.getModeThree().setFont(fontSmall);
+                screenSizeArea.getSizeOne().setSelected(true);
                 break;
         }
     }
