@@ -8,9 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static se.tetris.setting.SettingCode.grayMade;
+import static se.tetris.setting.Strings.*;
 
 public class ColorBlindnessSettingPanel extends JPanel {
-    JLabel colorBlindTitle = new JLabel("색맹모드");
+    JLabel colorBlindTitle = new JLabel(colorBlindTitleString);
 
     public JRadioButton getColorBlindOne() {
         return colorBlindOne;
@@ -20,8 +21,8 @@ public class ColorBlindnessSettingPanel extends JPanel {
         return colorBlindTwo;
     }
 
-    private JRadioButton colorBlindOne = new JRadioButton("Off");
-    private JRadioButton colorBlindTwo = new JRadioButton("On");
+    private JRadioButton colorBlindOne = new JRadioButton(colorBlindOneString);
+    private JRadioButton colorBlindTwo = new JRadioButton(colorBlindTwoString);
 
     DBCalls dataCalls = new DBCalls();
     int setColor = dataCalls.getColorSetting();

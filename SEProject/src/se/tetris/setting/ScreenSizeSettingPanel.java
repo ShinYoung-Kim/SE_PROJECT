@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import static se.tetris.setting.ScreenSizeSettingPanel.Resolution.*;
 import static se.tetris.setting.SettingCode.grayMade;
+import static se.tetris.setting.Strings.*;
 
 public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
 
@@ -35,7 +36,7 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
 
     private OnUpdateListener onUpdateListener = null;
 
-    JLabel screenSizeTitle = new JLabel("화면 크기 조절");
+    JLabel screenSizeTitle = new JLabel(screenSizeTitleString);
 
     public JRadioButton getSizeOne() {
         return sizeOne;
@@ -49,9 +50,9 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
         return sizeThree;
     }
 
-    private JRadioButton sizeOne = new JRadioButton("표준");
-    private JRadioButton sizeTwo = new JRadioButton("크게");
-    private JRadioButton sizeThree = new JRadioButton("전체 화면 모드");
+    private JRadioButton sizeOne = new JRadioButton(sizeOneString);
+    private JRadioButton sizeTwo = new JRadioButton(sizeTwoString);
+    private JRadioButton sizeThree = new JRadioButton(sizeThreeString);
 
     DBCalls dataCalls = new DBCalls();
     int Window = dataCalls.getWindowSetting();

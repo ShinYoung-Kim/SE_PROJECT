@@ -8,9 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static se.tetris.setting.SettingCode.grayMade;
+import static se.tetris.setting.Strings.*;
 
 public class DifficultySettingPanel extends JPanel {
-    JLabel modeTitle = new JLabel("모드 선택");
+    JLabel modeTitle = new JLabel(modeTitleString);
 
     public JRadioButton getModeOne() {
         return modeOne;
@@ -24,9 +25,9 @@ public class DifficultySettingPanel extends JPanel {
         return modeThree;
     }
 
-    private JRadioButton modeOne = new JRadioButton("Easy");
-    private JRadioButton modeTwo = new JRadioButton("Normal");
-    private JRadioButton modeThree = new JRadioButton("Hard");
+    private JRadioButton modeOne = new JRadioButton(modeOneString);
+    private JRadioButton modeTwo = new JRadioButton(modeTwoString);
+    private JRadioButton modeThree = new JRadioButton(modeThreeString);
 
     DBCalls dataCalls = new DBCalls();
     int setLevel = dataCalls.getLevelSetting();

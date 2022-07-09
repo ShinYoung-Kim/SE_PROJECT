@@ -8,9 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static se.tetris.setting.SettingCode.grayMade;
+import static se.tetris.setting.Strings.*;
 
 public class KeySettingPanel extends JPanel {
-    JLabel keyTitle = new JLabel("방향키 선택");
+    JLabel keyTitle = new JLabel(keyTitleString);
 
     public JRadioButton getKeyOne() {
         return keyOne;
@@ -20,8 +21,8 @@ public class KeySettingPanel extends JPanel {
         return keyTwo;
     }
 
-    private JRadioButton keyOne = new JRadioButton("방향키");
-    private JRadioButton keyTwo = new JRadioButton("WASD");
+    private JRadioButton keyOne = new JRadioButton(keyOneString);
+    private JRadioButton keyTwo = new JRadioButton(keyTwoString);
 
     DBCalls dataCalls = new DBCalls();
     int setKey = dataCalls.getKeySetting();

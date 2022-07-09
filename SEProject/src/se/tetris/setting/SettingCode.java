@@ -17,6 +17,7 @@ import static java.awt.event.KeyEvent.VK_UP;
 
 import se.tetris.component.StartBattle;
 import se.tetris.data.*;
+import static se.tetris.setting.Strings.*;
 
 public class SettingCode extends JFrame {
     public static Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -43,14 +44,14 @@ public class SettingCode extends JFrame {
 
     final static Color grayMade = new Color(238, 238, 238);
 
-    JLabel settingTitle = new JLabel("테트리스 게임 설정");
+    JLabel settingTitle = new JLabel(settingTitleString);
 
-    JButton scoreReset = new JButton("<html><body style='text-align:center;'>스코어보드<br>초기화</body></html>");
-    JButton BackToGame = new JButton("<html><body style='text-align:center;'>일반<br>게임으로</body></html>");
-    JButton BackToItemGame = new JButton("<html><body style='text-align:center;'>아이템 모드<br>게임으로</body></html>");
-    JButton BackToStart = new JButton("<html><body style='text-align:center;'>시작 메뉴</body></html>");
-    JButton BackToBattle = new JButton("<html><body style='text-align:center;'>대전 모드</body></html>");
-    JButton settingReset = new JButton("<html><body style='text-align:center;'>설정<br>초기화</body></html>");
+    JButton scoreReset = new JButton(addingHTMLfun(scoreResetString));
+    JButton BackToGame = new JButton(addingHTMLfun(BackToGameString));
+    JButton BackToItemGame = new JButton(addingHTMLfun(BackToItemGameString));
+    JButton BackToStart = new JButton(addingHTMLfun(BackToStartString));
+    JButton BackToBattle = new JButton(addingHTMLfun(BackToBattleString));
+    JButton settingReset = new JButton(addingHTMLfun(settingResetString));
 
     int KeyCount = 0;
     int KeyFoucus = 0;
@@ -64,7 +65,7 @@ public class SettingCode extends JFrame {
 
     public SettingCode() {
 
-        super("SeoulTech SE Tetris");
+        super(frameTitleString);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Container settingView = getContentPane();
@@ -243,7 +244,7 @@ public class SettingCode extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 dataCalls.refreshScoreData();
 
-                int Result = JOptionPane.showConfirmDialog(null, "초기화 되었습니다!", "스코어 보드 초기화",
+                int Result = JOptionPane.showConfirmDialog(null, resetMessageString, resetTitleString,
                         JOptionPane.DEFAULT_OPTION);
             }
         });
