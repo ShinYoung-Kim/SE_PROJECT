@@ -626,16 +626,19 @@ public class InnerItemBoard extends JPanel{
 		}
 		else {
 			if (collisionBottom()) {
+                lineRemove();
 				collisionOccur();
 				if (whoAttacked) {
 	                attackedFunction();
-	                ItemBattleBoard.drawAttack();
+	                ItemBattleBoard.drawEmptyAttack();
 	                placeBlock();
 	                drawBoard();
 	            }
 			}
-			else y++;
-			lineRemove();
+			else {
+                y++;
+			    lineRemove();
+            }
 			if (!isGameOver()) {
 				placeBlock();
 				drawBoard();

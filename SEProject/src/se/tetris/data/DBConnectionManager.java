@@ -8,7 +8,7 @@ class DBCreate {
     public static void createNewDatabase() {
         String path = System.getProperty("user.dir");
 
-        String url = "jdbc:sqlite:./lib/tetris.db";
+        String url = "jdbc:sqlite:./SEProject/lib/tetris.db";
 
         try {
             Connection conn = DriverManager.getConnection(url);
@@ -28,15 +28,14 @@ class DBCreate {
     public static void createNewTable() {
         String path = System.getProperty("user.dir");
 
-        // SQLite connection string
-        String url = "jdbc:sqlite:./lib/tetris.db";
+        String url = "jdbc:sqlite:./SEProject/lib/tetris.db";
 
         String sql = "CREATE TABLE IF NOT EXISTS StInit (\n"
                 + " id integer PRIMARY KEY AUTOINCREMENT,\n"
-                + " code text NOT NULL DEFAULT '',\n" // window, Color, Level
+                + " code text NOT NULL DEFAULT '',\n" // window, Color, Level, Key
                 + " type integer NOT NULL DEFAULT 0\n" + ");";
 
-        String initsql = "INSERT INTO StInit(code) VALUES('Window'), ('Color'), ('Level');";
+        String initsql = "INSERT INTO StInit(code) VALUES('Window'), ('Color'), ('Level'), ('Key');";
 
         try {
             Connection conn = DriverManager.getConnection(url);
@@ -62,21 +61,6 @@ class DBCreate {
             conn.close();
         } catch (SQLException e) {
             System.out.println("0"+e.getMessage());
-        }
-
-        // SQL statement for creating a new table
-        sql = "CREATE TABLE IF NOT EXISTS StGameKey (\n"
-                + " id integer PRIMARY KEY AUTOINCREMENT,\n"
-                + " code text NOT NULL DEFAULT '',\n"
-                + " key text NOT NULL DEFAULT ''\n" + ");";
-        try {
-            Connection conn = DriverManager.getConnection(url);
-
-            Statement stmt = conn.createStatement();
-            stmt.execute(sql);
-            conn.close();
-        } catch (SQLException e) {
-            System.out.println("1"+e.getMessage());
         }
 
         sql = "CREATE TABLE IF NOT EXISTS Score (\n"
@@ -107,10 +91,9 @@ public class DBConnectionManager extends DBCreate {
         Connection conn = null;
         String DB_JDBC_DRIVER = "org.sqlite.JDBC";
         String DB_PATH = System.getProperty("user.dir");
-        String DB_URL = "jdbc:sqlite:./lib/tetris.db";
+        String DB_URL = "jdbc:sqlite:./SEProject/lib/tetris.db";
 
         try {
-            // create a connection to the database
             conn = DriverManager.getConnection(DB_URL);
 
         } catch (SQLException e) {

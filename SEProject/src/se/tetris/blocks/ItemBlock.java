@@ -6,8 +6,8 @@ import java.util.Random;
 
 public class ItemBlock extends Block {
 	Block blockShape;
-	int itemType;
 	int [] itemCoor = new int [2];
+	int itemType;
 	ArrayList<int[]> coordinates = new ArrayList<int[]>();
 
 	public ItemBlock() {
@@ -23,13 +23,12 @@ public class ItemBlock extends Block {
 	public void coorColl() {
 		for (int i = 0; i < blockShape.height(); i++) {
 			for (int j = 0; j < blockShape.width(); j++) {
-				if (blockShape.getShape(j, i) == 1) {
+				if (blockShape.getShape(j, i) > 0) {
 					coordinates.add(new int [] {i,j});
 				}
 			}
 		}
 	}
-
 
 	public void setItemCoor() {
 		Random rnd = new Random(System.currentTimeMillis());
@@ -43,4 +42,7 @@ public class ItemBlock extends Block {
 		return blockShape;
 	}
 
+	public int getItemType() {
+		return itemType;
+	}
 }

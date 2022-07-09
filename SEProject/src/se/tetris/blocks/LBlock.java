@@ -6,10 +6,10 @@ public class LBlock extends Block {
 
 	public LBlock() {
 		shape = new int[][] {
-				{1, 1, 1},
-				{1, 0, 0}
+				{3, 3, 3},
+				{3, 0, 0}
 		};
-		color = Color.ORANGE;
+		color = Color.PINK;
 		colorBlind = new Color(165, 148, 159);
 	}
 }

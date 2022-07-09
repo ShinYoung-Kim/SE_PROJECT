@@ -247,33 +247,33 @@ public class Start extends JFrame {
 
 		if (Window == 0) {
 			setting.setSize(400, 600);
-			setting.screenSizeArea.sizeOne.setSelected(true);
-			setting.screenSizeArea.sizeOne.doClick();
+			setting.screenSizeArea.getSizeOne().setSelected(true);
+			setting.screenSizeArea.getSizeOne().doClick();
 		} else if (Window == 1) {
 			setting.setSize(800, 800);
-			setting.screenSizeArea.sizeTwo.setSelected(true);
-			setting.screenSizeArea.sizeTwo.doClick();
+			setting.screenSizeArea.getSizeTwo().setSelected(true);
+			setting.screenSizeArea.getSizeTwo().doClick();
 		} else {
 			setting.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
-			setting.screenSizeArea.sizeThree.setSelected(true);
-			setting.screenSizeArea.sizeThree.doClick();
+			setting.screenSizeArea.getSizeThree().setSelected(true);
+			setting.screenSizeArea.getSizeThree().doClick();
 		}
 		if (colorMode == 0) {
-			setting.colorBlindOne.setSelected(true);
-			setting.colorBlindOne.doClick();
+			setting.colorBlindnessSettingPanel.getColorBlindOne().setSelected(true);
+			setting.colorBlindnessSettingPanel.getColorBlindOne().doClick();
 		} else if (colorMode == 1) {
-			setting.colorBlindTwo.setSelected(true);
-			setting.colorBlindTwo.doClick();
+			setting.colorBlindnessSettingPanel.getColorBlindTwo().setSelected(true);
+			setting.colorBlindnessSettingPanel.getColorBlindTwo().doClick();
 		}
 		if (levelMode == 0) {
-			setting.modeOne.doClick();
-			setting.modeOne.setSelected(true);
+			setting.difficultySettingPanel.getModeOne().doClick();
+			setting.difficultySettingPanel.getModeOne().setSelected(true);
 		} else if (levelMode == 1) {
-			setting.modeTwo.doClick();
-			setting.modeTwo.setSelected(true);
+			setting.difficultySettingPanel.getModeTwo().doClick();
+			setting.difficultySettingPanel.getModeTwo().setSelected(true);
 		} else if (levelMode == 2) {
-			setting.modeThree.doClick();
-			setting.modeThree.setSelected(true);
+			setting.difficultySettingPanel.getModeThree().doClick();
+			setting.difficultySettingPanel.getModeThree().setSelected(true);
 		}
 
 		layerPane.setLayout(null);

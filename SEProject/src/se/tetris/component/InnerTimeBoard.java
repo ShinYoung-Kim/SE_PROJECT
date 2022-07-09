@@ -36,7 +36,7 @@ import se.tetris.data.*;
 import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
-public class InnerBoard extends JPanel {
+public class InnerTimeBoard extends JPanel {
 
     public static String BattleMode;
 
@@ -58,7 +58,6 @@ public class InnerBoard extends JPanel {
 
     private JTextPane tetrisArea;
     private JTextPane nextArea;
-    public JTextPane attackArea;
     private JPanel panel;
     private JPanel leftPanel;
     private JPanel rightPanel;
@@ -66,14 +65,12 @@ public class InnerBoard extends JPanel {
     private JPanel levelPanel;
     private int[][] board;
     private int[][] nextBoard;
-    private int[][] attackBoard;
     private SimpleAttributeSet stylesetBr;
     private SimpleAttributeSet stylesetNx;
     private SimpleAttributeSet stylesetCur;
     public SimpleAttributeSet stylesetAk;
     private StyledDocument boardDoc;
     private StyledDocument nextDoc;
-    public StyledDocument attackDoc;
     public Timer timer;
     private Block curr;
     private Block next;
@@ -88,7 +85,6 @@ public class InnerBoard extends JPanel {
     private int score = 0;
     private int level = 0;
     private String name = "player";
-    public ArrayList<Integer> attackLine;
 
     public static int mode = 0;
     int eraseCnt = 0;
@@ -111,16 +107,7 @@ public class InnerBoard extends JPanel {
     private JLabel levelLb1 = new JLabel("Level");
     private JLabel levelLb2 = new JLabel(Integer.toString(level));
 
-    boolean whoIs = false;
-    boolean whoAttacked = false;
-    public int attackLineCount = 0;
-
-    StringBuffer sbByAttack;
-
-    boolean alreadyAttacked = false;
-    boolean attackBoardFull = false;
-
-    public InnerBoard(int sizeNumber) {
+    public InnerTimeBoard(int sizeNumber) {
         //Board display setting.
         tetrisArea = new JTextPane();
         tetrisArea.setEditable(false);
@@ -176,16 +163,6 @@ public class InnerBoard extends JPanel {
         levelPanel.add(Box.createVerticalStrut(5));
         levelPanel.add(levelLb2);
 
-        attackArea = new JTextPane();
-        attackArea.setEditable(false);
-        attackArea.setBackground(Color.BLACK);
-        CompoundBorder attackBorder = BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.GRAY, 3),
-                BorderFactory.createLineBorder(Color.WHITE, 3));
-        attackArea.setBorder(attackBorder);
-        attackArea.setAlignmentX(CENTER_ALIGNMENT);
-        attackArea.setAlignmentY(CENTER_ALIGNMENT);
-        //attackArea.setPreferredSize(new Dimension(150, 150));
 
         leftPanel = new JPanel();
         leftPanel.add(tetrisArea);
@@ -196,8 +173,6 @@ public class InnerBoard extends JPanel {
         rightPanel.add(scorePanel);
         rightPanel.add(Box.createVerticalStrut(10));
         rightPanel.add(levelPanel);
-        rightPanel.add(Box.createVerticalStrut(10));
-        rightPanel.add(attackArea);
 
         panel = new JPanel();
         panel.add(leftPanel);
@@ -216,7 +191,6 @@ public class InnerBoard extends JPanel {
         //Initialize board for the game.
         board = new int[HEIGHT][WIDTH];
         nextBoard = new int[3][5];
-        attackBoard = new int [10][10];
 
 
         //Create the first block and draw
@@ -256,10 +230,6 @@ public class InnerBoard extends JPanel {
 
         boardDoc = tetrisArea.getStyledDocument();
         nextDoc = nextArea.getStyledDocument();
-        attackDoc = attackArea.getStyledDocument();
-
-        attackLine = new ArrayList<Integer>();
-
 
         placeBlock();
         drawBoard();
@@ -366,17 +336,17 @@ public class InnerBoard extends JPanel {
         }
     }
 
-    public void placeAttack(ArrayList<Integer> attack) {
-        for (int i = 0; i < attack.size(); i++) {
-            attackLine.add(attack.get(i) - lastY);
-        }
-        int firstY = attackY;
-        for (int i = firstY; i > firstY - attack.size(); i--, attackY--) {
-            for (int j = 0; j < attackBoard[0].length; j++) {
-                attackBoard[i][j] = 1;
-            }
-        }
-    }
+//    public void placeAttack(ArrayList<Integer> attack) {
+//        for (int i = 0; i < attack.size(); i++) {
+//            attackLine.add(attack.get(i) - lastY);
+//        }
+//        int firstY = attackY;
+//        for (int i = firstY; i > firstY - attack.size(); i--, attackY--) {
+//            for (int j = 0; j < attackBoard[0].length; j++) {
+//                attackBoard[i][j] = 1;
+//            }
+//        }
+//    }
 
     public void eraseCurr() {
         for(int i=x; i<x+curr.width(); i++) {
@@ -399,16 +369,7 @@ public class InnerBoard extends JPanel {
         int y = attackY + 1;
         int notRemove = 0;
         for (int i = y; i < y + lastBlock.height(); i++) {
-            if (attackLine.contains(i - y)) {
-                for (int j = lastX; j < lastX + lastBlock.width(); j++) {
-                    if (lastBlock.getShape(j - lastX, i - y) > 0) {
-                        attackBoard[i - notRemove][j] = 0;
-                    }
-                }
-            }
-            else {
-                notRemove++;
-            }
+            notRemove++;
         }
         attackY = 9;
     }
@@ -438,36 +399,19 @@ public class InnerBoard extends JPanel {
         curr = next;
         x = 3;
         y = 0;
-        if (isGameOver() == true) {
-        	String winner;
+        if (isGameOver()) {
+            String winner;
             if (name == "Player1") {
                 winner = "Player2";
             }
             else
                 winner = "Player1";
 
-            if(BattleMode == "Battle") {
-                BattleBoard.gameStop();
-            }else if(BattleMode == "TimeBattle") {
-                TimeBattleBoard.gameStop();
-                TimeBattleBoard.collisionStop();
+            TimeBattleBoard.gameStop();
+            TimeBattleBoard.collisionStop();
 
-                TimeBattleBoard.ColPlayer = winner;
-                return;
-            }
-
-            String[] overOption = {"종료하기", "다시하기"};
-
-            int over = JOptionPane.showOptionDialog(null, winner + "이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
-
-            if(BattleMode == "Battle") {
-                if (over == 0) {
-                    BattleBoard.gameClose();
-                }
-                if (over == 1) {
-                    BattleBoard.gameReset();
-                }
-            }
+            TimeBattleBoard.ColPlayer = winner;
+            return;
         }
         else {
             eraseNext();
@@ -480,11 +424,7 @@ public class InnerBoard extends JPanel {
     public void lineRemove() {
         line = lineCheck();
         if (line.size() > 1) {
-            whoIs = true;
-            BattleBoard.placeAttack(line);
             eraseLast();
-            BattleBoard.drawAttack();
-            attackLine.clear();
         }
         Iterator<Integer> iter = line.iterator();
         int index = 0;
@@ -495,17 +435,19 @@ public class InnerBoard extends JPanel {
                     board[i][j] = board[i-1][j];
                 }
             }
+            index = 0;
             eraseCnt++;
             getScore(eraseCnt, "line");
             setScore();
         }
+
+
     }
 
     public boolean collisionBottom() {
         for (int i = 0; i < curr.height(); i++) {
             for (int j = 0; j < curr.width(); j++) {
-                if (y >= HEIGHT - curr.height())
-                    return true;
+                if (y >= HEIGHT - curr.height()) return true;
                 if (curr.getShape(j, i) > 0 && i + y < 19) {
                     int checkBottom = board[i + y + 1][j + x];
                     if (checkBottom > 0) {
@@ -514,6 +456,7 @@ public class InnerBoard extends JPanel {
                 }
             }
         }
+
         return false;
     }
 
@@ -552,36 +495,17 @@ public class InnerBoard extends JPanel {
         setScore();
 
         if (collisionBottom()) {
-            lineRemove();
             collisionOccur();
-            if (whoAttacked) {
-                attackedFunction();
-                BattleBoard.drawEmptyAttack();
-                placeBlock();
-                drawBoard();
-            }
-        } else {
-            y++;
-            lineRemove();
+            placeBlock();
+            drawBoard();
         }
+        else y++;
+        lineRemove();
         if (!isGameOver()) {
             placeBlock();
             drawBoard();
         }
     }
-
-    public void attackedFunction() {
-        System.out.println("Clear");
-        for (int a = attackLineCount; a < HEIGHT; a++) {
-            for (int b = 0; b < WIDTH; b++) {
-                board[a - attackLineCount][b] = board[a][b];
-            }
-        }
-        System.out.println(attackLineCount);
-        BattleBoard.forAttack();
-        attackBoardFull = false;
-    }
-
 
     protected void moveRight() {
         eraseCurr();
@@ -705,6 +629,8 @@ public class InnerBoard extends JPanel {
                 }
             }
         }
+
+
     }
 
     //blockNumber 증가 + timer 변경
@@ -744,6 +670,7 @@ public class InnerBoard extends JPanel {
         boardDoc.setCharacterAttributes(offset, 1, stylesetCur, true);
     }
 
+    //interval 함수
     //interval 함수
     public int getInterval(int blockNumber, int eraseCnt) {
         //생성
@@ -856,6 +783,7 @@ public class InnerBoard extends JPanel {
     }
 
     public void reset() {
+        System.out.println("sdfadf");
         board = new int[HEIGHT][WIDTH];
         nextBoard = new int[4][5];
         x = 3;
@@ -867,6 +795,7 @@ public class InnerBoard extends JPanel {
         placeNext();
         drawNext();
         this.score = 0;
+        this.level = 0;
         this.setScore();
         this.board = new int[20][10];
     }
@@ -895,6 +824,7 @@ public class InnerBoard extends JPanel {
                 if (curr.getShape(j, i) > 0)
                     board[y + i][j + x] = curr.getShape(j, i);
     }
+
 
     public boolean rotateTest(int [][] shape, int inputX, int inputY) {
         for (int i = 0; i < shape.length; i++) {
@@ -991,23 +921,8 @@ public class InnerBoard extends JPanel {
         return timer;
     }
 
-    public int[][] getAttackBoard() {
-        return attackBoard;
-    }
-
-    public void setAttackBoard(int[][] attackBoard) {
-        this.attackBoard = attackBoard;
-    }
-
     public int[][] getBoard() {
         return board;
-    }
-
-    public void setAttackLineCount(int attackLineCount) {
-        this.attackLineCount = attackLineCount;
-    }
-    public int getAttackLineCount() {
-        return attackLineCount;
     }
 
     public void setStylesetSize(int size1, int size2, int size3) {
@@ -1024,7 +939,6 @@ public class InnerBoard extends JPanel {
         scorePanel.setPreferredSize(new Dimension(xSize, ySize));
         levelPanel.setPreferredSize(new Dimension(xSize, ySize));
         nextArea.setPreferredSize(new Dimension(xSize, xSize));
-        attackArea.setPreferredSize(new Dimension(ySize2, ySize2));
     }
 
     //max - 17, default - nothing,

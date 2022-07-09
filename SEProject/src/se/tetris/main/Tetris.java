@@ -1,5 +1,9 @@
 package se.tetris.main;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
+import se.tetris.component.Board;
 import se.tetris.component.Start;
 import se.tetris.data.*;
 import se.tetris.component.Score;
@@ -7,7 +11,9 @@ import se.tetris.setting.*;
 
 public class Tetris {
 	protected String path = System.getProperty("user.dir");
-    protected String url = "jdbc:sqlite:./lib/tetris.db";
+	protected String url = "jdbc:sqlite:./lib/tetris.db";
+
+
 
 	public static void main(String[] args) {
 		DBConnectionManager data = new DBConnectionManager();
@@ -33,16 +39,6 @@ public class Tetris {
 
 		data.connect();
 		data.createNewTable();
-
-
-//		SettingCode setting = new SettingCode();
-//		int Window = dataCalls.getWindowSetting();
-//		SettingValues.getInstance().sizeNumber = Window - 1;
-//
-//		Start.start.setVisible(true);
-//
-//		data.connect();
-//		data.createNewTable();
 
 //
 //		dataCalls.getWindowSetting();

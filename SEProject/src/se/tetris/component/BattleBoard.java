@@ -54,11 +54,11 @@ public class BattleBoard extends JFrame {
         setFocusTraversalKeysEnabled(false);
         requestFocus();
 
-        //Timer player1Timer = player1.getTimer();
-        //player1Timer.setDelay(10000);
+        Timer player1Timer = player1.getTimer();
+        player1Timer.setDelay(10000);
 
-        //Timer player2Timer = player2.getTimer();
-        //player2Timer.setDelay(10000);
+        Timer player2Timer = player2.getTimer();
+        player2Timer.setDelay(10000);
 
     }
 
@@ -256,7 +256,6 @@ public class BattleBoard extends JFrame {
                             player1AttackBoard[i][j] = 1;
                         }
                     }
-
                 } else {
                     if (attack.size() > 10) {
                         difference = attack.size() - 10;

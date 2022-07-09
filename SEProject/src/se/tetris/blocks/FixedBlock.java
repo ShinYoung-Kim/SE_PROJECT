@@ -3,13 +3,13 @@ package se.tetris.blocks;
 public class FixedBlock extends ItemBlock {
 
     public FixedBlock() {
-        itemType = 4;
+        itemType = 10;
         setItemCoor();
     }
 
     public FixedBlock(Block input) {
         super(input);
-        itemType = 4;
+        itemType = 10;
         setItemCoor();
     }
 
