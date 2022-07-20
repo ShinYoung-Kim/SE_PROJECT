@@ -55,27 +55,24 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
     private JRadioButton sizeThree = new JRadioButton(sizeThreeString);
 
     DBCalls dataCalls = new DBCalls();
-    int Window = dataCalls.getWindowSetting();
+
+    final SettingCode settingCode;
 
     @Override
     public void update(Object type) {
         if (type == Standard) {
             SettingValues.getInstance().sizeNumber = 1;
-            dataCalls.UpdateWindowSetting(SettingValues.getInstance().sizeNumber - 1);
             if (onUpdateListener != null) {
                 onUpdateListener.onUpdate(Standard);
             }
-            sizeOne.setSelected(true);
         } else if(type == Large) {
             SettingValues.getInstance().sizeNumber = 2;
-            dataCalls.UpdateWindowSetting(SettingValues.getInstance().sizeNumber - 1);
             if (onUpdateListener != null) {
                 onUpdateListener.onUpdate(Large);
             }
             sizeTwo.setSelected(true);
         } else if(type == Full) {
-            SettingValues.getInstance().sizeNumber = 3;
-            dataCalls.UpdateWindowSetting(SettingValues.getInstance().sizeNumber - 1);
+            dataCalls.UpdateWindowSetting(2);
             if (onUpdateListener != null) {
                 onUpdateListener.onUpdate(Full);
             }
@@ -85,13 +82,30 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
 
     @Override
     public void reload() {
+        int Window = dataCalls.getWindowSetting();
         if (Window == 0) {
-            update(Standard);
+            SettingValues.getInstance().sizeNumber = 1;
+            sizeOne.setSelected(true);
+            /*
+            SettingCode.setOnReloadingScreenSizeUIListener(new SettingCode.OnReloadingScreenSizeUIListener() {
+                @Override
+                public void OnReloadingScreenSizeUI(ScreenSizeSettingPanel.Resolution value) {
+                    SettingCode.getSettingCode().changeSize(value);
+                }
+            });
+            */
+            settingCode.changeSize(Standard);
         } else if (Window == 1) {
-            update(Large);
+            SettingValues.getInstance().sizeNumber = 2;
+            sizeTwo.setSelected(true);
+            settingCode.changeSize(Large);
         } else if (Window == 2) {
-            update(Full);
+            SettingValues.getInstance().sizeNumber = 3;
+            sizeThree.setSelected(true);
+            settingCode.changeSize(Full);
         }
+        int sizeNumber = Window + 1;
+        //SettingCode.changeSize(sizeNumber);
     }
 
     @Override
@@ -100,8 +114,8 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
         //이 함수를 통해 각 사이즈를 조절해주려했는데 인터페이스가 상수만을 가질 수 있어서 값 바꾸는 게 안 됩니다.ㅠㅠ
     }
 
-    public ScreenSizeSettingPanel() {
-
+    public ScreenSizeSettingPanel(SettingCode settingCode) {
+        this.settingCode = settingCode;
         this.setPreferredSize(new Dimension(250, 110));
 
         screenSizeTitle.setForeground(Color.BLACK);
@@ -143,34 +157,20 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
         // screenSizeArea.setPreferredSize(new Dimension(250, 70));
         setAlignmentX(LEFT_ALIGNMENT);
         setBackground(grayMade);
-
-        reload();
     }
     public void sizeOnefun() {
-        SettingValues.getInstance().sizeNumber = 1;
-        dataCalls.UpdateWindowSetting(SettingValues.getInstance().sizeNumber - 1);
-        if (onUpdateListener != null) {
-            onUpdateListener.onUpdate(Standard);
-        }
-        sizeOne.setSelected(true);
+        update(Standard);
+        reload();
     }
 
     public void sizeTwofun() {
-        SettingValues.getInstance().sizeNumber = 2;
-        dataCalls.UpdateWindowSetting(SettingValues.getInstance().sizeNumber - 1);
-        if (onUpdateListener != null) {
-            onUpdateListener.onUpdate(Large);
-        }
-        sizeTwo.setSelected(true);
+        update(Large);
+        reload();
     }
 
     public void sizeThreefun() {
-        SettingValues.getInstance().sizeNumber = 3;
-        dataCalls.UpdateWindowSetting(SettingValues.getInstance().sizeNumber - 1);
-        if (onUpdateListener != null) {
-            onUpdateListener.onUpdate(Full);
-        }
-        sizeThree.setSelected(true);
+        update(Full);
+        reload();
     }
 }
 

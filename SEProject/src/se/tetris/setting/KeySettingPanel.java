@@ -25,7 +25,7 @@ public class KeySettingPanel extends JPanel {
     private JRadioButton keyTwo = new JRadioButton(keyTwoString);
 
     DBCalls dataCalls = new DBCalls();
-    int setKey = dataCalls.getKeySetting();
+    int settingKey = dataCalls.getKeySetting();
 
     public enum KeyMode{
         Arrow,
@@ -45,10 +45,10 @@ public class KeySettingPanel extends JPanel {
     }
 
     void reload() {
-        if (setKey == 0) {
+        if (settingKey == 0) {
             //방향키
             keyOnefun();
-        } else if (setKey == 1) {
+        } else if (settingKey == 1) {
             //WASD
             keyTwofun();
         }

@@ -1,12 +1,6 @@
 package se.tetris.component;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -18,19 +12,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JTextPane;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.Timer;
+import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
@@ -42,6 +24,7 @@ import javax.swing.text.StyledDocument;
 import se.tetris.component.*;
 import se.tetris.data.DBCalls;
 import se.tetris.setting.SettingCode;
+import se.tetris.setting.SettingValues;
 
 public class Score extends tabViewBox {
 
@@ -102,7 +85,7 @@ class SButton extends JButton {
 
 
 
-class tabViewBox extends JFrame {
+class tabViewBox extends JFrame implements Sizeable {
 
     public tabViewBox() {
         setTitle("SeoulTech SE Tettris");
@@ -120,15 +103,9 @@ class tabViewBox extends JFrame {
     SettingCode setting = new SettingCode();
 
     public void startMode() {
+        int sizeNumber = SettingValues.getInstance().sizeNumber;
         Start start = new Start();
-        if (Window == 0) {
-            start.setSize(400, 600);
-        } else if (Window == 1) {
-            start.setSize(800, 800);
-        } else {
-            start.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
-        }
-
+        start.changeSize(sizeNumber);
         start.setVisible(true);
 
         setVisible(false);
@@ -178,6 +155,17 @@ class tabViewBox extends JFrame {
                 System.exit(0);
             }
         });
+    }
+
+    @Override
+    public void changeSize(int sizeNumber) {
+        if (sizeNumber == 1) {
+            setSize(400, 600);
+        } else if (sizeNumber == 2) {
+            setSize(800, 800);
+        } else {
+            setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+        }
     }
 }
 

@@ -36,7 +36,7 @@ import se.tetris.data.*;
 import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
-public class InnerBoard extends JPanel {
+public class InnerBoard extends JPanel implements Sizeable {
 
     public static String BattleMode;
 
@@ -1034,6 +1034,8 @@ public class InnerBoard extends JPanel {
         levelLb1.setFont(new Font(null, Font.BOLD, size));
         levelLb2.setFont(new Font(null, Font.BOLD, size));
     }
+
+    @Override
     public void changeSize(int sizeNumber){
         switch (sizeNumber) {
             case 1:

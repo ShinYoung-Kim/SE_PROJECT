@@ -36,13 +36,14 @@ import se.tetris.blocks.SBlock;
 import se.tetris.blocks.TBlock;
 import se.tetris.blocks.ZBlock;
 
+import se.tetris.setting.ISetting;
 import se.tetris.setting.SettingValues;
 import se.tetris.data.*;
 
 import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
-public class Board extends JFrame {
+public class Board extends JFrame implements Sizeable {
 	public static Board boardMain;
 	private static final long serialVersionUID = 2434035659171694595L;
 
@@ -87,10 +88,6 @@ public class Board extends JFrame {
 	public static int mode = 0;
 	int eraseCnt = 0;
 
-	//initInterval 난이도에 따라 조절
-	//public static int initEasyInterval = 2000;
-	//public static int initNormalInterval = 1000;
-	//public static int initHardInterval = 500;
 	final SettingValues setting = SettingValues.getInstance();
 	int intervalByMode = setting.intervalNumber;
 
@@ -103,7 +100,6 @@ public class Board extends JFrame {
 	static JLabel scoreLb2 = new JLabel(Integer.toString(score));
 	static JLabel levelLb1 = new JLabel("Level");
 	static JLabel levelLb2 = new JLabel(Integer.toString(level));
-
 
 	public Board() {
 
@@ -134,7 +130,6 @@ public class Board extends JFrame {
 		scorePanel.setBorder(scoreBorder);
 		scorePanel.setPreferredSize(new Dimension(150, 50));
 
-
 		scoreLb1.setForeground(Color.darkGray);
 		//정렬
 		scoreLb1.setAlignmentX(CENTER_ALIGNMENT);
@@ -149,11 +144,11 @@ public class Board extends JFrame {
 		scorePanel.add(Box.createVerticalStrut(5));
 		scorePanel.add(scoreLb2);
 
-
 		levelPanel = new JPanel();
 		levelPanel.setBorder(scoreBorder);
 		levelPanel.setPreferredSize(new Dimension(150, 50));
 
+		//인터페이스 setting
 		mode = dataCalls.getLevelSetting();
 
 		levelLb1.setForeground(Color.darkGray);
@@ -197,6 +192,7 @@ public class Board extends JFrame {
 		setFocusable(true);
 		requestFocus();
 
+		//인터페이스 세팅
 		//Create the first block and draw
 		curr = getRandomBlock(setting.modeChoose);
 		next = getRandomBlock(setting.modeChoose);
@@ -235,7 +231,8 @@ public class Board extends JFrame {
 		timer.start();
 	}
 
-	private Block getRandomBlock(int modeChoose) {
+	//인터페이스 세팅
+	public Block getRandomBlock(int modeChoose) {
 		switch (modeChoose) {
 			case 1:
 				min = 1;
@@ -309,7 +306,6 @@ public class Board extends JFrame {
 		}
 		return new IBlock();
 	}
-
 
 	private void placeBlock() {
 		for(int j=0; j<curr.height(); j++) {
@@ -492,12 +488,10 @@ public class Board extends JFrame {
 			collisionOccur();
 		}
 		else y++;
-
 		if (!isGameOver()) {
 			placeBlock();
 			drawBoard();
 		}
-
 		hey();
 		getScore(eraseCnt, "block");
 		setScore();
@@ -544,7 +538,6 @@ public class Board extends JFrame {
 				}
 			}
 		}
-
 		for (int i = 0; i < board.length; i++) {
 			int offset = (i + 1) * (WIDTH + 3) + 1;
 			for (int j = 0; j < board[0].length ; j++) {
@@ -646,18 +639,18 @@ public class Board extends JFrame {
 		colorBlindModeNext();
 	}
 
-	private void colorBlindMode(SimpleAttributeSet styleSet, Block block) {
+	public void colorBlindMode(SimpleAttributeSet styleSet, Block block) {
 		if (setting.colorBlindModeCheck == 1) {
 			StyleConstants.setForeground(styleSet, block.getColorBlind());
 		} else {
 			StyleConstants.setForeground(styleSet, block.getColor());
 		}
 	}
-	private void colorBlindModeNext(){
+	public void colorBlindModeNext(){
 		colorBlindMode(stylesetNx, next);
 		nextDoc.setParagraphAttributes(0, nextDoc.getLength(), stylesetNx, false);
 	}
-	private void colorBlindModeCurrent(int offset){
+	public void colorBlindModeCurrent(int offset){
 		colorBlindMode(stylesetCur, curr);
 		boardDoc.setCharacterAttributes(offset, 1, stylesetCur, true);
 	}
@@ -1074,6 +1067,8 @@ public class Board extends JFrame {
 		setScore();
 		return score;
 	}
+
+	@Override
 	public void changeSize(int sizeNumber){
 		switch (sizeNumber) {
 			case 1:
@@ -1106,5 +1101,24 @@ public class Board extends JFrame {
 				break;
 		}
 	}
+	public class MockSetting implements ISetting {
+		int modeChoose = SettingValues.getInstance().modeChoose;
+		int colorBlindModeCheck = SettingValues.getInstance().colorBlindModeCheck;
+		int intervalNumber = SettingValues.getInstance().intervalNumber;
+		public int sizeNumber = SettingValues.getInstance().sizeNumber;
+		public int keyChoose = SettingValues.getInstance().keyChoose;
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+		}
+	}
+
+	public class MockStart implements IStart {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+		}
+	}
 }

@@ -20,8 +20,9 @@ import java.util.TimerTask;
 
 import se.tetris.component.*;
 import se.tetris.data.DBCalls;
+import se.tetris.setting.SettingCode;
 
-public class TimeBattleBoard extends JFrame {
+public class TimeBattleBoard extends JFrame implements Sizeable  {
 
     private static InnerTimeBoard player1;
     private static InnerTimeBoard player2;
@@ -93,6 +94,17 @@ public class TimeBattleBoard extends JFrame {
     public static void stopGameTimer() {
         GameT.stop = true;
         GameT.setStop(true);
+    }
+
+    @Override
+    public void changeSize(int sizeNumber) {
+        if (sizeNumber == 1) {
+            setSize(400, 600);
+        } else if (sizeNumber == 2) {
+            setSize(800, 800);
+        } else {
+            setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+        }
     }
 
 

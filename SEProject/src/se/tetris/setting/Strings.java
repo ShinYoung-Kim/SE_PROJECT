@@ -24,6 +24,7 @@ public class Strings {
     public static final String colorBlindTwoString = "On";
 
     //SettingCode
+    //string 대문자로 시작하는 거 소문자로 바꾸기
     public static final String settingTitleString = "테트리스 게임 설정";
     public static final String scoreResetString = "스코어보드<br>초기화";
     public static final String BackToGameString = "일반<br>게임으로";

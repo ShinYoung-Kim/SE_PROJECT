@@ -7,6 +7,7 @@ import se.tetris.component.Start.BackPanel;
 import se.tetris.component.Start.SButton;
 import se.tetris.data.DBCalls;
 import se.tetris.setting.SettingCode;
+import se.tetris.setting.SettingValues;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +16,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.ConstructorProperties;
 
-public class StartBattle extends JFrame {
+public class StartBattle extends JFrame implements Sizeable {
 
     int KeyCount = 0;
     int KeyFoucus = 0;
@@ -24,7 +25,15 @@ public class StartBattle extends JFrame {
 
     int Window = dataCalls.getWindowSetting();
     SettingCode setting = new SettingCode();
+    int sizeNumber = SettingValues.getInstance().sizeNumber;
 
+    private JLayeredPane layerPane;
+
+    private BackPanel backPanel;
+
+    private ImageIcon titleImg = new ImageIcon("./SEProject/img/btitle.png");
+
+    private Image retitleFill;
 
     ImageIcon backImg = new ImageIcon("./SEProject/img/bg_one.png");
     Image rebackFill = backImg.getImage().getScaledInstance(400, 600, Image.SCALE_SMOOTH);
@@ -37,6 +46,28 @@ public class StartBattle extends JFrame {
             Image.SCALE_SMOOTH);
 
     int backX = 0;
+
+    @Override
+    public void changeSize(int sizeNumber) {
+        if (sizeNumber == 1) {
+            setSize(400, 600);
+            layerPane.setSize(400, 600);
+            backPanel.setSize(400, 600);
+            retitleFill = titleImg.getImage().getScaledInstance(160, 280, Image.SCALE_SMOOTH);
+        } else if (sizeNumber == 2) {
+            setSize(800, 800);
+            layerPane.setSize(800, 800);
+            backPanel.setSize(800, 800);
+            titleImg = new ImageIcon("./SEProject/img/btitle.png");
+            retitleFill = titleImg.getImage().getScaledInstance(320, 300, Image.SCALE_SMOOTH);
+        } else {
+            setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+            layerPane.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+            backPanel.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+            titleImg = new ImageIcon("./SEProject/img/btitle3.png");
+            retitleFill = titleImg.getImage().getScaledInstance(480, 450, Image.SCALE_SMOOTH);
+        }
+    }
 
     class BackPanel extends JPanel {
         protected void paintComponent(Graphics g) {
@@ -53,7 +84,7 @@ public class StartBattle extends JFrame {
         }
     }
 
-    class SButton extends JButton {
+    class SButton extends JButton implements Sizeable{
 
         Color Impact = new Color(106, 215, 255);
         Color Normal = new Color(0, 0, 0);
@@ -81,17 +112,21 @@ public class StartBattle extends JFrame {
 
             setForeground(Impact);
 
-            if (Window == 0) {
+            changeSize(sizeNumber);
+        }
+
+        @Override
+        public void changeSize(int sizeNumber) {
+            if (sizeNumber == 1) {
                 setPreferredSize(new Dimension(200, 35));
                 setFont(new Font("고딕", Font.CENTER_BASELINE, 12));
-            } else if (Window == 1) {
+            } else if (sizeNumber == 2) {
                 setPreferredSize(new Dimension(220, 45));
                 setFont(new Font("고딕", Font.CENTER_BASELINE, 14));
             } else {
                 setPreferredSize(new Dimension(300, 50));
                 setFont(new Font("고딕", Font.CENTER_BASELINE, 16));
             }
-
         }
     }
 
@@ -99,29 +134,11 @@ public class StartBattle extends JFrame {
         setTitle("SeoulTech SE Tettris");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JLayeredPane layerPane = new JLayeredPane();
+        layerPane = new JLayeredPane();
+        backPanel = new BackPanel();
+        retitleFill = null;
 
-        BackPanel backPanel = new BackPanel();
-
-        ImageIcon titleImg = new ImageIcon("./SEProject/img/btitle.png");
-
-        Image retitleFill = null;
-
-        if (Window == 0) {
-            layerPane.setSize(400, 600);
-            backPanel.setSize(400, 600);
-            retitleFill = titleImg.getImage().getScaledInstance(160, 280, Image.SCALE_SMOOTH);
-        } else if (Window == 1) {
-            layerPane.setSize(800, 800);
-            backPanel.setSize(800, 800);
-            titleImg = new ImageIcon("./SEProject/img/btitle.png");
-            retitleFill = titleImg.getImage().getScaledInstance(320, 300, Image.SCALE_SMOOTH);
-        } else {
-            layerPane.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
-            backPanel.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
-            titleImg = new ImageIcon("./SEProject/img/btitle3.png");
-            retitleFill = titleImg.getImage().getScaledInstance(480, 450, Image.SCALE_SMOOTH);
-        }
+        changeSize(sizeNumber);
 
         layerPane.setLayout(null);
 
@@ -173,13 +190,7 @@ public class StartBattle extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 BattleBoard battle = new BattleBoard();
-                if (Window == 0) {
-                    battle.setSize(800, 650);
-                } else if (Window == 1) {
-                    battle.setSize(1200, 800);
-                } else {
-                    battle.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
-                }
+                ((Sizeable)battle).changeSize(sizeNumber);
                 battle.setVisible(true);
             }
         });
@@ -189,13 +200,7 @@ public class StartBattle extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 ItemBattleBoard itembattle = new ItemBattleBoard();
-                if (Window == 0) {
-                    itembattle.setSize(800, 650);
-                } else if (Window == 1) {
-                    itembattle.setSize(1200, 800);
-                } else {
-                    itembattle.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
-                }
+                ((Sizeable)itembattle).changeSize(sizeNumber);
                 itembattle.setVisible(true);
             }
         });
@@ -205,13 +210,7 @@ public class StartBattle extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 TimeBattleBoard timebattle = new TimeBattleBoard();
-                if (Window == 0) {
-                    timebattle.setSize(800, 600);
-                } else if (Window == 1) {
-                    timebattle.setSize(1200, 800);
-                } else {
-                    timebattle.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
-                }
+                ((Sizeable)timebattle).changeSize(sizeNumber);
                 timebattle.setVisible(true);
             }
         });

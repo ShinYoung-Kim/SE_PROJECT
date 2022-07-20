@@ -35,7 +35,7 @@ import se.tetris.setting.SettingValues;
 import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
-public class ItemBoard extends JFrame {
+public class ItemBoard extends JFrame implements Sizeable {
 
 	public static ItemBoard itemBoardMain;
 	private static final long serialVersionUID = 2434035659171694595L;
@@ -1337,6 +1337,8 @@ public class ItemBoard extends JFrame {
 		setScore();
 		return score;
 	}
+
+	@Override
 	public void changeSize(int sizeNumber){
 		switch (sizeNumber) {
 			case 1:

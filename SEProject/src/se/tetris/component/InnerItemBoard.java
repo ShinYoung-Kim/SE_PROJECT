@@ -30,7 +30,7 @@ import se.tetris.data.*;
 import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
-public class InnerItemBoard extends JPanel{
+public class InnerItemBoard extends JPanel implements Sizeable{
 
     public static Board innerItemBoardMain;
     protected static final long serialVersionUID = 2434035659171694595L;
@@ -1274,6 +1274,8 @@ public class InnerItemBoard extends JPanel{
         levelLb1.setFont(new Font(null, Font.BOLD, size));
         levelLb2.setFont(new Font(null, Font.BOLD, size));
     }
+
+    @Override
     public void changeSize(int sizeNumber){
         switch (sizeNumber) {
             case 1:

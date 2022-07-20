@@ -12,7 +12,7 @@ import javax.swing.Timer;
 import se.tetris.data.DBCalls;
 import se.tetris.setting.*;
 
-public class ItemBattleBoard extends JFrame {
+public class ItemBattleBoard extends JFrame implements Sizeable {
 
     private static InnerItemBoard player1;
     private static InnerItemBoard player2;
@@ -52,6 +52,17 @@ public class ItemBattleBoard extends JFrame {
         //Timer player2Timer = player2.getTimer();
         //player2Timer.setDelay(10000);
 
+    }
+
+    @Override
+    public void changeSize(int sizeNumber) {
+        if (sizeNumber == 1) {
+            setSize(400, 600);
+        } else if (sizeNumber == 2) {
+            setSize(800, 800);
+        } else {
+            setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+        }
     }
 
 

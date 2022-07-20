@@ -1,6 +1,7 @@
 package se.tetris.component;
 
 import se.tetris.data.DBCalls;
+import se.tetris.setting.SettingCode;
 import se.tetris.setting.SettingValues;
 
 import java.awt.*;
@@ -18,7 +19,7 @@ import javax.swing.text.StyleConstants;
 import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
-public class BattleBoard extends JFrame {
+public class BattleBoard extends JFrame implements Sizeable {
 
     private static InnerBoard player1;
     private static InnerBoard player2;
@@ -33,8 +34,9 @@ public class BattleBoard extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         DBCalls dataCalls = new DBCalls();
-        player1 = new InnerBoard(dataCalls.getWindowSetting() + 1);
-        player2 = new InnerBoard(dataCalls.getWindowSetting() + 1);
+        int sizeNumber = SettingValues.getInstance().sizeNumber;
+        player1 = new InnerBoard(sizeNumber);
+        player2 = new InnerBoard(sizeNumber);
 
         InnerBoard.BattleMode = "Battle";
 
@@ -60,6 +62,17 @@ public class BattleBoard extends JFrame {
         Timer player2Timer = player2.getTimer();
         player2Timer.setDelay(10000);
 
+    }
+
+    @Override
+    public void changeSize(int sizeNumber) {
+        if (sizeNumber == 1) {
+            setSize(400, 600);
+        } else if (sizeNumber == 2) {
+            setSize(800, 800);
+        } else {
+            setSize(SettingCode.screenWidth, SettingCode.screenHeight);
+        }
     }
 
 

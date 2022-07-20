@@ -13,8 +13,6 @@ public class Tetris {
 	protected String path = System.getProperty("user.dir");
 	protected String url = "jdbc:sqlite:./lib/tetris.db";
 
-
-
 	public static void main(String[] args) {
 		DBConnectionManager data = new DBConnectionManager();
 
@@ -32,21 +30,9 @@ public class Tetris {
 			startView.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
 		}
 
-
 		startView.setVisible(true);
-
-
 
 		data.connect();
 		data.createNewTable();
-
-//
-//		dataCalls.getWindowSetting();
-//		dataCalls.getLevelSetting();
-//		dataCalls.getColorSetting();
-
-//
-//		dataCalls.get10ItemScoreData();
-
 	}
 }

@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import se.tetris.data.DBCalls;
 import se.tetris.setting.SettingCode;
 import se.tetris.component.*;
+import se.tetris.setting.SettingValues;
 
 public class ScoreItem {
 
@@ -102,16 +103,8 @@ public class ScoreItem {
 
     public void getRecentScore(int sc, int mode, int level, String name) {
         Score scoreView = new Score();
-
-        int Window = dataCalls.getWindowSetting();
-
-        if(Window == 0) {
-            scoreView.setSize(400,600);
-        }else if(Window == 1) {
-            scoreView.setSize(800,800);
-        }else {
-            scoreView.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
-        }
+        int sizeNumber = SettingValues.getInstance().sizeNumber;
+        scoreView.changeSize(sizeNumber);
         scoreView.setVisible(true);
     }
 
