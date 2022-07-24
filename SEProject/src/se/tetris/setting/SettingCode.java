@@ -151,7 +151,6 @@ public class SettingCode extends JFrame implements Sizeable {
             public void keyPressed(KeyEvent e) {
                 if (KeyCount == 0) {
                     settingView.requestFocusInWindow();
-                    KeyFoucus = 0;
                     foucusColoringRemove();
                     radioButtonArray[KeyFoucus].setBackground(Color.gray);
                     KeyCount++;
@@ -220,7 +219,7 @@ public class SettingCode extends JFrame implements Sizeable {
         if (KeyFoucus < 10) {
             radioButtonArray[KeyFoucus].setBackground(Color.gray);
         } else {
-            radioButtonArray[KeyFoucus - 10].setBackground(Color.gray);
+            buttonArray[KeyFoucus - 10].setBackground(Color.gray);
         }
     }
 
@@ -229,8 +228,8 @@ public class SettingCode extends JFrame implements Sizeable {
             radioButtonArray[KeyFoucus].setSelected(true);
             radioButtonArray[KeyFoucus].doClick();
         } else {
-            radioButtonArray[KeyFoucus - 10].setSelected(true);
-            radioButtonArray[KeyFoucus - 10].doClick();
+            buttonArray[KeyFoucus - 10].setSelected(true);
+            buttonArray[KeyFoucus - 10].doClick();
         }
     }
 
