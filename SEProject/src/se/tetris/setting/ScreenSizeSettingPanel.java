@@ -72,12 +72,13 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
             }
             sizeTwo.setSelected(true);
         } else if(type == Full) {
-            dataCalls.UpdateWindowSetting(2);
+            SettingValues.getInstance().sizeNumber = 3;
             if (onUpdateListener != null) {
                 onUpdateListener.onUpdate(Full);
             }
             sizeThree.setSelected(true);
         }
+        dataCalls.UpdateWindowSetting(SettingValues.getInstance().sizeNumber - 1);
     }
 
     @Override
@@ -160,17 +161,14 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
     }
     public void sizeOnefun() {
         update(Standard);
-        reload();
     }
 
     public void sizeTwofun() {
         update(Large);
-        reload();
     }
 
     public void sizeThreefun() {
         update(Full);
-        reload();
     }
 }
 
