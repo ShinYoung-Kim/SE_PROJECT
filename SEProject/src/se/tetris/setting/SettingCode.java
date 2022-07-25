@@ -13,6 +13,30 @@ import se.tetris.data.*;
 import static se.tetris.setting.Strings.*;
 
 public class SettingCode extends JFrame implements Sizeable {
+    enum KeyChoose {
+        ARROW(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT),
+        WASD(KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D);
+
+        final int up;
+        final int down;
+        final int left;
+        final int right;
+        KeyChoose(int up, int down, int left, int right) {
+            this.up = up;
+            this.down = down;
+            this.left = left;
+            this.right = right;
+        }
+
+        static KeyChoose getKeyChoose(int keyChoose) {
+            if (keyChoose == 1) {
+                return ARROW;
+            }
+            else {
+                return WASD;
+            }
+        }
+    }
     public static Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     public static int screenWidth = (int) (dimension.getWidth());
     public static int screenHeight = (int) (dimension.getHeight());
@@ -175,20 +199,21 @@ public class SettingCode extends JFrame implements Sizeable {
 
     void foucusMove(KeyEvent e) {
         int enteredKey = e.getKeyCode();
-        if ((enteredKey == KeyEvent.VK_UP && SettingValues.getInstance().keyChoose == 1) || (enteredKey == KeyEvent.VK_W && SettingValues.getInstance().keyChoose == 2)) {
+        int keyChoose = SettingValues.getInstance().keyChoose;
+        KeyChoose currentKeyChoose = KeyChoose.getKeyChoose(keyChoose);
+        if (currentKeyChoose.up == enteredKey) {
             foucusMoveUp();
-        } else if ((enteredKey == KeyEvent.VK_DOWN && SettingValues.getInstance().keyChoose == 1) || (enteredKey == KeyEvent.VK_S && SettingValues.getInstance().keyChoose == 2)) {
+        } else if (currentKeyChoose.down == enteredKey) {
             foucusMoveDown();
-        } else if ((enteredKey == KeyEvent.VK_LEFT && SettingValues.getInstance().keyChoose == 1) || (enteredKey == KeyEvent.VK_A && SettingValues.getInstance().keyChoose == 2)) {
+        } else if (currentKeyChoose.left == enteredKey) {
             foucusMoveLeft();
-        } else if ((enteredKey == KeyEvent.VK_RIGHT && SettingValues.getInstance().keyChoose == 1) || (enteredKey == KeyEvent.VK_D && SettingValues.getInstance().keyChoose == 2)) {
+        } else if (currentKeyChoose.right == enteredKey) {
             foucusMoveRight();
         } else if (enteredKey == 10) {
             foucusDoClick();
         }
         foucusColoringRemove();
         foucusColoring();
-        System.out.println("KeyFoucus : " + KeyFoucus);
     }
 
     void foucusMoveDown() {
