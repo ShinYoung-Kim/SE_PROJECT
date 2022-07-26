@@ -8,13 +8,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
 import se.tetris.data.*;
+
+import static java.awt.event.KeyEvent.VK_UP;
 import static se.tetris.setting.Strings.*;
 
 public class SettingCode extends JFrame implements Sizeable {
     enum KeyChoose {
-        ARROW(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT),
+        ARROW(VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT),
         WASD(KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_A, KeyEvent.VK_D);
 
         final int up;
@@ -79,6 +82,38 @@ public class SettingCode extends JFrame implements Sizeable {
 
     JRadioButton[] radioButtonArray;
     JButton[] buttonArray;
+
+    //keyCode 상수처리
+    final int vkUpKeycode = KeyEvent.VK_UP;
+    final int vkDownKeycode = KeyEvent.VK_DOWN;
+    final int vkLeftKeycode = KeyEvent.VK_LEFT;
+    final int vkRightKeycode = KeyEvent.VK_RIGHT;
+    final int vkWKeycode = KeyEvent.VK_W;
+    final int vkSKeycode = KeyEvent.VK_S;
+    final int vkAKeycode = KeyEvent.VK_A;
+    final int vkDKeycode = KeyEvent.VK_D;
+    final int vkEnterKeycode = 10;
+
+    //keyFoucus 상수 처리
+    final int screensizeStandard = 0;
+    final int screensizeBig = 1;
+    final int screensizeFull = 2;
+    final int keyArrow = 3;
+    final int keyWASD = 4;
+    final int colorBlindActive = 5;
+    final int colorBlindInactive = 6;
+    final int difficultyEasy = 7;
+    final int difficultyNormal = 8;
+    final int difficultyHard = 9;
+
+    final int scoreResetButton = 10;
+    final int backToGameButton = 11;
+    final int backToItemGameButton = 12;
+    final int backToBattleButton = 13;
+    final int backToStartButton = 14;
+    final int settingResetButton = 15;
+
+    int relation[][] = new int[16][4];
 
     public SettingCode() {
 
@@ -195,6 +230,30 @@ public class SettingCode extends JFrame implements Sizeable {
         colorBlindnessSettingPanel.reload();
         //기존 키보드 설정 가져오기
         keySettingPanel.reload();
+
+        for (int i = 0; i < 16; i++) {
+            int j = 0;
+            if (i != 0 && i != 10) {
+                relation[i][j] = i - 1;
+            } else {
+                relation[i][j] = i;
+            }
+            j++;
+            if (i != 9 && i != 15) {
+                relation[i][j] = i + 1;
+            } else {
+                relation[i][j] = i;
+            }
+            j++;
+            if (i > 9) {
+                relation[i][j] = 0;
+                relation[i][j + 1] = i;
+            } else {
+                relation[i][j] = i;
+                relation[i][j + 1] = 10;
+            }
+        }
+        System.out.println(Arrays.deepToString(relation));
     }
 
     void foucusMove(KeyEvent e) {
@@ -209,7 +268,7 @@ public class SettingCode extends JFrame implements Sizeable {
             foucusMoveLeft();
         } else if (currentKeyChoose.right == enteredKey) {
             foucusMoveRight();
-        } else if (enteredKey == 10) {
+        } else if (enteredKey == vkEnterKeycode) {
             foucusDoClick();
         }
         foucusColoringRemove();
