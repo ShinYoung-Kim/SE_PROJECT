@@ -88,12 +88,12 @@ public class Start extends JFrame implements Sizeable {
     private int backX = 0;
 
     public void startStdMode() {
+        /*
         Board main = new Board();
         if (main instanceof Sizeable) {
             int sizeNumber = SettingValues.getInstance().sizeNumber;
             ((Sizeable)main).changeSize(sizeNumber);
         }
-        /*
         if (SettingValues.getInstance().sizeNumber == 0) {
             main.setSize(400, 600);
             main.changeSize(1);
@@ -105,17 +105,17 @@ public class Start extends JFrame implements Sizeable {
             main.changeSize(3);
         }
         */
-        main.setVisible(true);
-        setVisible(false);
+        Navigation.getInstance().navigate(Navigation.BOARD_SCREEN);
+        //setVisible(false);
     }
 
     public void startItemMode() {
+        /*
         ItemBoard itemBoard = new ItemBoard();
         if (itemBoard instanceof Sizeable) {
             int sizeNumber = SettingValues.getInstance().sizeNumber;
             ((Sizeable)itemBoard).changeSize(sizeNumber);
         }
-        /*
         if (SettingValues.getInstance().sizeNumber == 0) {
             itemBoard.setSize(400, 600);
             itemBoard.changeSize(1);
@@ -127,17 +127,17 @@ public class Start extends JFrame implements Sizeable {
             itemBoard.changeSize(3);
         }
         */
-        itemBoard.setVisible(true);
-        setVisible(false);
+        Navigation.getInstance().navigate(Navigation.ITEM_BOARD_SCREEN);
+        //setVisible(false);
     }
 
     public void startScoreMode() {
+        /*
         Score scoreView = new Score();
         if (scoreView instanceof Sizeable) {
             int sizeNumber = SettingValues.getInstance().sizeNumber;
             ((Sizeable)scoreView).changeSize(sizeNumber);
         }
-        /*
         if (SettingValues.getInstance().sizeNumber == 0) {
             scoreView.setSize(400, 600);
         } else if (SettingValues.getInstance().sizeNumber == 1) {
@@ -147,17 +147,17 @@ public class Start extends JFrame implements Sizeable {
         }
 
          */
-        scoreView.setVisible(true);
-        setVisible(false);
+        Navigation.getInstance().navigate(Navigation.SCOREBOARD_SCREEN);
+        //setVisible(false);
     }
 
     public void startBattleMode() {
+        /*
         StartBattle battleMode = new StartBattle();
         if (battleMode instanceof Sizeable) {
             int sizeNumber = SettingValues.getInstance().sizeNumber;
             ((Sizeable)battleMode).changeSize(sizeNumber);
         }
-        /*
         if (SettingValues.getInstance().sizeNumber == 0) {
             battleMode.setSize(400, 600);
         } else if (SettingValues.getInstance().sizeNumber == 1) {
@@ -167,13 +167,13 @@ public class Start extends JFrame implements Sizeable {
         }
 
          */
-        battleMode.setVisible(true);
-        setVisible(false);
+        Navigation.getInstance().navigate(Navigation.START_BATTLE);
+        //setVisible(false);
     }
 
     public void startSettingMode() {
         Navigation.getInstance().navigate(Navigation.SETTING_SCREEN);
-        setVisible(false);
+        //setVisible(false);
     }
 
     public void startExitMode() {

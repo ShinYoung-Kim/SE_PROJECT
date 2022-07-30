@@ -1,7 +1,6 @@
 package se.tetris.common;
 
-import se.tetris.component.Sizeable;
-import se.tetris.component.Start;
+import se.tetris.component.*;
 import se.tetris.setting.SettingCode;
 import se.tetris.setting.SettingValues;
 
@@ -21,6 +20,7 @@ public class Navigation {
     public static final int BATTLE_BOARD_SCREEN = 5;
     public static final int BATTLE_ITEM_BOARD_SCREEN = 6;
     public static final int BATTLE_TIME_BOARD_SCREEN = 7;
+    public static final int START_BATTLE = 8;
 
     private Component current = null;
     private final SettingCode setting = new SettingCode();
@@ -32,6 +32,13 @@ public class Navigation {
         current = switch (screen){
             case START_SCREEN -> new Start();
             case SETTING_SCREEN -> setting;
+            case SCOREBOARD_SCREEN -> new Score();
+            case BOARD_SCREEN -> new Board();
+            case ITEM_BOARD_SCREEN -> new ItemBoard();
+            case BATTLE_BOARD_SCREEN -> new BattleBoard();
+            case BATTLE_ITEM_BOARD_SCREEN -> new ItemBattleBoard();
+            case BATTLE_TIME_BOARD_SCREEN -> new TimeBattleBoard();
+            case START_BATTLE -> new StartBattle();
             default -> throw new RuntimeException("유효하지 않은 스크린을 넘겼습니다.");
             //default -> current;
         };
