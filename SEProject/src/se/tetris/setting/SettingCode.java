@@ -259,20 +259,20 @@ public class SettingCode extends JFrame implements Sizeable {
         int keyChoose = SettingValues.getInstance().keyChoose;
         KeyChoose currentKeyChoose = KeyChoose.getKeyChoose(keyChoose);
         if (currentKeyChoose.up == enteredKey) {
-            foucusMoveUp();
+            KeyFoucus = relation[KeyFoucus][0];
         } else if (currentKeyChoose.down == enteredKey) {
-            foucusMoveDown();
+            KeyFoucus = relation[KeyFoucus][1];
         } else if (currentKeyChoose.left == enteredKey) {
-            foucusMoveLeft();
+            KeyFoucus = relation[KeyFoucus][2];
         } else if (currentKeyChoose.right == enteredKey) {
-            foucusMoveRight();
+            KeyFoucus = relation[KeyFoucus][3];
         } else if (enteredKey == vkEnterKeycode) {
             foucusDoClick();
         }
         foucusColoringRemove();
         foucusColoring();
     }
-
+/*
     void foucusMoveDown() {
         if (KeyFoucus != 9 && KeyFoucus != 15) {
             KeyFoucus++;
@@ -296,6 +296,8 @@ public class SettingCode extends JFrame implements Sizeable {
             KeyFoucus = 10;
         }
     }
+
+ */
 
     void foucusColoring() {
         buttonArray[KeyFoucus].setBackground(Color.gray);
