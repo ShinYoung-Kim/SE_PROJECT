@@ -3,6 +3,7 @@ package se.tetris.component;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import se.tetris.common.Navigation;
 import se.tetris.component.Start.BackPanel;
 import se.tetris.component.Start.SButton;
 import se.tetris.data.DBCalls;
@@ -188,30 +189,21 @@ public class StartBattle extends JFrame implements Sizeable {
         general.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                BattleBoard battle = new BattleBoard();
-                ((Sizeable)battle).changeSize(sizeNumber);
-                battle.setVisible(true);
+                Navigation.getInstance().navigate(Navigation.BATTLE_BOARD_SCREEN);
             }
         });
 
         item.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                ItemBattleBoard itembattle = new ItemBattleBoard();
-                ((Sizeable)itembattle).changeSize(sizeNumber);
-                itembattle.setVisible(true);
+                Navigation.getInstance().navigate(Navigation.BATTLE_ITEM_BOARD_SCREEN);
             }
         });
 
         timeLimit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                TimeBattleBoard timebattle = new TimeBattleBoard();
-                ((Sizeable)timebattle).changeSize(sizeNumber);
-                timebattle.setVisible(true);
+                Navigation.getInstance().navigate(Navigation.BATTLE_TIME_BOARD_SCREEN);
             }
         });
 
