@@ -4,10 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import se.tetris.data.DBCalls;
 import se.tetris.setting.*;
@@ -34,7 +31,7 @@ public class ItemBattleBoard extends JFrame implements Sizeable {
         player2.setName("Player2");
 
         panel = new JPanel();
-
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(player1);
         panel.add(player2);
 

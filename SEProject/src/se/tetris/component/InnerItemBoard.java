@@ -56,6 +56,7 @@ public class InnerItemBoard extends JPanel implements Sizeable{
     private JPanel rightPanel;
     private JPanel scorePanel;
     private JPanel levelPanel;
+    private JPanel scoreLevelPanel;
     public int[][] board;
     private int[][] nextBoard;
     private int[][] attackBoard;
@@ -143,7 +144,6 @@ public class InnerItemBoard extends JPanel implements Sizeable{
         scorePanel.setBorder(scoreBorder);
         scorePanel.setPreferredSize(new Dimension(150, 50));
 
-
         scoreLb1.setForeground(Color.darkGray);
         //정렬
         scoreLb1.setAlignmentX(CENTER_ALIGNMENT);
@@ -157,7 +157,6 @@ public class InnerItemBoard extends JPanel implements Sizeable{
         scorePanel.add(scoreLb1);
         scorePanel.add(Box.createVerticalStrut(5));
         scorePanel.add(scoreLb2);
-
 
         levelPanel = new JPanel();
         levelPanel.setBorder(scoreBorder);
@@ -174,6 +173,11 @@ public class InnerItemBoard extends JPanel implements Sizeable{
         levelPanel.add(Box.createVerticalStrut(5));
         levelPanel.add(levelLb2);
 
+        scoreLevelPanel = new JPanel();
+        scoreLevelPanel.setLayout(new BoxLayout(scoreLevelPanel, BoxLayout.Y_AXIS));
+        scoreLevelPanel.add(scorePanel);
+        scoreLevelPanel.add(levelPanel);
+
         attackArea = new JTextPane();
         attackArea.setEditable(false);
         attackArea.setBackground(Color.BLACK);
@@ -188,16 +192,15 @@ public class InnerItemBoard extends JPanel implements Sizeable{
         leftPanel = new JPanel();
         leftPanel.add(tetrisArea);
         rightPanel = new JPanel();
-        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+        rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.X_AXIS));
         rightPanel.add(nextArea);
         rightPanel.add(Box.createVerticalStrut(10));
-        rightPanel.add(scorePanel);
-        rightPanel.add(Box.createVerticalStrut(10));
-        rightPanel.add(levelPanel);
+        rightPanel.add(scoreLevelPanel);
         rightPanel.add(Box.createVerticalStrut(10));
         rightPanel.add(attackArea);
 
         panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(leftPanel);
         panel.add(rightPanel);
 
@@ -1279,22 +1282,22 @@ public class InnerItemBoard extends JPanel implements Sizeable{
     public void changeSize(int sizeNumber){
         switch (sizeNumber) {
             case 1:
-                setStylesetSize(20, 13, 20);
-                setRtSize(120, 50, 120);
-                setLbSize(10);
+                setStylesetSize(20, 8, 8);
+                setRtSize(40, 50, 50);
+                setLbSize(8);
                 tetrisArea.setPreferredSize(new Dimension(180, 330));
                 break;
             case 2:
-                setStylesetSize(40, 22, 36);
-                setRtSize(200, 55, 200);
-                setLbSize(15);
-                tetrisArea.setPreferredSize(new Dimension(330, 625));
+                setStylesetSize(35, 11, 20);
+                setRtSize(120, 50, 120);
+                setLbSize(13);
+                tetrisArea.setPreferredSize(new Dimension(300, 550));
                 break;
             case 3:
-                setStylesetSize(40, 22, 36);
+                setStylesetSize(35, 22, 36);
                 setRtSize(200, 55, 200);
                 setLbSize(17);
-                tetrisArea.setPreferredSize(new Dimension(330, 625));
+                tetrisArea.setPreferredSize(new Dimension(300, 550));
                 break;
             default:
                 setStylesetSize(25, 13, 20);
