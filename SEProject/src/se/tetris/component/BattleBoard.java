@@ -10,10 +10,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 import javax.swing.text.StyleConstants;
 
 import static se.tetris.setting.SettingCode.screenHeight;
@@ -44,7 +41,7 @@ public class BattleBoard extends JFrame implements Sizeable {
         player2.setName("Player2");
 
         panel = new JPanel();
-
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(player1);
         panel.add(player2);
 
