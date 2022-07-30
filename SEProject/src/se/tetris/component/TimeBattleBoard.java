@@ -9,12 +9,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import java.util.TimerTask;
 
@@ -65,7 +60,7 @@ public class TimeBattleBoard extends JFrame implements Sizeable  {
         player2.setName("Player2");
 
         panel = new JPanel();
-
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(player1);
         panel.add(player2);
 
