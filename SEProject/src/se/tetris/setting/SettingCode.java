@@ -80,8 +80,7 @@ public class SettingCode extends JFrame implements Sizeable {
 
     private OnReloadingScreenSizeUIListener onReloadingScreenSizeUIListener = null;
 
-    JRadioButton[] radioButtonArray;
-    JButton[] buttonArray;
+    AbstractButton[] buttonArray;
 
     //keyCode 상수처리
     final int vkUpKeycode = KeyEvent.VK_UP;
@@ -192,10 +191,9 @@ public class SettingCode extends JFrame implements Sizeable {
         colorBlindnessSettingPanel.setPreferredSize(new Dimension(250, 110));
         difficultySettingPanel.setPreferredSize(new Dimension(250, 110));
 
-        radioButtonArray = new JRadioButton[]{screenSizeArea.getSizeOne(), screenSizeArea.getSizeTwo(), screenSizeArea.getSizeThree(), keySettingPanel.getKeyOne(),
+        buttonArray = new AbstractButton[]{screenSizeArea.getSizeOne(), screenSizeArea.getSizeTwo(), screenSizeArea.getSizeThree(), keySettingPanel.getKeyOne(),
                 keySettingPanel.getKeyTwo(), colorBlindnessSettingPanel.getColorBlindOne(), colorBlindnessSettingPanel.getColorBlindTwo(),
-                difficultySettingPanel.getModeOne(), difficultySettingPanel.getModeTwo(), difficultySettingPanel.getModeThree()};
-        buttonArray = new JButton[]{buttonPanel.getScoreReset(), buttonPanel.getBackToGame(), buttonPanel.getBackToItemGame(),
+                difficultySettingPanel.getModeOne(), difficultySettingPanel.getModeTwo(), difficultySettingPanel.getModeThree(), buttonPanel.getScoreReset(), buttonPanel.getBackToGame(), buttonPanel.getBackToItemGame(),
                 buttonPanel.getBackToBattle(), buttonPanel.getBackToStart(), buttonPanel.getSettingReset()};
 
         // Initialize board for the game.
@@ -211,7 +209,7 @@ public class SettingCode extends JFrame implements Sizeable {
                 if (KeyCount == 0) {
                     settingView.requestFocusInWindow();
                     foucusColoringRemove();
-                    radioButtonArray[KeyFoucus].setBackground(Color.gray);
+                    buttonArray[KeyFoucus].setBackground(Color.gray);
                     KeyCount++;
                 } else {
                     foucusMove(e);
@@ -300,28 +298,16 @@ public class SettingCode extends JFrame implements Sizeable {
     }
 
     void foucusColoring() {
-        if (KeyFoucus < 10) {
-            radioButtonArray[KeyFoucus].setBackground(Color.gray);
-        } else {
-            buttonArray[KeyFoucus - 10].setBackground(Color.gray);
-        }
+        buttonArray[KeyFoucus].setBackground(Color.gray);
     }
 
     void foucusDoClick() {
-        if (KeyFoucus < 10) {
-            radioButtonArray[KeyFoucus].setSelected(true);
-            radioButtonArray[KeyFoucus].doClick();
-        } else {
-            buttonArray[KeyFoucus - 10].setSelected(true);
-            buttonArray[KeyFoucus - 10].doClick();
-        }
+        buttonArray[KeyFoucus].setSelected(true);
+        buttonArray[KeyFoucus].doClick();
     }
 
     void foucusColoringRemove() {
-        for(int i = 0; i < 10; i++) {
-            radioButtonArray[i].setBackground(grayMade);
-        }
-        for(int i = 0; i < 6; i++) {
+        for(int i = 0; i < 16; i++) {
             buttonArray[i].setBackground(grayMade);
         }
     }

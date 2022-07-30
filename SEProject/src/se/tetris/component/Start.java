@@ -51,6 +51,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import se.tetris.blocks.Block;
+import se.tetris.common.Navigation;
 import se.tetris.component.Board;
 import se.tetris.setting.ISetting;
 import se.tetris.setting.SettingCode;
@@ -171,20 +172,7 @@ public class Start extends JFrame implements Sizeable {
     }
 
     public void startSettingMode() {
-        if (setting instanceof Sizeable) {
-            int sizeNumber = SettingValues.getInstance().sizeNumber;
-            ((Sizeable)setting).changeSize(sizeNumber);
-        }
-        /*
-        if (SettingValues.getInstance().sizeNumber == 0) {
-            setting.setSize(400, 600);
-        } else if (SettingValues.getInstance().sizeNumber == 1) {
-            setting.setSize(800, 800);
-        } else {
-            setting.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
-        }
-         */
-        setting.setVisible(true);
+        Navigation.getInstance().navigate(Navigation.SETTING_SCREEN);
         setVisible(false);
     }
 

@@ -3,6 +3,7 @@ package se.tetris.main;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import se.tetris.common.Navigation;
 import se.tetris.component.Board;
 import se.tetris.component.Start;
 import se.tetris.data.*;
@@ -16,21 +17,7 @@ public class Tetris {
 	public static void main(String[] args) {
 		DBConnectionManager data = new DBConnectionManager();
 
-		DBCalls dataCalls = new DBCalls();
-
-		Start startView = new Start();
-
-		int Window = dataCalls.getWindowSetting();
-
-		if(Window == 0) {
-			startView.setSize(400, 600);
-		}else if(Window == 1) {
-			startView.setSize(800, 800);
-		}else {
-			startView.setSize(SettingCode.screenWidth, SettingCode.screenHeight);
-		}
-
-		startView.setVisible(true);
+		Navigation.getInstance().navigate(Navigation.START_SCREEN);
 
 		data.connect();
 		data.createNewTable();

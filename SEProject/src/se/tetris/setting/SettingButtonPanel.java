@@ -1,5 +1,6 @@
 package se.tetris.setting;
 
+import se.tetris.common.Navigation;
 import se.tetris.component.*;
 import se.tetris.data.DBCalls;
 
@@ -124,11 +125,7 @@ public class SettingButtonPanel extends JPanel {
         BackToStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sizeNumber = SettingValues.getInstance().sizeNumber;
-                Start startView = new Start();
-                startView.changeSize(sizeNumber);
-                startView.setVisible(true);
-                settingCode.setVisible(false);
+                Navigation.getInstance().navigate(Navigation.START_SCREEN);
             }
         });
 
