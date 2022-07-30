@@ -92,33 +92,21 @@ public class SettingButtonPanel extends JPanel {
         BackToGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sizeNumber = SettingValues.getInstance().sizeNumber;
-                Board main = new Board();
-                main.changeSize(sizeNumber);
-                main.setVisible(true);
-                settingCode.setVisible(false);
+                Navigation.getInstance().navigate(Navigation.BOARD_SCREEN);
             }
         });
 
         BackToBattle.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sizeNumber = SettingValues.getInstance().sizeNumber;
-                StartBattle battleMode = new StartBattle();
-                battleMode.changeSize(sizeNumber);
-                battleMode.setVisible(true);
-                settingCode.setVisible(false);
+                Navigation.getInstance().navigate(Navigation.START_BATTLE);
             }
         });
 
         BackToItemGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                sizeNumber = SettingValues.getInstance().sizeNumber;
-                ItemBoard itemBoard = new ItemBoard();
-                itemBoard.changeSize(sizeNumber);
-                itemBoard.setVisible(true);
-                settingCode.setVisible(false);
+                Navigation.getInstance().navigate(Navigation.ITEM_BOARD_SCREEN);
             }
         });
 
