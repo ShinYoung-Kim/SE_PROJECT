@@ -24,21 +24,29 @@ public class Navigation {
 
     private Component current = null;
     private final SettingCode setting = new SettingCode();
+    private final Start start = new Start();
+    private final Score score = new Score();
+    private final Board board = new Board();
+    private final ItemBoard itemBoard = new ItemBoard();
+    private final BattleBoard battleBoard = new BattleBoard();
+    private final ItemBattleBoard itemBattleBoard = new ItemBattleBoard();
+    private final TimeBattleBoard timeBattleBoard = new TimeBattleBoard();
+    private final StartBattle startBattle = new StartBattle();
 
     public void navigate(int screen) {
         if (current != null) {
             current.setVisible(false);
         }
         current = switch (screen){
-            case START_SCREEN -> new Start();
+            case START_SCREEN -> start;
             case SETTING_SCREEN -> setting;
-            case SCOREBOARD_SCREEN -> new Score();
-            case BOARD_SCREEN -> new Board();
-            case ITEM_BOARD_SCREEN -> new ItemBoard();
-            case BATTLE_BOARD_SCREEN -> new BattleBoard();
-            case BATTLE_ITEM_BOARD_SCREEN -> new ItemBattleBoard();
-            case BATTLE_TIME_BOARD_SCREEN -> new TimeBattleBoard();
-            case START_BATTLE -> new StartBattle();
+            case SCOREBOARD_SCREEN -> score;
+            case BOARD_SCREEN -> board;
+            case ITEM_BOARD_SCREEN -> itemBoard;
+            case BATTLE_BOARD_SCREEN -> battleBoard;
+            case BATTLE_ITEM_BOARD_SCREEN -> itemBattleBoard;
+            case BATTLE_TIME_BOARD_SCREEN -> timeBattleBoard;
+            case START_BATTLE -> startBattle;
             default -> throw new RuntimeException("유효하지 않은 스크린을 넘겼습니다.");
             //default -> current;
         };
