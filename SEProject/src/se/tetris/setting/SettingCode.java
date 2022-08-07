@@ -24,6 +24,7 @@ public class SettingCode extends JFrame implements Sizeable {
         final int down;
         final int left;
         final int right;
+
         KeyChoose(int up, int down, int left, int right) {
             this.up = up;
             this.down = down;
@@ -34,12 +35,12 @@ public class SettingCode extends JFrame implements Sizeable {
         static KeyChoose getKeyChoose(int keyChoose) {
             if (keyChoose == 1) {
                 return ARROW;
-            }
-            else {
+            } else {
                 return WASD;
             }
         }
     }
+
     public static Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     public static int screenWidth = (int) (dimension.getWidth());
     public static int screenHeight = (int) (dimension.getHeight());
@@ -70,7 +71,7 @@ public class SettingCode extends JFrame implements Sizeable {
 
     DBCalls dataCalls = new DBCalls();
 
-    interface OnReloadingScreenSizeUIListener{
+    interface OnReloadingScreenSizeUIListener {
         void OnReloadingScreenSizeUI(ScreenSizeSettingPanel.Resolution value);
     }
 
@@ -215,6 +216,7 @@ public class SettingCode extends JFrame implements Sizeable {
                     foucusMove(e);
                 }
             }
+
             @Override
             public void keyReleased(KeyEvent e) {
             }
@@ -309,34 +311,18 @@ public class SettingCode extends JFrame implements Sizeable {
     }
 
     void foucusColoringRemove() {
-        for(int i = 0; i < 16; i++) {
+        for (int i = 0; i < 16; i++) {
             buttonArray[i].setBackground(grayMade);
         }
     }
 
     public void setFontSize(Font font) {
-        screenSizeArea.screenSizeTitle.setFont(font);
-        keySettingPanel.keyTitle.setFont(font);
-        colorBlindnessSettingPanel.colorBlindTitle.setFont(font);
-        difficultySettingPanel.modeTitle.setFont(font);
+        buttonPanel.changeFontSize(font);
 
-        buttonPanel.getScoreReset().setFont(font);
-        buttonPanel.getBackToItemGame().setFont(font);
-        buttonPanel.getBackToGame().setFont(font);
-        buttonPanel.getBackToBattle().setFont(font);
-        buttonPanel.getBackToStart().setFont(font);
-        buttonPanel.getSettingReset().setFont(font);
-
-        screenSizeArea.getSizeOne().setFont(font);
-        screenSizeArea.getSizeTwo().setFont(font);
-        screenSizeArea.getSizeThree().setFont(font);
-        keySettingPanel.getKeyOne().setFont(font);
-        keySettingPanel.getKeyTwo().setFont(font);
-        colorBlindnessSettingPanel.getColorBlindOne().setFont(font);
-        colorBlindnessSettingPanel.getColorBlindTwo().setFont(font);
-        difficultySettingPanel.getModeOne().setFont(font);
-        difficultySettingPanel.getModeTwo().setFont(font);
-        difficultySettingPanel.getModeThree().setFont(font);
+        screenSizeArea.changeFontSize(font);
+        keySettingPanel.changeFontSize(font);
+        difficultySettingPanel.changeFontSize(font);
+        colorBlindnessSettingPanel.changeFontSize(font);
 
         settingTitle.setFont(font);
     }
@@ -347,12 +333,7 @@ public class SettingCode extends JFrame implements Sizeable {
         rightRight.setPreferredSize(new Dimension(resolution.width / 4, 3 * resolution.height / 4));
         nextArea.setPreferredSize(new Dimension(3 * resolution.width / 4, 3 * resolution.height / 4));
         buttonPanel.setPreferredSize(new Dimension(resolution.width / 4, 1 * resolution.height / 2));
-        buttonPanel.getScoreReset().setPreferredSize(new Dimension(resolution.width / 4, 1 * resolution.height / 4));
-        buttonPanel.getBackToItemGame().setPreferredSize(new Dimension(resolution.width / 4, 1 * resolution.height / 8));
-        buttonPanel.getBackToGame().setPreferredSize(new Dimension(resolution.width / 4, 1 * resolution.height / 8));
-        buttonPanel.getBackToBattle().setPreferredSize(new Dimension(resolution.width / 4, 1 * resolution.height / 8));
-        buttonPanel.getBackToStart().setPreferredSize(new Dimension(resolution.width / 4, 1 * resolution.height / 8));
-        buttonPanel.getSettingReset().setPreferredSize(new Dimension(resolution.width / 4, 1 * resolution.height / 8));
+        buttonPanel.changeButtonSize(resolution.width, resolution.height);
     }
 
     public void changeSize(ScreenSizeSettingPanel.Resolution resolution) {

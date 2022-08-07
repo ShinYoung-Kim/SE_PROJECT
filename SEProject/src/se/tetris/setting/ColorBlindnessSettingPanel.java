@@ -97,4 +97,11 @@ public class ColorBlindnessSettingPanel extends JPanel {
         dataCalls.UpdateColorSetting(SettingValues.getInstance().colorBlindModeCheck);
         colorBlindTwo.setSelected(true);
     }
+
+    void changeFontSize(Font font) {
+        colorBlindTitle.setFont(font);
+
+        colorBlindOne.setFont(font);
+        colorBlindTwo.setFont(font);
+    }
 }

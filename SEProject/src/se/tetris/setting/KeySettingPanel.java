@@ -104,4 +104,11 @@ public class KeySettingPanel extends JPanel {
 
         keyOne.setSelected(true);
     }
+
+    void changeFontSize(Font font) {
+        keyTitle.setFont(font);
+
+        keyOne.setFont(font);
+        keyTwo.setFont(font);
+    }
 }

@@ -137,4 +137,21 @@ public class SettingButtonPanel extends JPanel {
             }
         });
     }
+    void changeButtonSize(int width, int height) {
+        scoreReset.setPreferredSize(new Dimension(width / 4, 1 * height / 4));
+        BackToItemGame.setPreferredSize(new Dimension(width / 4, 1 * height / 8));
+        BackToGame.setPreferredSize(new Dimension(width / 4, 1 * height / 8));
+        BackToBattle.setPreferredSize(new Dimension(width / 4, 1 * height / 8));
+        BackToStart.setPreferredSize(new Dimension(width / 4, 1 * height / 8));
+        settingReset.setPreferredSize(new Dimension(width / 4, 1 * height / 8));
+    }
+
+    void changeFontSize(Font font) {
+        scoreReset.setFont(font);
+        BackToItemGame.setFont(font);
+        BackToGame.setFont(font);
+        BackToBattle.setFont(font);
+        BackToStart.setFont(font);
+        settingReset.setFont(font);
+    }
 }

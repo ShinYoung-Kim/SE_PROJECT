@@ -170,5 +170,15 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
     public void sizeThreefun() {
         update(Full);
     }
+
+    void changeFontSize(Font font) {
+        screenSizeTitle.setFont(font);
+
+        sizeOne.setFont(font);
+        sizeTwo.setFont(font);
+        sizeThree.setFont(font);
+
+
+    }
 }
 

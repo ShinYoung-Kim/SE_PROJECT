@@ -132,4 +132,12 @@ public class DifficultySettingPanel extends JPanel {
         dataCalls.UpdateLevelSetting(1);
         modeOne.setSelected(true);
     }
+
+    void changeFontSize(Font font) {
+        modeTitle.setFont(font);
+
+        modeOne.setFont(font);
+        modeTwo.setFont(font);
+        modeThree.setFont(font);
+    }
 }
