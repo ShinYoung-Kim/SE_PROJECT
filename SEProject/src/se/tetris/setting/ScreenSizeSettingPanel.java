@@ -177,8 +177,37 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
         sizeOne.setFont(font);
         sizeTwo.setFont(font);
         sizeThree.setFont(font);
+    }
 
+    void foucusDoClick(int foucus) {
+        switch (foucus){
+            case 0:
+                sizeOne.setSelected(true);
+                sizeOne.doClick();
+                break;
+            case 1:
+                sizeTwo.setSelected(true);
+                sizeTwo.doClick();
+                break;
+            case 2:
+                sizeThree.setSelected(true);
+                sizeThree.doClick();
+                break;
+        }
+    }
 
+    void foucusColoring(int foucus, Color color) {
+        switch (foucus){
+            case 0:
+                sizeOne.setBackground(color);
+                break;
+            case 1:
+                sizeTwo.setBackground(color);
+                break;
+            case 2:
+                sizeThree.setBackground(color);
+                break;
+        }
     }
 }
 

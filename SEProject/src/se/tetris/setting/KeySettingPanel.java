@@ -111,4 +111,28 @@ public class KeySettingPanel extends JPanel {
         keyOne.setFont(font);
         keyTwo.setFont(font);
     }
+
+    void foucusDoClick(int foucus) {
+        switch (foucus){
+            case 3:
+                keyOne.setSelected(true);
+                keyOne.doClick();
+                break;
+            case 4:
+                keyTwo.setSelected(true);
+                keyTwo.doClick();
+                break;
+        }
+    }
+
+    void foucusColoring(int foucus, Color color) {
+        switch (foucus){
+            case 3:
+                keyOne.setBackground(color);
+                break;
+            case 4:
+                keyTwo.setBackground(color);
+                break;
+        }
+    }
 }

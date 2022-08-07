@@ -58,10 +58,10 @@ public class Navigation {
             int sizeNumber = SettingValues.getInstance().sizeNumber;
             ((Sizeable)current).changeSize(sizeNumber);
         }
-        ArrayList<Integer> arrayList = new ArrayList<>();
-        int[] array = new int[5];
-        array[1] = 0;
-        arrayList.set(0, 1);
+        //ArrayList<Integer> arrayList = new ArrayList<>();
+        //int[] array = new int[5];
+        //array[1] = 0;
+        //arrayList.set(0, 1);
     }
 
     private Navigation() {

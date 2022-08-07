@@ -140,4 +140,35 @@ public class DifficultySettingPanel extends JPanel {
         modeTwo.setFont(font);
         modeThree.setFont(font);
     }
+
+    void foucusDoClick(int foucus) {
+        switch (foucus){
+            case 7:
+                modeOne.setSelected(true);
+                modeOne.doClick();
+                break;
+            case 8:
+                modeTwo.setSelected(true);
+                modeTwo.doClick();
+                break;
+            case 9:
+                modeThree.setSelected(true);
+                modeThree.doClick();
+                break;
+        }
+    }
+
+    void foucusColoring(int foucus, Color color) {
+        switch (foucus){
+            case 7:
+                modeOne.setBackground(color);
+                break;
+            case 8:
+                modeTwo.setBackground(color);
+                break;
+            case 9:
+                modeThree.setBackground(color);
+                break;
+        }
+    }
 }

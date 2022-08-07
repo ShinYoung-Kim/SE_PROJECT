@@ -81,7 +81,7 @@ public class SettingCode extends JFrame implements Sizeable {
 
     private OnReloadingScreenSizeUIListener onReloadingScreenSizeUIListener = null;
 
-    AbstractButton[] buttonArray;
+    //AbstractButton[] buttonArray;
 
     //keyCode 상수처리
     final int vkUpKeycode = KeyEvent.VK_UP;
@@ -192,10 +192,12 @@ public class SettingCode extends JFrame implements Sizeable {
         colorBlindnessSettingPanel.setPreferredSize(new Dimension(250, 110));
         difficultySettingPanel.setPreferredSize(new Dimension(250, 110));
 
+        /*
         buttonArray = new AbstractButton[]{screenSizeArea.getSizeOne(), screenSizeArea.getSizeTwo(), screenSizeArea.getSizeThree(), keySettingPanel.getKeyOne(),
                 keySettingPanel.getKeyTwo(), colorBlindnessSettingPanel.getColorBlindOne(), colorBlindnessSettingPanel.getColorBlindTwo(),
                 difficultySettingPanel.getModeOne(), difficultySettingPanel.getModeTwo(), difficultySettingPanel.getModeThree(), buttonPanel.getScoreReset(), buttonPanel.getBackToGame(), buttonPanel.getBackToItemGame(),
                 buttonPanel.getBackToBattle(), buttonPanel.getBackToStart(), buttonPanel.getSettingReset()};
+         */
 
         // Initialize board for the game.
 
@@ -210,7 +212,8 @@ public class SettingCode extends JFrame implements Sizeable {
                 if (KeyCount == 0) {
                     settingView.requestFocusInWindow();
                     foucusColoringRemove();
-                    buttonArray[KeyFoucus].setBackground(Color.gray);
+                    foucusColoring();
+                    //buttonArray[KeyFoucus].setBackground(Color.gray);
                     KeyCount++;
                 } else {
                     foucusMove(e);
@@ -302,17 +305,31 @@ public class SettingCode extends JFrame implements Sizeable {
  */
 
     void foucusColoring() {
-        buttonArray[KeyFoucus].setBackground(Color.gray);
+        //buttonArray[KeyFoucus].setBackground(Color.gray);
+        buttonPanel.foucusColoring(KeyFoucus, Color.gray);
+        screenSizeArea.foucusColoring(KeyFoucus, Color.gray);
+        keySettingPanel.foucusColoring(KeyFoucus, Color.gray);
+        difficultySettingPanel.foucusColoring(KeyFoucus, Color.gray);
+        colorBlindnessSettingPanel.foucusColoring(KeyFoucus, Color.gray);
     }
 
     void foucusDoClick() {
-        buttonArray[KeyFoucus].setSelected(true);
-        buttonArray[KeyFoucus].doClick();
+        //buttonArray[KeyFoucus].setSelected(true);
+        //buttonArray[KeyFoucus].doClick();
+        buttonPanel.foucusDoClick(KeyFoucus);
+        screenSizeArea.foucusDoClick(KeyFoucus);
+        keySettingPanel.foucusDoClick(KeyFoucus);
+        difficultySettingPanel.foucusDoClick(KeyFoucus);
+        colorBlindnessSettingPanel.foucusDoClick(KeyFoucus);
     }
 
     void foucusColoringRemove() {
         for (int i = 0; i < 16; i++) {
-            buttonArray[i].setBackground(grayMade);
+            buttonPanel.foucusColoring(i, grayMade);
+            screenSizeArea.foucusColoring(i, grayMade);
+            keySettingPanel.foucusColoring(i, grayMade);
+            difficultySettingPanel.foucusColoring(i, grayMade);
+            colorBlindnessSettingPanel.foucusColoring(i, grayMade);
         }
     }
 

@@ -154,4 +154,56 @@ public class SettingButtonPanel extends JPanel {
         BackToStart.setFont(font);
         settingReset.setFont(font);
     }
+
+    void foucusDoClick(int foucus) {
+        switch (foucus){
+            case 10:
+                scoreReset.setSelected(true);
+                scoreReset.doClick();
+                break;
+            case 11:
+                BackToGame.setSelected(true);
+                BackToGame.doClick();
+                break;
+            case 12:
+                BackToItemGame.setSelected(true);
+                BackToItemGame.doClick();
+                break;
+            case 13:
+                BackToBattle.setSelected(true);
+                BackToBattle.doClick();
+                break;
+            case 14:
+                BackToStart.setSelected(true);
+                BackToStart.doClick();
+                break;
+            case 15:
+                settingReset.setSelected(true);
+                settingReset.doClick();
+                break;
+        }
+    }
+
+    void foucusColoring(int foucus, Color color) {
+        switch (foucus){
+            case 10:
+                scoreReset.setBackground(color);
+                break;
+            case 11:
+                BackToGame.setBackground(color);
+                break;
+            case 12:
+                BackToItemGame.setBackground(color);
+                break;
+            case 13:
+                BackToBattle.setBackground(color);
+                break;
+            case 14:
+                BackToStart.setBackground(color);
+                break;
+            case 15:
+                settingReset.setBackground(color);
+                break;
+        }
+    }
 }

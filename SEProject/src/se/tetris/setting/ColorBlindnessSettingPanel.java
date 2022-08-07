@@ -104,4 +104,28 @@ public class ColorBlindnessSettingPanel extends JPanel {
         colorBlindOne.setFont(font);
         colorBlindTwo.setFont(font);
     }
+
+    void foucusDoClick(int foucus) {
+        switch (foucus){
+            case 5:
+                colorBlindOne.setSelected(true);
+                colorBlindOne.doClick();
+                break;
+            case 6:
+                colorBlindTwo.setSelected(true);
+                colorBlindTwo.doClick();
+                break;
+        }
+    }
+
+    void foucusColoring(int foucus, Color color) {
+        switch (foucus){
+            case 5:
+                colorBlindOne.setBackground(color);
+                break;
+            case 6:
+                colorBlindTwo.setBackground(color);
+                break;
+        }
+    }
 }
