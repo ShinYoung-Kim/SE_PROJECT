@@ -32,7 +32,7 @@ public class DifficultySettingPanel extends JPanel {
     DBCalls dataCalls = new DBCalls();
     int setLevel = dataCalls.getLevelSetting();
 
-    enum Difficulty{
+    enum Difficulty {
         Easy,
         Normal,
         Hard;
@@ -57,7 +57,7 @@ public class DifficultySettingPanel extends JPanel {
         }
     }
 
-    void reload(){
+    void reload() {
         if (setLevel == 0) {
             //Normal
             modeTwofun();
@@ -112,6 +112,7 @@ public class DifficultySettingPanel extends JPanel {
 
         reload();
     }
+
     public void modeThreefun() {
         SettingValues.getInstance().intervalNumber = 800;
         SettingValues.getInstance().modeChoose = 3;
@@ -142,7 +143,7 @@ public class DifficultySettingPanel extends JPanel {
     }
 
     void foucusDoClick(int foucus) {
-        switch (foucus){
+        switch (foucus) {
             case 7:
                 modeOne.setSelected(true);
                 modeOne.doClick();
@@ -159,7 +160,7 @@ public class DifficultySettingPanel extends JPanel {
     }
 
     void foucusColoring(int foucus, Color color) {
-        switch (foucus){
+        switch (foucus) {
             case 7:
                 modeOne.setBackground(color);
                 break;

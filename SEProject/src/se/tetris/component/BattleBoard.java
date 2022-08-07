@@ -81,7 +81,7 @@ public class BattleBoard extends JFrame implements Sizeable {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            switch(e.getKeyCode()) {
+            switch (e.getKeyCode()) {
                 case KeyEvent.VK_S:
                     player1.moveDown();
                     player1.drawBoard();
@@ -99,9 +99,9 @@ public class BattleBoard extends JFrame implements Sizeable {
                     player1.drawBoard();
                     break;
                 case KeyEvent.VK_TAB:
-                    while(true){
+                    while (true) {
                         player1.eraseCurr();
-                        if(player1.collisionBottom()) {
+                        if (player1.collisionBottom()) {
                             player1.lineRemove();
                             player1.collisionOccur();
                             if (player1.whoAttacked) {
@@ -138,9 +138,9 @@ public class BattleBoard extends JFrame implements Sizeable {
                     player2.drawBoard();
                     break;
                 case KeyEvent.VK_ENTER:
-                    while(true){
+                    while (true) {
                         player2.eraseCurr();
-                        if(player2.collisionBottom()) {
+                        if (player2.collisionBottom()) {
                             player2.lineRemove();
                             player2.collisionOccur();
                             if (player2.whoAttacked) {
@@ -152,8 +152,7 @@ public class BattleBoard extends JFrame implements Sizeable {
                                 player2.drawBoard();
                             }
                             break;
-                        }
-                        else {
+                        } else {
                             player2.y++;
                             player2.lineRemove();
                         }
@@ -165,14 +164,13 @@ public class BattleBoard extends JFrame implements Sizeable {
                     player1.timer.stop();
                     player2.timer.stop();
                     String[] stopOption = {"재시작", "계속", "종료"};
-                    int choice = JOptionPane.showOptionDialog(null, "무엇을 선택하시겠습니까?", "일시정지", 0, 0, null, stopOption,stopOption[1]);
-                    switch(choice) {
+                    int choice = JOptionPane.showOptionDialog(null, "무엇을 선택하시겠습니까?", "일시정지", 0, 0, null, stopOption, stopOption[1]);
+                    switch (choice) {
                         case 0:
-                        	int confirm1 = JOptionPane.showConfirmDialog(null, "정말 게임을 재시작 하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
+                            int confirm1 = JOptionPane.showConfirmDialog(null, "정말 게임을 재시작 하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
                             if (confirm1 == 0) {
                                 gameReset();
-                            }
-                            else {
+                            } else {
                                 player1.timer.restart();
                                 player2.timer.restart();
                             }
@@ -182,13 +180,12 @@ public class BattleBoard extends JFrame implements Sizeable {
                             player2.timer.restart();
                             break;
                         case 2:
-                        	int confirm2 = JOptionPane.showConfirmDialog(null, "정말 게임을 종료하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
+                            int confirm2 = JOptionPane.showConfirmDialog(null, "정말 게임을 종료하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
                             if (confirm2 == 0) {
-                            	dispose();
-                            }
-                            else {
-                            	player1.timer.restart();
-                            	player2.timer.restart();
+                                dispose();
+                            } else {
+                                player1.timer.restart();
+                                player2.timer.restart();
                             }
                             break;
                     }
@@ -209,9 +206,9 @@ public class BattleBoard extends JFrame implements Sizeable {
     }
 
     public static void gameReset() {
-    	player1.reset();
-    	player2.reset();
-    	Timer player1Timer = player1.getTimer();
+        player1.reset();
+        player2.reset();
+        Timer player1Timer = player1.getTimer();
         Timer player2Timer = player2.getTimer();
         player1Timer.restart();
         player2Timer.restart();
@@ -375,11 +372,11 @@ public class BattleBoard extends JFrame implements Sizeable {
 
     public static void drawAttack() {
         if (restart) {
-            int [][] attackP1 = player1.getAttackBoard();
-            int [][] attackP2 = player2.getAttackBoard();
+            int[][] attackP1 = player1.getAttackBoard();
+            int[][] attackP2 = player2.getAttackBoard();
             player1.sbByAttack = new StringBuffer();
             player2.sbByAttack = new StringBuffer();
-            for( int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++) {
                 for (int j = 0; j < 10; j++) {
                     attackP1[i][j] = 0;
                     attackP2[i][j] = 0;
@@ -400,8 +397,7 @@ public class BattleBoard extends JFrame implements Sizeable {
                 for (int j = 0; j < player1AttackBoard[i].length; j++) {
                     if (player1AttackBoard[i][j] == 1) {
                         player1.sbByAttack.append("■");
-                    }
-                    else {
+                    } else {
                         player1.sbByAttack.append(" ");
                     }
                 }
@@ -442,8 +438,7 @@ public class BattleBoard extends JFrame implements Sizeable {
                 for (int j = 0; j < player1AttackBoard[i].length; j++) {
                     if (player1AttackBoard[i][j] == 1) {
                         player1.sbByAttack.append("■");
-                    }
-                    else {
+                    } else {
                         player1.sbByAttack.append(" ");
                     }
                 }

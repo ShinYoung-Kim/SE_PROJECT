@@ -418,6 +418,7 @@ public class DBCalls extends DBConnectionManager {
             System.out.println(e.getMessage());
         }
     }
+
     public void refreshScoreData() {
         String sql = "DELETE FROM Score;";
 

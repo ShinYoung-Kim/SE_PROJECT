@@ -10,7 +10,8 @@ public class SettingValues {
     public int modeChoose = 2;
     public int keyChoose = 1;
 
-    private SettingValues() {}
+    private SettingValues() {
+    }
 
     public static SettingValues getInstance() {
         return instance;

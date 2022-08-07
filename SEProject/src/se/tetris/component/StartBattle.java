@@ -85,7 +85,7 @@ public class StartBattle extends JFrame implements Sizeable {
         }
     }
 
-    class SButton extends JButton implements Sizeable{
+    class SButton extends JButton implements Sizeable {
 
         Color Impact = new Color(106, 215, 255);
         Color Normal = new Color(0, 0, 0);
@@ -95,7 +95,7 @@ public class StartBattle extends JFrame implements Sizeable {
             Default();
         }
 
-        @ConstructorProperties({ "text" })
+        @ConstructorProperties({"text"})
         public SButton(String text) {
             super(text, null);
             Default();
@@ -131,7 +131,7 @@ public class StartBattle extends JFrame implements Sizeable {
         }
     }
 
-    public StartBattle(){
+    public StartBattle() {
         setTitle("SeoulTech SE Tettris");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -217,26 +217,28 @@ public class StartBattle extends JFrame implements Sizeable {
 
 
             @Override
-            public void keyTyped(KeyEvent e) {}
+            public void keyTyped(KeyEvent e) {
+            }
 
             @Override
-            public void keyReleased(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {
+            }
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if(KeyCount == 0) {
+                if (KeyCount == 0) {
                     allBtnNotActive();
                     general.Active();
                     KeyFoucus = 0;
                 }
 
-                if(e.getKeyCode() == 40) {
-                    if(KeyFoucus == 0 && KeyCount>0) {
+                if (e.getKeyCode() == 40) {
+                    if (KeyFoucus == 0 && KeyCount > 0) {
                         allBtnNotActive();
                         item.Active();
                         KeyFoucus = 1;
-                    }else if(KeyFoucus ==1) {
-                        timeLimit.setBackground(new Color(106,215,255));
+                    } else if (KeyFoucus == 1) {
+                        timeLimit.setBackground(new Color(106, 215, 255));
                         allBtnNotActive();
                         timeLimit.Active();
                         KeyFoucus = 2;
@@ -244,20 +246,20 @@ public class StartBattle extends JFrame implements Sizeable {
                     KeyCount++;
                 }
 
-                if(e.getKeyCode() == 38) {
-                    if(KeyFoucus == 0) {
+                if (e.getKeyCode() == 38) {
+                    if (KeyFoucus == 0) {
                         allBtnNotActive();
                         general.Active();
                         KeyFoucus = 0;
-                    }else if(KeyFoucus ==1) {
+                    } else if (KeyFoucus == 1) {
                         allBtnNotActive();
                         general.Active();
                         KeyFoucus = 0;
-                    }else if(KeyFoucus ==2) {
+                    } else if (KeyFoucus == 2) {
                         allBtnNotActive();
                         item.Active();
                         KeyFoucus = 1;
-                    }else if(KeyFoucus ==3) {
+                    } else if (KeyFoucus == 3) {
                         allBtnNotActive();
                         timeLimit.Active();
                         KeyFoucus = 2;
@@ -265,12 +267,12 @@ public class StartBattle extends JFrame implements Sizeable {
                     KeyCount++;
                 }
 
-                if(e.getKeyCode() == 10) {
-                    if(KeyFoucus == 0) {
+                if (e.getKeyCode() == 10) {
+                    if (KeyFoucus == 0) {
                         general.doClick();
-                    }else if(KeyFoucus ==1) {
+                    } else if (KeyFoucus == 1) {
                         item.doClick();
-                    }else if(KeyFoucus ==2) {
+                    } else if (KeyFoucus == 2) {
                         timeLimit.doClick();
                     }
                 }

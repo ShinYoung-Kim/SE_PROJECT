@@ -13,6 +13,8 @@ public interface SettingInterface<T> {
     JRadioButton selectThree = null;
 
     abstract void update(T type);
+
     abstract void reload();
+
     abstract void changeEachSettingSize();
 }

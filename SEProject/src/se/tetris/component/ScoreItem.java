@@ -109,33 +109,33 @@ public class ScoreItem {
     }
 
     public void getScoreInfo(int sc, int mode, int level) {
-        String name = JOptionPane.showInputDialog(null, "점수에 기록될 닉네임을 입력해주세요.","스코어 기록",JOptionPane.OK_CANCEL_OPTION);
+        String name = JOptionPane.showInputDialog(null, "점수에 기록될 닉네임을 입력해주세요.", "스코어 기록", JOptionPane.OK_CANCEL_OPTION);
 
 
-        String modeTxt ="";
+        String modeTxt = "";
 
-        if(level == 0) {
-            modeTxt ="Normal";
-        }else if(level == 1) {
+        if (level == 0) {
+            modeTxt = "Normal";
+        } else if (level == 1) {
             modeTxt = "Easy";
-        }else {
+        } else {
             modeTxt = "Hard";
         }
 
         //String name, int score, int type, int mode
 
-        if(name == null) {
+        if (name == null) {
             System.exit(0);
-        }else {
+        } else {
 
             dataCalls.InsertScoreData(name, sc, level, mode);
 
-            if(mode == 0) {
+            if (mode == 0) {
                 CODE_RECENT = 1;
                 STD_SCORE_RECENT[0] = modeTxt;
                 STD_SCORE_RECENT[1] = name;
                 STD_SCORE_RECENT[2] = String.valueOf(sc);
-            }else {
+            } else {
                 CODE_RECENT = 2;
                 ITEM_SCORE_RECENT[0] = modeTxt;
                 ITEM_SCORE_RECENT[1] = name;
@@ -149,7 +149,6 @@ public class ScoreItem {
         }
 
     }
-
 
 
 }

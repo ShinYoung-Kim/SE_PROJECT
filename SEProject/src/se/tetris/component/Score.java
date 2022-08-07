@@ -60,7 +60,7 @@ class SButton extends JButton {
         Default();
     }
 
-    @ConstructorProperties({ "text" })
+    @ConstructorProperties({"text"})
     public SButton(String text) {
         super(text, null);
         Default();
@@ -82,7 +82,6 @@ class SButton extends JButton {
         setFont(new Font("고딕", Font.CENTER_BASELINE, 12));
     }
 }
-
 
 
 class tabViewBox extends JFrame implements Sizeable {
@@ -175,7 +174,7 @@ class stdTable extends JPanel {
     int Count = 0;
     int FocusMode = 0;
 
-    String[] title = { "랭킹", "모드", "닉네임", "점수" };
+    String[] title = {"랭킹", "모드", "닉네임", "점수"};
 
     SButton b1;
     SButton b2;
@@ -266,7 +265,6 @@ class stdTable extends JPanel {
         JScrollPane scrollview = new JScrollPane(table);
         JScrollPane scrollview2 = new JScrollPane(table2);
         JScrollPane scrollview3 = new JScrollPane(table3);
-
 
 
         if (Count == 0) {
@@ -405,7 +403,7 @@ class itemTable extends JPanel {
         b3.Default();
     }
 
-    String[] title = { "랭킹", "모드", "닉네임", "점수" };
+    String[] title = {"랭킹", "모드", "닉네임", "점수"};
 
     itemTable() {
 
@@ -457,7 +455,6 @@ class itemTable extends JPanel {
 
         JPanel p2 = new JPanel(new FlowLayout());
         p2.setBackground(Color.black);
-
 
 
         JLabel l0 = new JLabel("업데이트 된 스코어 >> ");

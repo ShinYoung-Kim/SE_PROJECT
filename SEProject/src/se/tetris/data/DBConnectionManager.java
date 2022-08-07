@@ -47,7 +47,7 @@ class DBCreate {
             ResultSet rs = stmt.executeQuery("select count(*) from StInit;");
             int count = 0;
 
-            while(rs.next()) {
+            while (rs.next()) {
                 count = rs.getInt(1);
             }
 
@@ -60,7 +60,7 @@ class DBCreate {
 
             conn.close();
         } catch (SQLException e) {
-            System.out.println("0"+e.getMessage());
+            System.out.println("0" + e.getMessage());
         }
 
         sql = "CREATE TABLE IF NOT EXISTS Score (\n"
@@ -80,7 +80,7 @@ class DBCreate {
 
             conn.close();
         } catch (SQLException e) {
-            System.out.println("2"+e.getMessage());
+            System.out.println("2" + e.getMessage());
         }
     }
 }

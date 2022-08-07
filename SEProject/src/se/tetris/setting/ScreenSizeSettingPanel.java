@@ -11,7 +11,7 @@ import static se.tetris.setting.ScreenSizeSettingPanel.Resolution.*;
 import static se.tetris.setting.SettingCode.grayMade;
 import static se.tetris.setting.Strings.*;
 
-public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
+public class ScreenSizeSettingPanel extends JPanel implements SettingInterface {
 
     public enum Resolution {
         Standard(400, 600),
@@ -20,13 +20,14 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
 
         public final int width;
         public final int height;
+
         Resolution(int width, int height) {
             this.width = width;
             this.height = height;
         }
     }
 
-    interface OnUpdateListener{
+    interface OnUpdateListener {
         void onUpdate(Resolution value);
     }
 
@@ -65,13 +66,13 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
             if (onUpdateListener != null) {
                 onUpdateListener.onUpdate(Standard);
             }
-        } else if(type == Large) {
+        } else if (type == Large) {
             SettingValues.getInstance().sizeNumber = 2;
             if (onUpdateListener != null) {
                 onUpdateListener.onUpdate(Large);
             }
             sizeTwo.setSelected(true);
-        } else if(type == Full) {
+        } else if (type == Full) {
             SettingValues.getInstance().sizeNumber = 3;
             if (onUpdateListener != null) {
                 onUpdateListener.onUpdate(Full);
@@ -159,6 +160,7 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
         setAlignmentX(LEFT_ALIGNMENT);
         setBackground(grayMade);
     }
+
     public void sizeOnefun() {
         update(Standard);
     }
@@ -180,7 +182,7 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
     }
 
     void foucusDoClick(int foucus) {
-        switch (foucus){
+        switch (foucus) {
             case 0:
                 sizeOne.setSelected(true);
                 sizeOne.doClick();
@@ -197,7 +199,7 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface{
     }
 
     void foucusColoring(int foucus, Color color) {
-        switch (foucus){
+        switch (foucus) {
             case 0:
                 sizeOne.setBackground(color);
                 break;

@@ -40,7 +40,7 @@ public class Navigation {
         if (current != null) {
             current.setVisible(false);
         }
-        current = switch (screen){
+        current = switch (screen) {
             case START_SCREEN -> start;
             case SETTING_SCREEN -> setting;
             case SCOREBOARD_SCREEN -> score;
@@ -56,7 +56,7 @@ public class Navigation {
         current.setVisible(true);
         if (current instanceof Sizeable) {
             int sizeNumber = SettingValues.getInstance().sizeNumber;
-            ((Sizeable)current).changeSize(sizeNumber);
+            ((Sizeable) current).changeSize(sizeNumber);
         }
         //ArrayList<Integer> arrayList = new ArrayList<>();
         //int[] array = new int[5];
@@ -69,7 +69,8 @@ public class Navigation {
     }
 
     public static Navigation instance = null;
-    public static Navigation getInstance(){
+
+    public static Navigation getInstance() {
         if (instance == null) {
             instance = new Navigation();
         }

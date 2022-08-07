@@ -14,7 +14,7 @@ public class FixedBlock extends ItemBlock {
     }
 
     public void setItemCoor() {
-        for(int i = 0; i<coordinates.size(); i++) {
+        for (int i = 0; i < coordinates.size(); i++) {
             blockShape.shape[coordinates.get(i)[0]][coordinates.get(i)[1]] = itemType;
         }
     }

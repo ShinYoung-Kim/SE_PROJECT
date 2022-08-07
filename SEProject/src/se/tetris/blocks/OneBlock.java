@@ -1,4 +1,5 @@
 package se.tetris.blocks;
+
 public class OneBlock extends ItemBlock {
 
     public OneBlock() {

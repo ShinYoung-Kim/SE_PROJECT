@@ -17,7 +17,7 @@ import se.tetris.component.*;
 import se.tetris.data.DBCalls;
 import se.tetris.setting.SettingCode;
 
-public class TimeBattleBoard extends JFrame implements Sizeable  {
+public class TimeBattleBoard extends JFrame implements Sizeable {
 
     private static InnerTimeBoard player1;
     private static InnerTimeBoard player2;
@@ -111,7 +111,7 @@ public class TimeBattleBoard extends JFrame implements Sizeable  {
 
         @Override
         public void keyPressed(KeyEvent e) {
-            switch(e.getKeyCode()) {
+            switch (e.getKeyCode()) {
                 case KeyEvent.VK_S:
                     player1.moveDown();
                     player1.drawBoard();
@@ -129,16 +129,15 @@ public class TimeBattleBoard extends JFrame implements Sizeable  {
                     player1.drawBoard();
                     break;
                 case KeyEvent.VK_TAB:
-                    while(true){
+                    while (true) {
                         player1.eraseCurr();
-                        if(player1.collisionBottom()) {
+                        if (player1.collisionBottom()) {
                             player1.collisionOccur();
                             player1.lineRemove();
                             player1.placeBlock();
                             player1.drawBoard();
                             break;
-                        }
-                        else {
+                        } else {
                             player1.y++;
                         }
                         player1.placeBlock();
@@ -162,16 +161,15 @@ public class TimeBattleBoard extends JFrame implements Sizeable  {
                     player2.drawBoard();
                     break;
                 case KeyEvent.VK_ENTER:
-                    while(true){
+                    while (true) {
                         player2.eraseCurr();
-                        if(player2.collisionBottom()) {
+                        if (player2.collisionBottom()) {
                             player2.collisionOccur();
                             player2.lineRemove();
                             player2.placeBlock();
                             player2.drawBoard();
                             break;
-                        }
-                        else {
+                        } else {
                             player2.y++;
                         }
                         player2.placeBlock();
@@ -182,13 +180,12 @@ public class TimeBattleBoard extends JFrame implements Sizeable  {
                     player1.timer.stop();
                     player2.timer.stop();
                     int choice = JOptionPane.showConfirmDialog(null, "게임을 종료하시겠습니까?", "게임 종료", JOptionPane.YES_NO_CANCEL_OPTION);
-                    switch(choice) {
+                    switch (choice) {
                         case 0:
                             int confirm = JOptionPane.showConfirmDialog(null, "정말 종료하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
                             if (confirm == 0) {
                                 dispose();
-                            }
-                            else {
+                            } else {
                                 player1.timer.restart();
                                 player2.timer.restart();
                             }
@@ -239,61 +236,61 @@ public class TimeBattleBoard extends JFrame implements Sizeable  {
     /**
      * 게임 타이머
      */
-    class GameTimer extends Thread{
+    class GameTimer extends Thread {
 
         private boolean stop = false;
 
-        public void setStop(boolean stop){
+        public void setStop(boolean stop) {
             this.stop = stop;
         }
 
-    	@Override
-    	public void run() {
+        @Override
+        public void run() {
 
-    		for(int i=20; i>=0; i--){
-				if(stop) {
-					break;
-				}
+            for (int i = 20; i >= 0; i--) {
+                if (stop) {
+                    break;
+                }
 
-    			int Min = i/60;
-    			int Sec = i%60;
+                int Min = i / 60;
+                int Sec = i % 60;
 
-    			String timerTxt = Min >= 10 ? Integer.toString(Min) : "0" + Integer.toString(Min);
-        		timerTxt += " : "+ (Sec >= 10 ? Integer.toString(Sec): "0" + Integer.toString(Sec));
+                String timerTxt = Min >= 10 ? Integer.toString(Min) : "0" + Integer.toString(Min);
+                timerTxt += " : " + (Sec >= 10 ? Integer.toString(Sec) : "0" + Integer.toString(Sec));
 
-        		if(Min == 0) {
-        			timerCount.setForeground(Color.RED);
-        		}
+                if (Min == 0) {
+                    timerCount.setForeground(Color.RED);
+                }
 
-    			timerCount.setText(timerTxt);
+                timerCount.setText(timerTxt);
 
-    			try {
-    				Thread.sleep(1000);
-    			} catch (InterruptedException e) {
-    				e.printStackTrace();
-    			}
-    		}
-    		stopGameTimer();
-    		gameStop();
-
-
-    		String[] overOption = {"종료하기", "다시하기"};
-    		int over = 0;
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            stopGameTimer();
+            gameStop();
 
 
-    		if(IsCollision) {
-    			//블록 더이상 쌓을 수 없음
-    			over = JOptionPane.showOptionDialog(null, ColPlayer +" 이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
-    		}else {
-    			//점수 비교
-        		if(player1.getNowScore() > player2.getNowScore()) {
-        			over = JOptionPane.showOptionDialog(null, "Player1 이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
-        		}else if(player1.getNowScore() == player2.getNowScore()) {
-        			over = JOptionPane.showOptionDialog(null, "무승부입니다!", "종료", 0, 0, null, overOption, overOption[0]);
-        		}else {
-        			over = JOptionPane.showOptionDialog(null, "Player2 이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
-        		}
-    		}
+            String[] overOption = {"종료하기", "다시하기"};
+            int over = 0;
+
+
+            if (IsCollision) {
+                //블록 더이상 쌓을 수 없음
+                over = JOptionPane.showOptionDialog(null, ColPlayer + " 이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
+            } else {
+                //점수 비교
+                if (player1.getNowScore() > player2.getNowScore()) {
+                    over = JOptionPane.showOptionDialog(null, "Player1 이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
+                } else if (player1.getNowScore() == player2.getNowScore()) {
+                    over = JOptionPane.showOptionDialog(null, "무승부입니다!", "종료", 0, 0, null, overOption, overOption[0]);
+                } else {
+                    over = JOptionPane.showOptionDialog(null, "Player2 이(가) 게임에서 승리했습니다!", "종료", 0, 0, null, overOption, overOption[0]);
+                }
+            }
 
             if (over == 0) {
                 gameClose();

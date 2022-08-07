@@ -137,6 +137,7 @@ public class SettingButtonPanel extends JPanel {
             }
         });
     }
+
     void changeButtonSize(int width, int height) {
         scoreReset.setPreferredSize(new Dimension(width / 4, 1 * height / 4));
         BackToItemGame.setPreferredSize(new Dimension(width / 4, 1 * height / 8));
@@ -156,7 +157,7 @@ public class SettingButtonPanel extends JPanel {
     }
 
     void foucusDoClick(int foucus) {
-        switch (foucus){
+        switch (foucus) {
             case 10:
                 scoreReset.setSelected(true);
                 scoreReset.doClick();
@@ -185,7 +186,7 @@ public class SettingButtonPanel extends JPanel {
     }
 
     void foucusColoring(int foucus, Color color) {
-        switch (foucus){
+        switch (foucus) {
             case 10:
                 scoreReset.setBackground(color);
                 break;

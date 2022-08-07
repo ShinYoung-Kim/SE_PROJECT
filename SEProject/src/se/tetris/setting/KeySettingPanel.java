@@ -27,7 +27,7 @@ public class KeySettingPanel extends JPanel {
     DBCalls dataCalls = new DBCalls();
     int settingKey = dataCalls.getKeySetting();
 
-    public enum KeyMode{
+    public enum KeyMode {
         Arrow,
         WASD;
     }
@@ -89,6 +89,7 @@ public class KeySettingPanel extends JPanel {
 
         reload();
     }
+
     public void keyTwofun() {
         SettingValues.getInstance().keyChoose = 2;
 
@@ -113,7 +114,7 @@ public class KeySettingPanel extends JPanel {
     }
 
     void foucusDoClick(int foucus) {
-        switch (foucus){
+        switch (foucus) {
             case 3:
                 keyOne.setSelected(true);
                 keyOne.doClick();
@@ -126,7 +127,7 @@ public class KeySettingPanel extends JPanel {
     }
 
     void foucusColoring(int foucus, Color color) {
-        switch (foucus){
+        switch (foucus) {
             case 3:
                 keyOne.setBackground(color);
                 break;

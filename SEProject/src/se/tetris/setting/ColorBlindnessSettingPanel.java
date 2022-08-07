@@ -29,7 +29,7 @@ public class ColorBlindnessSettingPanel extends JPanel {
 
     boolean colorOnOff;
 
-    void reload(){
+    void reload() {
         if (setColor == 0) {
             //Off
             colorOnOff = false;
@@ -41,12 +41,12 @@ public class ColorBlindnessSettingPanel extends JPanel {
         }
     }
 
-    void update(){
+    void update() {
         if (colorOnOff == true) {
             SettingValues.getInstance().colorBlindModeCheck = 1;
             dataCalls.UpdateColorSetting(SettingValues.getInstance().colorBlindModeCheck);
             colorBlindTwo.setSelected(true);
-        } else if(colorOnOff == false) {
+        } else if (colorOnOff == false) {
             SettingValues.getInstance().colorBlindModeCheck = 0;
             dataCalls.UpdateColorSetting(SettingValues.getInstance().colorBlindModeCheck);
             colorBlindOne.setSelected(true);
@@ -86,6 +86,7 @@ public class ColorBlindnessSettingPanel extends JPanel {
 
         reload();
     }
+
     public void colorBlindOneFun() {
         SettingValues.getInstance().colorBlindModeCheck = 0;
         dataCalls.UpdateColorSetting(SettingValues.getInstance().colorBlindModeCheck);
@@ -106,7 +107,7 @@ public class ColorBlindnessSettingPanel extends JPanel {
     }
 
     void foucusDoClick(int foucus) {
-        switch (foucus){
+        switch (foucus) {
             case 5:
                 colorBlindOne.setSelected(true);
                 colorBlindOne.doClick();
@@ -119,7 +120,7 @@ public class ColorBlindnessSettingPanel extends JPanel {
     }
 
     void foucusColoring(int foucus, Color color) {
-        switch (foucus){
+        switch (foucus) {
             case 5:
                 colorBlindOne.setBackground(color);
                 break;

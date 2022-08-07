@@ -415,11 +415,4 @@ public class SettingCode extends JFrame implements Sizeable {
 
         }
     }
-    /*
-    public static SettingCode getSettingCode() {
-        return this;
-    }
-    */
-
-
 }
