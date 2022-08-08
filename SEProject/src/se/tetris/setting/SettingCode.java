@@ -113,7 +113,7 @@ public class SettingCode extends JFrame implements Sizeable {
     final int backToStartButton = 14;
     final int settingResetButton = 15;
 
-    int relation[][] = new int[16][4];
+    int[][] relation = new int[16][4];
 
     public SettingCode() {
 
