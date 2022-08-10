@@ -2,6 +2,7 @@ package se.tetris.component.boardui;
 
 import se.tetris.blocks.*;
 import se.tetris.component.Sizeable;
+import se.tetris.component.boardlogic.RandomBlock;
 import se.tetris.setting.SettingValues;
 
 import javax.swing.*;
@@ -20,6 +21,7 @@ public class BoardNextArea extends JTextPane implements Sizeable {
     private static StyledDocument nextDoc;
     public static Block next;
     public int[][] nextBoard;
+    RandomBlock randomBlock;
 
     double min;
     double max;
@@ -54,7 +56,7 @@ public class BoardNextArea extends JTextPane implements Sizeable {
 
         nextDoc = nextArea.getStyledDocument();
 
-        next = getRandomBlock(setting.modeChoose);
+        next = randomBlock.getRandomBlock(setting.modeChoose);
     }
 
     @Override
@@ -77,78 +79,6 @@ public class BoardNextArea extends JTextPane implements Sizeable {
                 setRtSize(120, 50);
                 break;
         }
-    }
-    public Block getRandomBlock(int modeChoose) {
-        switch (modeChoose) {
-            case 1:
-                min = 1;
-                max = 100;
-                percentage = Math.random() * (max - min) + min;
-                if (percentage <= (double) 100 / 720 * 100 * 1.2)
-                    return new IBlock();
-                else {
-                    block = (int) (Math.random() * 6);
-                    switch (block) {
-                        case 0:
-                            return new JBlock();
-                        case 1:
-                            return new LBlock();
-                        case 2:
-                            return new ZBlock();
-                        case 3:
-                            return new SBlock();
-                        case 4:
-                            return new TBlock();
-                        case 5:
-                            return new OBlock();
-                    }
-                }
-            case 2:
-                block = (int) (Math.random() * 7);
-                switch (block) {
-                    case 0:
-                        return new IBlock();
-                    case 1:
-                        return new JBlock();
-                    case 2:
-                        return new LBlock();
-                    case 3:
-                        return new ZBlock();
-                    case 4:
-                        return new SBlock();
-                    case 5:
-                        return new TBlock();
-                    case 6:
-                        return new OBlock();
-                }
-            case 3:
-                min = 1;
-                max = 100;
-                percentage = Math.random() * (max - min) + min;
-                if (percentage <= (double) 100 / 680 * 100 * 0.8)
-                    return new IBlock();
-                else {
-                    block = (int) (Math.random() * 6);
-                    switch (block) {
-                        case 0:
-                            return new JBlock();
-                        case 1:
-                            return new LBlock();
-                        case 2:
-                            return new ZBlock();
-                        case 3:
-                            return new SBlock();
-                        case 4:
-                            return new TBlock();
-                        case 5:
-                            return new OBlock();
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-        return new IBlock();
     }
 
     public void placeNext() {

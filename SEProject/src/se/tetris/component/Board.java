@@ -36,6 +36,7 @@ import se.tetris.blocks.SBlock;
 import se.tetris.blocks.TBlock;
 import se.tetris.blocks.ZBlock;
 
+import se.tetris.component.boardlogic.RandomBlock;
 import se.tetris.component.boardui.BoardLevelPanel;
 import se.tetris.component.boardui.BoardNextArea;
 import se.tetris.component.boardui.BoardScorePanel;
@@ -62,6 +63,7 @@ public class Board extends JFrame implements Sizeable {
     private JPanel rightPanel;
     private static BoardScorePanel scorePanel;
     private static BoardLevelPanel levelPanel;
+    RandomBlock randomBlock;
     //private static int[][] board;
     //private static int[][] nextBoard;
     private KeyListener playerKeyListener;
@@ -265,8 +267,8 @@ public class Board extends JFrame implements Sizeable {
         nextArea.nextBoard = new int[4][5];
         x = 3;
         y = 0;
-        tetrisArea.curr = tetrisArea.getRandomBlock(setting.modeChoose);
-        nextArea.next = nextArea.getRandomBlock(setting.modeChoose);
+        tetrisArea.curr = randomBlock.getRandomBlock(setting.modeChoose);
+        nextArea.next = randomBlock.getRandomBlock(setting.modeChoose);
         tetrisArea.placeBlock();
         tetrisArea.drawBoard();
         nextArea.placeNext();
@@ -432,50 +434,6 @@ public class Board extends JFrame implements Sizeable {
 
     public static Board getBoard() {
         return boardMain;
-    }
-
-    public void setScore() {
-        String scoretxt = Integer.toString(score);
-        String prescoretxt = scoreLb2.getText();
-        scoreLb2.setText(scoretxt);
-    }
-
-    public void getScore(int lines, String mode) {
-        int scorePre = lines;
-        if (mode == "line") {
-            updateSroce(scorePre, mode);
-        } else if (mode == "block") {
-            updateSroce(1, mode);
-        }
-
-    }
-
-    public int getNowScore() {
-        int score = this.score;
-        return score;
-    }
-
-    public int updateSroce(int sc, String mode) {
-        if (mode == "line") {
-            if (sc > 0 && sc <= 5) {
-                this.score += 10;
-            } else if (sc > 5 && sc <= 10) {
-                this.score += 15;
-            } else {
-                this.score += 20;
-            }
-            if (sc % 3 == 0) {
-                this.score += 3 * sc;
-            }
-            if (sc % 11 == 0) {
-                this.score += 11;
-            }
-        } else if (mode == "block") {
-            this.score += sc;
-        }
-
-        setScore();
-        return score;
     }
 
     @Override
