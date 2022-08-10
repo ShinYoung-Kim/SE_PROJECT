@@ -1,6 +1,7 @@
 package se.tetris.component.boardui;
 
 import se.tetris.component.Sizeable;
+import se.tetris.component.boardlogic.BoardValues;
 import se.tetris.data.DBCalls;
 
 import javax.swing.*;
@@ -12,12 +13,10 @@ import static se.tetris.setting.SettingCode.screenWidth;
 
 public class BoardLevelPanel extends JPanel implements Sizeable {
 
-    private static JPanel levelPanel;
-    public static int level = 0;
-    static JLabel levelLb1 = new JLabel("Level");
-    static JLabel levelLb2 = new JLabel(Integer.toString(level));
-    DBCalls dataCalls = new DBCalls();
-    public static int mode = 0;
+    private JPanel levelPanel;
+    private int level = 0;
+    private JLabel levelLb1 = new JLabel("Level");
+    private JLabel levelLb2 = new JLabel(Integer.toString(level));
 
     public BoardLevelPanel() {
         levelLb1.setAlignmentX(CENTER_ALIGNMENT);
@@ -29,7 +28,6 @@ public class BoardLevelPanel extends JPanel implements Sizeable {
         levelPanel.setPreferredSize(new Dimension(150, 50));
 
         //인터페이스 setting
-        mode = dataCalls.getLevelSetting();
 
         levelLb1.setForeground(Color.darkGray);
         levelLb1.setAlignmentX(CENTER_ALIGNMENT);
@@ -63,12 +61,16 @@ public class BoardLevelPanel extends JPanel implements Sizeable {
         }
     }
 
-    public static void setRtSize(int xSize, int ySize) {
-        levelPanel.setPreferredSize(new Dimension(xSize, ySize));
+    public void setRtSize(int xSize, int ySize) {
+        setSize(new Dimension(xSize, ySize));
     }
 
-    public static void setLbSize(int size) {
+    public void setLbSize(int size) {
         levelLb1.setFont(new Font(null, Font.BOLD, size));
         levelLb2.setFont(new Font(null, Font.BOLD, size));
+    }
+
+    public void changeLevelLb (int level) {
+        levelLb2.setText(Integer.toString(level));
     }
 }

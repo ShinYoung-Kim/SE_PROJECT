@@ -2,6 +2,9 @@ package se.tetris.component.boardui;
 
 import se.tetris.blocks.*;
 import se.tetris.component.Sizeable;
+import se.tetris.component.boardlogic.BoardLocator;
+import se.tetris.component.boardlogic.BoardTimer;
+import se.tetris.component.boardlogic.BoardValues;
 import se.tetris.component.boardlogic.RandomBlock;
 import se.tetris.setting.SettingValues;
 
@@ -14,33 +17,31 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import static se.tetris.component.Board.nextArea;
-import static se.tetris.component.Board.scoreItem;
 import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
 public class BoardTetrisArea extends JTextPane implements Sizeable {
-    private static JTextPane tetrisArea;
-    private static SimpleAttributeSet stylesetBr;
-    private static SimpleAttributeSet stylesetCur;
-    private static StyledDocument boardDoc;
-    public static final int HEIGHT = 20;
-    public static final int WIDTH = 10;
-    public static Block curr;
-    public int[][] board;
-    static int x = 3; //Default Position.
-    static int y = 0;
-    public static final char BORDER_CHAR = 'X';
-    int eraseCnt = 0;
-    RandomBlock randomBlock;
+    private JTextPane tetrisArea;
+    private SimpleAttributeSet stylesetBr;
+    private SimpleAttributeSet stylesetCur;
+    private StyledDocument boardDoc;
+    private final int HEIGHT = 20;
+    private final int WIDTH = 10;
+    private Block curr;
+    private int[][] board;
+    private int x = 3; //Default Position.
+    private int y = 0;
+    private final char BORDER_CHAR = 'X';
+    //int eraseCnt = 0;
+    RandomBlock randomBlock = new RandomBlock();
 
-    double min;
-    double max;
-    double percentage;
-    double weighted;
-    int block;
+    BoardValues boardValues = BoardValues.getInstance();
+    int mode = boardValues.mode;
 
     final SettingValues setting = SettingValues.getInstance();
+    BoardNextArea nextArea;
+    BoardScorePanel scorePanel;
+    BoardTimer boardTimer;
 
     public BoardTetrisArea() {
         tetrisArea = new JTextPane();
@@ -74,24 +75,43 @@ public class BoardTetrisArea extends JTextPane implements Sizeable {
 
         curr = randomBlock.getRandomBlock(setting.modeChoose);
     }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void increaseY() {
+        this.y++;
+    }
+
+    public void setStylesetSize(int size1, int size2, int size3) {
+        StyleConstants.setFontSize(stylesetBr, size1);
+        StyleConstants.setFontSize(stylesetCur, size1);
+        drawBoard();
+    }
+
     @Override
     public void changeSize(int sizeNumber) {
         switch (sizeNumber) {
             case 1:
-                setStylesetSize(30, 25, 20);
-                tetrisArea.setPreferredSize(new Dimension(250, 460));
+                this.setStylesetSize(30, 25, 20);
+                this.setPreferredSize(new Dimension(250, 460));
                 break;
             case 2:
-                setStylesetSize(50, 50, 45);
-                tetrisArea.setPreferredSize(new Dimension(400, 750));
+                this.setStylesetSize(50, 50, 45);
+                this.setPreferredSize(new Dimension(400, 750));
                 break;
             case 3:
-                setStylesetSize(50, 50, 45);
-                tetrisArea.setPreferredSize(new Dimension(400, 750));
+                this.setStylesetSize(50, 50, 45);
+                this.setPreferredSize(new Dimension(400, 750));
                 break;
             default:
-                setStylesetSize(30, 25, 25);
-                tetrisArea.setPreferredSize(new Dimension(220, 400));
+                this.setStylesetSize(30, 25, 25);
+                this.setPreferredSize(new Dimension(220, 400));
                 break;
         }
     }
@@ -133,24 +153,6 @@ public class BoardTetrisArea extends JTextPane implements Sizeable {
         return Item;
     }
 
-    public void collisionOccur() {
-        saveBoard();
-        curr = nextArea.next;
-        x = 3;
-        y = 0;
-        if (isGameOver() == true) {
-            timer.stop();
-            boolean result = scoreItem.showDialog(getNowScore(), 0, mode);
-            setVisible(result);
-            //종료 화면과 잇기
-        } else {
-            nextArea.eraseNext();
-            nextArea.next = randomBlock.getRandomBlock(setting.modeChoose);
-            nextArea.placeNext();
-            nextArea.drawNext();
-        }
-    }
-
     public void hey() {
         line = lineCheck();
         Iterator<Integer> iter = line.iterator();
@@ -169,6 +171,7 @@ public class BoardTetrisArea extends JTextPane implements Sizeable {
     }
 
     void lineRemove() {
+        scorePanel = BoardLocator.getInstance().getScorePanel();
         line = lineCheck();
         Iterator<Integer> iter = line.iterator();
         int index = 0;
@@ -180,9 +183,9 @@ public class BoardTetrisArea extends JTextPane implements Sizeable {
                 }
             }
             index = 0;
-            eraseCnt++;
-            getScore(eraseCnt, "line");
-            setScore();
+            boardValues.increaseEraseCnt();
+            scorePanel.getScore(boardValues.getEraseCnt(), "line");
+            scorePanel.setScore();
         }
     }
 
@@ -254,7 +257,29 @@ public class BoardTetrisArea extends JTextPane implements Sizeable {
         return false;
     }
 
+    public void collisionOccur() {
+        nextArea = BoardLocator.getInstance().getBoardNextArea();
+        scorePanel = BoardLocator.getInstance().getScorePanel();
+        boardTimer = BoardLocator.getInstance().getBoardTimer();
+        saveBoard();
+        setCurr(nextArea.getNext());
+        x = 3;
+        y = 0;
+        if (isGameOver() == true) {
+            boardTimer.boardTimerStop();
+            boolean result = scorePanel.showDialog(scorePanel.getNowScore(), 0, mode);
+            setVisible(result);
+            //종료 화면과 잇기
+        } else {
+            nextArea.eraseNext();
+            nextArea.setNext(randomBlock.getRandomBlock(setting.modeChoose));
+            nextArea.placeNext();
+            nextArea.drawNext();
+        }
+    }
+
     public void moveDown() {
+        scorePanel = BoardLocator.getInstance().getScorePanel();
         eraseCurr();
         if (collisionBottom()) {
             collisionOccur();
@@ -264,8 +289,8 @@ public class BoardTetrisArea extends JTextPane implements Sizeable {
             drawBoard();
         }
         hey();
-        getScore(eraseCnt, "block");
-        setScore();
+        scorePanel.getScore(boardValues.getEraseCnt(), "block");
+        scorePanel.setScore();
     }
 
     public void moveRight() {
@@ -442,12 +467,6 @@ public class BoardTetrisArea extends JTextPane implements Sizeable {
         drawBoard();
     }
 
-    public void setStylesetSize(int size1, int size2, int size3) {
-        StyleConstants.setFontSize(stylesetBr, size1);
-        StyleConstants.setFontSize(stylesetCur, size1);
-        drawBoard();
-    }
-
     public void colorBlindMode(SimpleAttributeSet styleSet, Block block) {
         if (setting.colorBlindModeCheck == 1) {
             StyleConstants.setForeground(styleSet, block.getColorBlind());
@@ -459,5 +478,13 @@ public class BoardTetrisArea extends JTextPane implements Sizeable {
     public void colorBlindModeCurrent(int offset) {
         colorBlindMode(stylesetCur, curr);
         boardDoc.setCharacterAttributes(offset, 1, stylesetCur, true);
+    }
+
+    public void setCurr(Block curr) {
+        this.curr = curr;
+    }
+
+    public void resetBoard() {
+        board = new int[HEIGHT][WIDTH];
     }
 }

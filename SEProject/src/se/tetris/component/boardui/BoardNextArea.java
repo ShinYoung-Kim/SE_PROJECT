@@ -2,6 +2,8 @@ package se.tetris.component.boardui;
 
 import se.tetris.blocks.*;
 import se.tetris.component.Sizeable;
+import se.tetris.component.boardlogic.BoardLocator;
+import se.tetris.component.boardlogic.BoardTimer;
 import se.tetris.component.boardlogic.RandomBlock;
 import se.tetris.setting.SettingValues;
 
@@ -19,19 +21,16 @@ public class BoardNextArea extends JTextPane implements Sizeable {
     private static JTextPane nextArea;
     private static SimpleAttributeSet stylesetNx;
     private static StyledDocument nextDoc;
-    public static Block next;
-    public int[][] nextBoard;
-    RandomBlock randomBlock;
 
-    double min;
-    double max;
-    double percentage;
-    double weighted;
-    int block;
-    int nextX = 1;
-    int nextY = 1;
+    private Block next;
+    private int[][] nextBoard;
+    RandomBlock randomBlock = new RandomBlock();
+
+    private int nextX = 1;
+    private int nextY = 1;
 
     final SettingValues setting = SettingValues.getInstance();
+    BoardTimer boardTimer;
 
     public BoardNextArea(){
         nextArea = new JTextPane();
@@ -98,10 +97,11 @@ public class BoardNextArea extends JTextPane implements Sizeable {
     }
 
     public void drawNext() {
+        boardTimer = BoardLocator.getInstance().getBoardTimer();
         StringBuffer sb = new StringBuffer();
         sb.append("\n");
-        blockNumber++;
-        timer.setDelay(getInterval(blockNumber, eraseCnt));
+        boardTimer.blockNumberIncrease();
+        boardTimer.boardTimerSetDelay();
         for (int i = 0; i < nextBoard.length; i++) {
             for (int j = 0; j < nextBoard[i].length; j++) {
                 if (nextBoard[i][j] > 0) {
@@ -121,8 +121,8 @@ public class BoardNextArea extends JTextPane implements Sizeable {
         drawNext();
     }
 
-    public static void setRtSize(int xSize, int ySize) {
-        nextArea.setPreferredSize(new Dimension(xSize, xSize));
+    public void setRtSize(int xSize, int ySize) {
+        setSize(new Dimension(xSize, xSize));
     }
 
     public void colorBlindMode(SimpleAttributeSet styleSet, Block block) {
@@ -136,5 +136,17 @@ public class BoardNextArea extends JTextPane implements Sizeable {
     public void colorBlindModeNext() {
         colorBlindMode(stylesetNx, next);
         nextDoc.setParagraphAttributes(0, nextDoc.getLength(), stylesetNx, false);
+    }
+
+    public Block getNext() {
+        return next;
+    }
+
+    public void setNext(Block next) {
+        this.next = next;
+    }
+
+    public void resetNextBoard() {
+        nextBoard = new int[HEIGHT][WIDTH];
     }
 }

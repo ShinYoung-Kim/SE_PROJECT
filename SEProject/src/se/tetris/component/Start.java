@@ -355,7 +355,7 @@ public class Start extends JFrame implements Sizeable {
         setLayout(null);
 
         add(layerPane);
-
+/*
         if (Board.getBoard() == null) {
             Board.boardMain = new Board();
             Board.boardMain.timer.stop();
@@ -366,6 +366,8 @@ public class Start extends JFrame implements Sizeable {
             ItemBoard.itemBoardMain.timer.stop();
             ItemBoard.itemBoardMain.setSize(400, 600);
         }
+
+ */
 
         stdBtn.addActionListener(new ActionListener() {
             @Override
