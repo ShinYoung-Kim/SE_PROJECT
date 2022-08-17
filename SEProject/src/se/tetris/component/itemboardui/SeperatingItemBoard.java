@@ -1,4 +1,4 @@
-package se.tetris.component;
+package se.tetris.component.itemboardui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,6 +28,9 @@ import javax.swing.text.StyledDocument;
 
 import se.tetris.blocks.*;
 import se.tetris.component.Board.PlayerKeyListener;
+import se.tetris.component.ScoreItem;
+import se.tetris.component.Sizeable;
+import se.tetris.component.boardui.BoardLevelPanel;
 import se.tetris.data.*;
 import se.tetris.setting.SettingCode;
 import se.tetris.setting.SettingValues;
@@ -35,9 +38,9 @@ import se.tetris.setting.SettingValues;
 import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
-public class ItemBoard extends JFrame implements Sizeable {
+public class SeperatingItemBoard extends JFrame implements Sizeable {
 
-    public static ItemBoard itemBoardMain;
+    public static SeperatingItemBoard seperatingItemBoardMain;
     private static final long serialVersionUID = 2434035659171694595L;
 
     ScoreItem scoreItem = new ScoreItem();
@@ -55,7 +58,7 @@ public class ItemBoard extends JFrame implements Sizeable {
 
     DBCalls dataCalls = new DBCalls();
 
-    private static JTextPane tetrisArea;
+    private static ItemBoardTetrisTextPane tetrisArea;
     private static JTextPane nextArea;
     private JPanel panel;
     private JPanel leftPanel;
@@ -107,20 +110,15 @@ public class ItemBoard extends JFrame implements Sizeable {
 
     private static int blockNumber = 0;
 
-    public ItemBoard() {
+    public SeperatingItemBoard() {
         super("SeoulTech SE Tetris");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Board display setting.
-        tetrisArea = new JTextPane();
-        tetrisArea.setEditable(false);
-        tetrisArea.setBackground(Color.BLACK);
+        tetrisArea = new ItemBoardTetrisTextPane();
         CompoundBorder border = BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.GRAY, 10),
                 BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
-        tetrisArea.setBorder(border);
-        tetrisArea.setAlignmentX(CENTER_ALIGNMENT);
-        tetrisArea.setAlignmentY(CENTER_ALIGNMENT);
 
         nextArea = new JTextPane();
         nextArea.setEditable(false);
@@ -139,8 +137,6 @@ public class ItemBoard extends JFrame implements Sizeable {
         //정렬
         scoreLb1.setAlignmentX(CENTER_ALIGNMENT);
         scoreLb2.setAlignmentX(CENTER_ALIGNMENT);
-        levelLb1.setAlignmentX(CENTER_ALIGNMENT);
-        levelLb2.setAlignmentX(CENTER_ALIGNMENT);
 
         scoreLb2.setForeground(Color.RED);
 
@@ -149,18 +145,7 @@ public class ItemBoard extends JFrame implements Sizeable {
         scorePanel.add(Box.createVerticalStrut(5));
         scorePanel.add(scoreLb2);
 
-        levelPanel = new JPanel();
-        levelPanel.setBorder(scoreBorder);
-        levelPanel.setPreferredSize(new Dimension(150, 50));
-
-        levelLb1.setForeground(Color.darkGray);
-        levelLb1.setAlignmentX(CENTER_ALIGNMENT);
-
-        levelLb2.setForeground(Color.BLUE);
-        levelPanel.setLayout(new BoxLayout(levelPanel, BoxLayout.Y_AXIS));
-        levelPanel.add(levelLb1);
-        levelPanel.add(Box.createVerticalStrut(5));
-        levelPanel.add(levelLb2);
+        levelPanel = new ItemBoardLevelPanel();
 
         leftPanel = new JPanel();
         leftPanel.add(tetrisArea);
@@ -216,6 +201,7 @@ public class ItemBoard extends JFrame implements Sizeable {
         StyleConstants.setAlignment(stylesetCur, StyleConstants.ALIGN_CENTER);
         StyleConstants.setLineSpacing(stylesetCur, -0.45f);
 
+
         stylesetNx = new SimpleAttributeSet();
         StyleConstants.setFontSize(stylesetNx, 25);
         StyleConstants.setFontFamily(stylesetNx, "Courier New");
@@ -226,8 +212,8 @@ public class ItemBoard extends JFrame implements Sizeable {
         boardDoc = tetrisArea.getStyledDocument();
         nextDoc = nextArea.getStyledDocument();
 
-        placeBlock();
-        drawBoard();
+        tetrisArea.placeBlock();
+        tetrisArea.drawBoard();
         placeNext();
         drawNext();
 
@@ -305,16 +291,6 @@ public class ItemBoard extends JFrame implements Sizeable {
                 break;
         }
         return new IBlock();
-    }
-
-
-    private void placeBlock() {
-        for (int j = 0; j < curr.height(); j++) {
-            for (int i = 0; i < curr.width(); i++) {
-                if (curr.getShape(i, j) > 0)
-                    board[y + j][x + i] = curr.getShape(i, j);
-            }
-        }
     }
 
     private void placeNext() {
@@ -399,14 +375,14 @@ public class ItemBoard extends JFrame implements Sizeable {
                     break;
                 case 9:
                     curr.getInitBlock(curr);
-                    placeBlock();
-                    drawBoard();
+                    tetrisArea.placeBlock();
+                    tetrisArea.drawBoard();
                     break;
                 case 10:
                     blockFix = false;
                     curr.getInitBlock(curr);
-                    placeBlock();
-                    drawBoard();
+                    tetrisArea.placeBlock();
+                    tetrisArea.drawBoard();
                     break;
                 case 11://CRI
                     cRItem();
@@ -480,16 +456,16 @@ public class ItemBoard extends JFrame implements Sizeable {
                 itemDrop = false;
             }
             eraseCurr();
-            placeBlock();
-            drawBoard();
+            tetrisArea.placeBlock();
+            tetrisArea.drawBoard();
         } else {
             if (collisionBottom()) {
                 collisionOccur();
             } else y++;
             lineRemove();
             if (!isGameOver()) {
-                placeBlock();
-                drawBoard();
+                tetrisArea.placeBlock();
+                tetrisArea.drawBoard();
             }
         }
     }
@@ -497,143 +473,13 @@ public class ItemBoard extends JFrame implements Sizeable {
     protected void moveRight() {
         eraseCurr();
         if (x < WIDTH - curr.width() && collisionRight() == false) x++;
-        placeBlock();
+        tetrisArea.placeBlock();
     }
 
     protected void moveLeft() {
         eraseCurr();
         if (x > 0 && collisionLeft() == false) x--;
-        placeBlock();
-    }
-
-    public void drawBoard() {
-        StringBuffer sb = new StringBuffer();
-        for (int t = 0; t < WIDTH + 2; t++) sb.append(BORDER_CHAR);
-        sb.append("\n");
-        for (int i = 0; i < board.length; i++) {
-            sb.append(BORDER_CHAR);
-            for (int j = 0; j < board[i].length; j++) {
-                int blockType = board[i][j];
-                switch (blockType) {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 13:
-                        sb.append("■");
-                        break;
-                    case 8:
-                        sb.append("L");
-                        break;
-                    case 9:
-                        sb.append("●");
-                        break;
-                    case 10:
-                        sb.append("×");
-                        break;
-                    case 11:
-                        sb.append("C");
-                        break;
-                    case 12:
-                        sb.append("O");
-                        break;
-                    default:
-                        sb.append(" ");
-
-                }
-            }
-            sb.append(BORDER_CHAR);
-            sb.append("\n");
-        }
-        for (int t = 0; t < WIDTH + 2; t++) sb.append(BORDER_CHAR);
-        tetrisArea.setText(sb.toString());
-        boardDoc.setParagraphAttributes(0, boardDoc.getLength(), stylesetBr, false);
-
-
-        for (int j = 0; j < curr.height(); j++) {
-            int rows = y + j == 0 ? 1 : y + j + 1;
-            int offset = rows * (WIDTH + 3) + x + 1;
-            for (int i = 0; i < curr.width(); i++) {
-                if (curr.getShape(i, j) > 0 && curr.getShape(i, j) < 8) {
-                    colorBlindModeCurrent(offset + i);
-                }
-            }
-        }
-
-        for (int i = 0; i < board.length; i++) {
-            int offset = (i + 1) * (WIDTH + 3) + 1;
-            for (int j = 0; j < board[0].length; j++) {
-                int block = board[i][j];
-                switch (block) {
-                    case 1:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(0, 58, 97));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.CYAN);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                    case 2:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(126, 98, 61));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.BLUE);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                    case 3:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(165, 148, 159));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.PINK);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                    case 4:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(187, 190, 242));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.YELLOW);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                    case 5:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(247, 193, 121));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.GREEN);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                    case 6:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(154, 127, 112));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.MAGENTA);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                    case 7:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(99, 106, 141));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.RED);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                }
-            }
-        }
+        tetrisArea.placeBlock();
     }
 
     public void drawNext() {
@@ -827,8 +673,8 @@ public class ItemBoard extends JFrame implements Sizeable {
         y = 0;
         curr = getRandomBlock(setting.modeChoose);
         next = getRandomBlock(setting.modeChoose);
-        placeBlock();
-        drawBoard();
+        tetrisArea.placeBlock();
+        tetrisArea.drawBoard();
         placeNext();
         drawNext();
         this.board = new int[20][10];
@@ -977,8 +823,8 @@ public class ItemBoard extends JFrame implements Sizeable {
             curr.rotate();
         }
 
-        placeBlock();
-        drawBoard();
+        tetrisArea.placeBlock();
+        tetrisArea.drawBoard();
     }
 
     public void lRItem() {
@@ -1049,24 +895,24 @@ public class ItemBoard extends JFrame implements Sizeable {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_DOWN:
                         moveDown();
-                        drawBoard();
+                        tetrisArea.drawBoard();
                         break;
                     case KeyEvent.VK_RIGHT:
                         if (notMove == false) {
                             moveRight();
                         }
-                        drawBoard();
+                        tetrisArea.drawBoard();
                         break;
                     case KeyEvent.VK_LEFT:
                         if (notMove == false) {
                             moveLeft();
                         }
-                        drawBoard();
+                        tetrisArea.drawBoard();
                         break;
                     case KeyEvent.VK_UP:
                         if (blockFix == false)
                             blockRotate();
-                        drawBoard();
+                        tetrisArea.drawBoard();
                         break;
                     case KeyEvent.VK_SPACE:
                         while (true) {
@@ -1084,8 +930,8 @@ public class ItemBoard extends JFrame implements Sizeable {
                                 next = getRandomBlock(setting.modeChoose);
                                 placeNext();
                                 drawNext();
-                                placeBlock();
-                                drawBoard();
+                                tetrisArea.placeBlock();
+                                tetrisArea.drawBoard();
                                 notMove = false;
                                 blockFix = false;
                                 itemType = 0;
@@ -1097,16 +943,16 @@ public class ItemBoard extends JFrame implements Sizeable {
                                     collisionOccur();
                                     lineRemove();
                                     if (!isGameOver()) {
-                                        placeBlock();
-                                        drawBoard();
+                                        tetrisArea.placeBlock();
+                                        tetrisArea.drawBoard();
                                     }
                                     break;
                                 } else {
                                     y++;
                                 }
                                 lineRemove();
-                                placeBlock();
-                                drawBoard();
+                                tetrisArea.placeBlock();
+                                tetrisArea.drawBoard();
                             }
                         }
                         break;
@@ -1144,24 +990,24 @@ public class ItemBoard extends JFrame implements Sizeable {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_S:
                         moveDown();
-                        drawBoard();
+                        tetrisArea.drawBoard();
                         break;
                     case KeyEvent.VK_D:
                         if (notMove == false) {
                             moveRight();
                         }
-                        drawBoard();
+                        tetrisArea.drawBoard();
                         break;
                     case KeyEvent.VK_A:
                         if (notMove == false) {
                             moveLeft();
                         }
-                        drawBoard();
+                        tetrisArea.drawBoard();
                         break;
                     case KeyEvent.VK_W:
                         if (blockFix == false)
                             blockRotate();
-                        drawBoard();
+                        tetrisArea.drawBoard();
                         break;
                     case KeyEvent.VK_SPACE:
                         while (true) {
@@ -1179,8 +1025,8 @@ public class ItemBoard extends JFrame implements Sizeable {
                                 next = getRandomBlock(setting.modeChoose);
                                 placeNext();
                                 drawNext();
-                                placeBlock();
-                                drawBoard();
+                                tetrisArea.placeBlock();
+                                tetrisArea.drawBoard();
                                 notMove = false;
                                 blockFix = false;
                                 itemType = 0;
@@ -1192,16 +1038,16 @@ public class ItemBoard extends JFrame implements Sizeable {
                                     collisionOccur();
                                     lineRemove();
                                     if (!isGameOver()) {
-                                        placeBlock();
-                                        drawBoard();
+                                        tetrisArea.placeBlock();
+                                        tetrisArea.drawBoard();
                                     }
                                     break;
                                 } else {
                                     y++;
                                 }
                                 lineRemove();
-                                placeBlock();
-                                drawBoard();
+                                tetrisArea.placeBlock();
+                                tetrisArea.drawBoard();
                             }
                         }
                         break;
@@ -1253,7 +1099,7 @@ public class ItemBoard extends JFrame implements Sizeable {
         StyleConstants.setFontSize(stylesetBr, size1);
         StyleConstants.setFontSize(stylesetCur, size1);
         StyleConstants.setFontSize(stylesetNx, size3);
-        drawBoard();
+        tetrisArea.drawBoard();
         drawNext();
     }
 
@@ -1351,12 +1197,18 @@ public class ItemBoard extends JFrame implements Sizeable {
         }
     }
 
-    public static ItemBoard getItemBoard() {
-        return itemBoardMain;
+    public static SeperatingItemBoard getseperatingItemBoard() {
+        return seperatingItemBoardMain;
     }
 
     public void gameStop() {
         timer.stop();
+    }
+
+    public static void main(String[] args) {
+        SeperatingItemBoard seperatingItemBoard = new SeperatingItemBoard();
+        seperatingItemBoard.changeSize(1);
+        seperatingItemBoard.setVisible(true);
     }
 
 }

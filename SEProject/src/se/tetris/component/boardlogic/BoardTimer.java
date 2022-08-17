@@ -15,26 +15,21 @@ public class BoardTimer {
     private int eraseCnt;
     private int level;
 
-    BoardTetrisArea boardTetrisArea;
-    BoardScorePanel boardScorePanel;
-    BoardLevelPanel boardLevelPanel;
-
     SettingValues setting = SettingValues.getInstance();
     int intervalByMode = setting.intervalNumber;
 
     public BoardTimer() {
-        boardTetrisArea = BoardLocator.getInstance().getBoardTetrisArea();
         timer = new Timer(getInterval(this.blockNumber, this.eraseCnt), new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boardTetrisArea.moveDown();
+                BoardLocator.getInstance().getBoardTetrisArea().moveDown();
             }
         });
     }
 
     public int getInterval(int blockNumber, int eraseCnt) {
-        boardLevelPanel = BoardLocator.getInstance().getLevelPanel();
-        boardScorePanel = BoardLocator.getInstance().getScorePanel();
+        BoardLevelPanel boardLevelPanel = BoardLocator.getInstance().getLevelPanel();
+        BoardScorePanel boardScorePanel = BoardLocator.getInstance().getScorePanel();
         //생성
         if (blockNumber == 30 || blockNumber == 60 || blockNumber == 80 || blockNumber == 100 || blockNumber == 120) {
             if (intervalByMode == 1000) {

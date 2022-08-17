@@ -2,6 +2,8 @@ package se.tetris.component.boardui;
 
 import se.tetris.component.ScoreItem;
 import se.tetris.component.Sizeable;
+import se.tetris.component.boardlogic.BoardLocator;
+import se.tetris.component.boardlogic.BoardTimer;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -32,6 +34,8 @@ public class BoardScorePanel extends JPanel implements Sizeable {
         scorePanel.add(scoreLb1);
         scorePanel.add(Box.createVerticalStrut(5));
         scorePanel.add(scoreLb2);
+
+        add(scorePanel);
     }
 
     @Override
@@ -111,5 +115,24 @@ public class BoardScorePanel extends JPanel implements Sizeable {
 
     public boolean showDialog(int sc, int mode, int level) {
         return scoreItem.showDialog(sc, mode, level);
+    }
+
+    public static void main(String[] args) {
+        /*
+        BoardScorePanel boardNextArea = new BoardScorePanel();
+
+        BoardLocator boardLocator = BoardLocator.getInstance();
+
+        boardLocator.getInstance().setBoardNextArea(new BoardNextArea());
+        boardLocator.getInstance().setBoardTetrisArea(new BoardTetrisArea());
+        boardLocator.getInstance().setScorePanel(new BoardScorePanel());
+        boardLocator.getInstance().setLevelPanel(new BoardLevelPanel());
+        boardLocator.getInstance().setBoardTimer(new BoardTimer());
+
+        boardNextArea.changeSize(1);
+
+        boardNextArea.scorePanel.setVisible(true);
+
+         */
     }
 }

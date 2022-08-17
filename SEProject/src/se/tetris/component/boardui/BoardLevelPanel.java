@@ -1,5 +1,6 @@
 package se.tetris.component.boardui;
 
+import se.tetris.common.LifeCycleManager;
 import se.tetris.component.Sizeable;
 import se.tetris.component.boardlogic.BoardValues;
 import se.tetris.data.DBCalls;
@@ -11,7 +12,7 @@ import java.awt.*;
 import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
-public class BoardLevelPanel extends JPanel implements Sizeable {
+public class BoardLevelPanel extends JPanel implements Sizeable, LifeCycleManager {
 
     private JPanel levelPanel;
     private int level = 0;
@@ -37,6 +38,8 @@ public class BoardLevelPanel extends JPanel implements Sizeable {
         levelPanel.add(levelLb1);
         levelPanel.add(Box.createVerticalStrut(5));
         levelPanel.add(levelLb2);
+
+        add(levelPanel);
     }
 
     @Override
@@ -72,5 +75,15 @@ public class BoardLevelPanel extends JPanel implements Sizeable {
 
     public void changeLevelLb (int level) {
         levelLb2.setText(Integer.toString(level));
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onStop() {
+
     }
 }

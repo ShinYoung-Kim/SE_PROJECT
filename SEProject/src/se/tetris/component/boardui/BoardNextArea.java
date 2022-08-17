@@ -1,6 +1,7 @@
 package se.tetris.component.boardui;
 
 import se.tetris.blocks.*;
+import se.tetris.common.LifeCycleManager;
 import se.tetris.component.Sizeable;
 import se.tetris.component.boardlogic.BoardLocator;
 import se.tetris.component.boardlogic.BoardTimer;
@@ -17,7 +18,7 @@ import java.awt.*;
 import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
-public class BoardNextArea extends JTextPane implements Sizeable {
+public class BoardNextArea extends JTextPane implements Sizeable, LifeCycleManager {
     private static JTextPane nextArea;
     private static SimpleAttributeSet stylesetNx;
     private static StyledDocument nextDoc;
@@ -30,7 +31,6 @@ public class BoardNextArea extends JTextPane implements Sizeable {
     private int nextY = 1;
 
     final SettingValues setting = SettingValues.getInstance();
-    BoardTimer boardTimer;
 
     public BoardNextArea(){
         nextArea = new JTextPane();
@@ -56,6 +56,11 @@ public class BoardNextArea extends JTextPane implements Sizeable {
         nextDoc = nextArea.getStyledDocument();
 
         next = randomBlock.getRandomBlock(setting.modeChoose);
+
+        //placeNext();
+        //drawNext();
+
+        add(nextArea);
     }
 
     @Override
@@ -97,11 +102,10 @@ public class BoardNextArea extends JTextPane implements Sizeable {
     }
 
     public void drawNext() {
-        boardTimer = BoardLocator.getInstance().getBoardTimer();
         StringBuffer sb = new StringBuffer();
         sb.append("\n");
-        boardTimer.blockNumberIncrease();
-        boardTimer.boardTimerSetDelay();
+        BoardLocator.getInstance().getBoardTimer().blockNumberIncrease();
+        BoardLocator.getInstance().getBoardTimer().boardTimerSetDelay();
         for (int i = 0; i < nextBoard.length; i++) {
             for (int j = 0; j < nextBoard[i].length; j++) {
                 if (nextBoard[i][j] > 0) {
@@ -148,5 +152,33 @@ public class BoardNextArea extends JTextPane implements Sizeable {
 
     public void resetNextBoard() {
         nextBoard = new int[HEIGHT][WIDTH];
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
+
+    public static void main(String[] args) {
+        /*
+        BoardLocator boardLocator = BoardLocator.getInstance();
+
+        BoardLocator.getInstance().setBoardTetrisArea(new BoardTetrisArea());
+        BoardLocator.getInstance().setLevelPanel(new BoardLevelPanel());
+        BoardLocator.getInstance().setBoardTimer(new BoardTimer());
+        BoardNextArea boardNextArea = new BoardNextArea();
+        BoardLocator.getInstance().setBoardNextArea(boardNextArea);
+        BoardLocator.getInstance().setScorePanel(new BoardScorePanel());
+
+        boardNextArea.changeSize(1);
+
+        nextArea.setVisible(true);
+
+         */
     }
 }

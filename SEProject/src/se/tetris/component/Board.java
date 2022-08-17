@@ -79,14 +79,14 @@ public class Board extends JFrame implements Sizeable {
         super("SeoulTech SE Tetris");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        boardLocator = BoardLocator.getInstance();
+        tetrisArea = new BoardTetrisArea();
+        nextArea = new BoardNextArea();
+        scorePanel = new BoardScorePanel();
+        levelPanel = new BoardLevelPanel();
+
+        BoardLocator.init(new BoardLocator(nextArea, tetrisArea, scorePanel, levelPanel));
 
         //Board display setting.
-        tetrisArea = BoardLocator.getInstance().getBoardTetrisArea();
-        nextArea = BoardLocator.getInstance().getBoardNextArea();
-        scorePanel = BoardLocator.getInstance().getScorePanel();
-        levelPanel = BoardLocator.getInstance().getLevelPanel();
-        boardTimer = BoardLocator.getInstance().getBoardTimer();
 
         leftPanel = new JPanel();
         leftPanel.add(tetrisArea);
@@ -99,15 +99,17 @@ public class Board extends JFrame implements Sizeable {
         rightPanel.add(levelPanel);
 
         panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(leftPanel);
         panel.add(rightPanel);
 
         add(panel);
 
         //Set timer for block drops.
+        boardTimer = new BoardTimer();
+        BoardLocator.getInstance().setBoardTimer(boardTimer);
 
         //Initialize board for the game.
-
         playerKeyListener = new PlayerKeyListener();
         addKeyListener(playerKeyListener);
         setFocusable(true);
@@ -115,8 +117,10 @@ public class Board extends JFrame implements Sizeable {
 
         //인터페이스 세팅
         //Create the first block and draw
+        tetrisArea.changeCurr();
 
         //Document default style.
+        tetrisArea.defaultDocumentStyle();
 
         tetrisArea.placeBlock();
         tetrisArea.drawBoard();
@@ -366,5 +370,24 @@ public class Board extends JFrame implements Sizeable {
         public void actionPerformed(ActionEvent e) {
 
         }
+    }
+
+    public static void main(String[] args) {
+        /*
+        Board board = new Board();
+
+        BoardLocator boardLocator = BoardLocator.getInstance();
+
+        BoardLocator.getInstance().setBoardTetrisArea(new BoardTetrisArea());
+        BoardLocator.getInstance().setLevelPanel(new BoardLevelPanel());
+        BoardLocator.getInstance().setBoardTimer(new BoardTimer());
+        BoardLocator.getInstance().setBoardNextArea(new BoardNextArea());
+        BoardLocator.getInstance().setScorePanel(new BoardScorePanel());
+
+        board.changeSize(1);
+
+        board.setVisible(true);
+
+         */
     }
 }

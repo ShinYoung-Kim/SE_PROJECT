@@ -8,18 +8,25 @@ import se.tetris.component.boardui.BoardTetrisArea;
 public class BoardLocator {
     private static BoardLocator instance;
 
-    private final BoardNextArea boardNextArea = new BoardNextArea();
-    private final BoardTetrisArea boardTetrisArea = new BoardTetrisArea();
-    private final BoardScorePanel scorePanel = new BoardScorePanel();
-    private final BoardLevelPanel levelPanel = new BoardLevelPanel();
+    private BoardNextArea boardNextArea;
+    private BoardTetrisArea boardTetrisArea;
+    private BoardScorePanel scorePanel;
+    private BoardLevelPanel levelPanel;
 
-    private final BoardTimer boardTimer = new BoardTimer();
+    private BoardTimer boardTimer;
 
     public static BoardLocator getInstance() {
         if (instance == null) {
-            instance = new BoardLocator();
+            instance = new BoardLocator(new BoardNextArea(), new BoardTetrisArea(), new BoardScorePanel(), new BoardLevelPanel());
         }
         return instance;
+    }
+
+    public BoardLocator(BoardNextArea next, BoardTetrisArea tetris, BoardScorePanel score, BoardLevelPanel level) {
+        this.boardNextArea = next;
+        this.boardTetrisArea = tetris;
+        this.scorePanel = score;
+        this.levelPanel = level;
     }
 
     public static void init(BoardLocator boardLocator) {
@@ -42,10 +49,6 @@ public class BoardLocator {
         return levelPanel;
     }
 
-    public BoardTimer getBoardTimer() {
-        return boardTimer;
-    }
-    /*
     public void setBoardNextArea(BoardNextArea boardNextArea) {
         this.boardNextArea = boardNextArea;
     }
@@ -62,9 +65,11 @@ public class BoardLocator {
         this.levelPanel = levelPanel;
     }
 
+    public BoardTimer getBoardTimer() {
+        return boardTimer;
+    }
+
     public void setBoardTimer(BoardTimer boardTimer) {
         this.boardTimer = boardTimer;
     }
-
-     */
 }
