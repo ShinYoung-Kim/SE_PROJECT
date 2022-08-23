@@ -332,35 +332,18 @@ public class SettingCode extends JFrame implements Sizeable {
     }
 
     void foucusMoveLeft(int panelLocation) {
-        switch (panelLocation) {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                this.panelLocation = onScreenSizePanel;
-                screenSizeArea.panelFirstFoucus();
-                KeyFoucus = screenSizeArea.getKeyFoucus();
-                break;
+        if (panelLocation == onSettingButtonPanel) {
+            this.panelLocation = onScreenSizePanel;
+            screenSizeArea.panelFirstFoucus();
+            KeyFoucus = screenSizeArea.getKeyFoucus();
         }
     }
 
     void foucusMoveRight(int panelLocation) {
-        switch (panelLocation) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                this.panelLocation = onSettingButtonPanel;
-                buttonPanel.panelFirstFoucus();
-                KeyFoucus = buttonPanel.getKeyFoucus();
-                break;
-            case 5:
-                break;
+        if (panelLocation != onSettingButtonPanel) {
+            this.panelLocation = onSettingButtonPanel;
+            buttonPanel.panelFirstFoucus();
+            KeyFoucus = buttonPanel.getKeyFoucus();
         }
     }
 /*
