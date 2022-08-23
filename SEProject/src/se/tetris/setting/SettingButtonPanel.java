@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 
 import static se.tetris.setting.Strings.*;
 
-public class SettingButtonPanel extends JPanel {
+public class SettingButtonPanel extends SettingPanel {
 
     final SettingCode settingCode;
 
@@ -55,6 +55,10 @@ public class SettingButtonPanel extends JPanel {
     private int KeyFoucus;
     private final boolean canMoveLeft = true;
     private final boolean canMoveRight = false;
+    private boolean canPanelMoveDown = false;
+    private boolean canPanelMoveUp = false;
+    private int firstPanelComponent = 11;
+    private int lastPanellComponent = 16;
 
     public SettingButtonPanel(SettingCode settingCode) {
         this.setPreferredSize(new Dimension(80, 300));
@@ -139,6 +143,13 @@ public class SettingButtonPanel extends JPanel {
                         JOptionPane.DEFAULT_OPTION);
             }
         });
+
+        setCanMoveLeft(canMoveLeft);
+        setCanMoveRight(canMoveRight);
+        setCanPanelMoveUp(canPanelMoveUp);
+        setCanPanelMoveDown(canPanelMoveDown);
+        setFirstPanelComponent(firstPanelComponent);
+        setLastPanellComponent(lastPanellComponent);
     }
 
     void changeButtonSize(int width, int height) {
@@ -209,41 +220,5 @@ public class SettingButtonPanel extends JPanel {
                 settingReset.setBackground(color);
                 break;
         }
-    }
-
-    public int getKeyFoucus() {
-        return KeyFoucus - 1;
-    }
-
-    public void foucusMoveUp() {
-        KeyFoucus -= 1;
-    }
-
-    public void foucusMoveDown() {
-        KeyFoucus += 1;
-    }
-
-    public boolean canMoveUp() {
-        foucusMoveUp();
-        if (KeyFoucus < 11) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean canMoveDown() {
-        foucusMoveDown();
-        if (KeyFoucus > 16) {
-            return false;
-        }
-        return true;
-    }
-
-    public void panelFirstFoucus() {
-        KeyFoucus = 11;
-    }
-
-    public void panelLastFoucus() {
-        KeyFoucus = 16;
     }
 }

@@ -10,10 +10,14 @@ import java.awt.event.ActionListener;
 import static se.tetris.setting.ScreenSizeSettingPanel.Resolution.*;
 import static se.tetris.setting.Strings.*;
 
-public class ScreenSizeSettingPanel extends JPanel implements SettingInterface {
+public class ScreenSizeSettingPanel extends SettingPanel implements SettingInterface {
     private int KeyFoucus;
     private final boolean canMoveLeft = false;
     private final boolean canMoveRight = true;
+    private boolean canPanelMoveDown = true;
+    private boolean canPanelMoveUp = false;
+    private int firstPanelComponent = 1;
+    private int lastPanellComponent = 3;
 
     public enum Resolution {
         Standard(400, 600),
@@ -155,6 +159,13 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface {
         // screenSizeArea.setPreferredSize(new Dimension(250, 70));
         setAlignmentX(LEFT_ALIGNMENT);
         setBackground(SettingValues.getInstance().backgroundColoring(false));
+
+        setCanMoveLeft(canMoveLeft);
+        setCanMoveRight(canMoveRight);
+        setCanPanelMoveUp(canPanelMoveUp);
+        setCanPanelMoveDown(canPanelMoveDown);
+        setFirstPanelComponent(firstPanelComponent);
+        setLastPanellComponent(lastPanellComponent);
     }
 
     public void sizeOnefun() {
@@ -206,54 +217,6 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface {
                 sizeThree.setBackground(color);
                 break;
         }
-    }
-
-    public int getKeyFoucus() {
-        return KeyFoucus - 1;
-    }
-
-    public void setKeyFoucus(int KeyFoucus) {
-        this.KeyFoucus = KeyFoucus;
-    }
-
-    public void foucusMoveUp() {
-        KeyFoucus -= 1;
-    }
-
-    public void foucusMoveDown() {
-        KeyFoucus += 1;
-    }
-
-    public boolean canMoveUp() {
-        foucusMoveUp();
-        if (KeyFoucus < 1) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean canMoveDown() {
-        foucusMoveDown();
-        if (KeyFoucus > 3) {
-            return false;
-        }
-        return true;
-    }
-
-    public void panelFirstFoucus() {
-        KeyFoucus = 1;
-    }
-
-    public void panelLastFoucus() {
-        KeyFoucus = 3;
-    }
-
-    public boolean getCanMoveLeft() {
-        return canMoveLeft;
-    }
-
-    public boolean getCanMoveRight() {
-        return canMoveRight;
     }
 }
 

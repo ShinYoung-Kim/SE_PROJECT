@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import se.tetris.data.*;
@@ -125,6 +126,8 @@ public class SettingCode extends JFrame implements Sizeable {
 
     int[][] relation = new int[16][4];
 
+    ArrayList<SettingPanel> panelArrayList = new ArrayList<>();
+
     public SettingCode() {
 
         super(frameTitleString);
@@ -202,6 +205,12 @@ public class SettingCode extends JFrame implements Sizeable {
         colorBlindnessSettingPanel.setPreferredSize(new Dimension(250, 110));
         difficultySettingPanel.setPreferredSize(new Dimension(250, 110));
 
+        panelArrayList.add(screenSizeArea);
+        panelArrayList.add(keySettingPanel);
+        panelArrayList.add(colorBlindnessSettingPanel);
+        panelArrayList.add(difficultySettingPanel);
+        panelArrayList.add(buttonPanel);
+
         /*
         buttonArray = new AbstractButton[]{screenSizeArea.getSizeOne(), screenSizeArea.getSizeTwo(), screenSizeArea.getSizeThree(), keySettingPanel.getKeyOne(),
                 keySettingPanel.getKeyTwo(), colorBlindnessSettingPanel.getColorBlindOne(), colorBlindnessSettingPanel.getColorBlindTwo(),
@@ -276,9 +285,9 @@ public class SettingCode extends JFrame implements Sizeable {
         int keyChoose = SettingValues.getInstance().keyChoose;
         KeyChoose currentKeyChoose = KeyChoose.getKeyChoose(keyChoose);
         if (currentKeyChoose.up == enteredKey) {
-            foucusMoveUp(panelLocation);
+            foucusMoveUp();
         } else if (currentKeyChoose.down == enteredKey) {
-            foucusMoveDown(panelLocation);
+            foucusMoveDown();
         } else if (currentKeyChoose.left == enteredKey) {
             foucusMoveLeft(panelLocation);
         } else if (currentKeyChoose.right == enteredKey) {
@@ -290,96 +299,36 @@ public class SettingCode extends JFrame implements Sizeable {
         foucusColoring();
     }
 
-    void foucusMoveDown(int panelLocation) {
-        switch (panelLocation) {
-            case 1:
-                if (!screenSizeArea.canMoveDown()) {
-                    this.panelLocation = onKeySettingPanel;
-                    keySettingPanel.panelFirstFoucus();
-                    KeyFoucus = keySettingPanel.getKeyFoucus();
-                } else {
-                    KeyFoucus = screenSizeArea.getKeyFoucus();
-                }
-                break;
-            case 2:
-                if (!keySettingPanel.canMoveDown()) {
-                    this.panelLocation = onColorBlindnessSettingPanel;
-                    colorBlindnessSettingPanel.panelFirstFoucus();
-                    KeyFoucus = colorBlindnessSettingPanel.getKeyFoucus();
-                } else {
-                    KeyFoucus = keySettingPanel.getKeyFoucus();
-                }
-                break;
-            case 3:
-                if (!colorBlindnessSettingPanel.canMoveDown()) {
-                    this.panelLocation = onDifficultySettingPanel;
-                    difficultySettingPanel.panelFirstFoucus();
-                    KeyFoucus = difficultySettingPanel.getKeyFoucus();
-                } else {
-                    KeyFoucus = colorBlindnessSettingPanel.getKeyFoucus();
-                }
-                break;
-            case 4:
-                if (!difficultySettingPanel.canMoveDown()) {
-                    difficultySettingPanel.panelLastFoucus();
-                    System.out.println("at difficulty panel last thing down");
-                }
-                KeyFoucus = difficultySettingPanel.getKeyFoucus();
-                System.out.println(KeyFoucus + "difficulty panel downing");
-                break;
-            case 5:
-                if (!buttonPanel.canMoveDown()) {
-                    buttonPanel.panelLastFoucus();
-                    System.out.println("at buttonPanel last thing down");
-                }
-                KeyFoucus = buttonPanel.getKeyFoucus();
-                System.out.println(KeyFoucus + "button panel downing");
-                break;
-        }
+    private SettingPanel getSettingPanel(int panelLocation) {
+        return panelArrayList.get(panelLocation - 1);
     }
 
-    void foucusMoveUp(int panelLocation) {
-        switch (panelLocation) {
-            case 1:
-                if (!screenSizeArea.canMoveUp()) {
-                    screenSizeArea.panelFirstFoucus();
-                }
-                KeyFoucus = screenSizeArea.getKeyFoucus();
-                break;
-            case 2:
-                if (!keySettingPanel.canMoveUp()) {
-                    this.panelLocation = onScreenSizePanel;
-                    screenSizeArea.panelLastFoucus();
-                    KeyFoucus = screenSizeArea.getKeyFoucus();
-                } else {
-                    KeyFoucus = keySettingPanel.getKeyFoucus();
-                }
-                break;
-            case 3:
-                if (!colorBlindnessSettingPanel.canMoveUp()) {
-                    this.panelLocation = onKeySettingPanel;
-                    keySettingPanel.panelLastFoucus();
-                    KeyFoucus = keySettingPanel.getKeyFoucus();
-                } else {
-                    KeyFoucus = colorBlindnessSettingPanel.getKeyFoucus();
-                }
-                break;
-            case 4:
-                if (!difficultySettingPanel.canMoveUp()) {
-                    this.panelLocation = onColorBlindnessSettingPanel;
-                    colorBlindnessSettingPanel.panelLastFoucus();
-                    KeyFoucus = colorBlindnessSettingPanel.getKeyFoucus();
-                } else {
-                    KeyFoucus = difficultySettingPanel.getKeyFoucus();
-                }
-                break;
-            case 5:
-                if (!buttonPanel.canMoveUp()) {
-                    buttonPanel.panelFirstFoucus();
-                }
-                KeyFoucus = buttonPanel.getKeyFoucus();
-                break;
+    private void foucusMoveDown() {
+        SettingPanel currentPanel = getSettingPanel(panelLocation);
+        if (!currentPanel.canMoveDown()) {
+            if (!currentPanel.getCanPanelMoveDown()) {
+                currentPanel.downAtBottom();
+            } else {
+                panelLocation += 1;
+                currentPanel = getSettingPanel(panelLocation);
+                currentPanel.panelFirstFoucus();
+            }
         }
+        KeyFoucus = currentPanel.getKeyFoucus();
+    }
+
+    private void foucusMoveUp() {
+        SettingPanel currentPanel = getSettingPanel(panelLocation);
+        if (!currentPanel.canMoveUp()) {
+            if (!currentPanel.getCanPanelMoveUp()) {
+                currentPanel.upAtTop();
+            } else {
+                panelLocation -= 1;
+                currentPanel = getSettingPanel(panelLocation);
+                currentPanel.panelLastFoucus();
+            }
+        }
+        KeyFoucus = currentPanel.getKeyFoucus();
     }
 
     void foucusMoveLeft(int panelLocation) {

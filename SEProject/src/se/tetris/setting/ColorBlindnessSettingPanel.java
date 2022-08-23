@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 import static se.tetris.setting.Strings.*;
 
-public class ColorBlindnessSettingPanel extends JPanel {
+public class ColorBlindnessSettingPanel extends SettingPanel {
     JLabel colorBlindTitle = new JLabel(colorBlindTitleString);
 
     public JRadioButton getColorBlindOne() {
@@ -29,6 +29,10 @@ public class ColorBlindnessSettingPanel extends JPanel {
     private int KeyFoucus;
     private final boolean canMoveLeft = false;
     private final boolean canMoveRight = true;
+    private boolean canPanelMoveDown = true;
+    private boolean canPanelMoveUp = true;
+    private int firstPanelComponent = 6;
+    private int lastPanellComponent = 7;
 
     boolean colorOnOff;
 
@@ -88,6 +92,13 @@ public class ColorBlindnessSettingPanel extends JPanel {
         setBackground(SettingValues.getInstance().backgroundColoring(false));
 
         reload();
+
+        setCanMoveLeft(canMoveLeft);
+        setCanMoveRight(canMoveRight);
+        setCanPanelMoveUp(canPanelMoveUp);
+        setCanPanelMoveDown(canPanelMoveDown);
+        setFirstPanelComponent(firstPanelComponent);
+        setLastPanellComponent(lastPanellComponent);
     }
 
     public void colorBlindOneFun() {
@@ -131,41 +142,5 @@ public class ColorBlindnessSettingPanel extends JPanel {
                 colorBlindTwo.setBackground(color);
                 break;
         }
-    }
-
-    public int getKeyFoucus() {
-        return KeyFoucus - 1;
-    }
-
-    public void foucusMoveUp() {
-        KeyFoucus -= 1;
-    }
-
-    public void foucusMoveDown() {
-        KeyFoucus += 1;
-    }
-
-    public boolean canMoveUp() {
-        foucusMoveUp();
-        if (KeyFoucus < 6) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean canMoveDown() {
-        foucusMoveDown();
-        if (KeyFoucus > 7) {
-            return false;
-        }
-        return true;
-    }
-
-    public void panelFirstFoucus() {
-        KeyFoucus = 6;
-    }
-
-    public void panelLastFoucus() {
-        KeyFoucus = 7;
     }
 }

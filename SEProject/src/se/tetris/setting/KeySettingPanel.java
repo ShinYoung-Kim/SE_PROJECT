@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 import static se.tetris.setting.Strings.*;
 
-public class KeySettingPanel extends JPanel {
+public class KeySettingPanel extends SettingPanel {
     JLabel keyTitle = new JLabel(keyTitleString);
 
     public JRadioButton getKeyOne() {
@@ -29,6 +29,10 @@ public class KeySettingPanel extends JPanel {
     private int KeyFoucus;
     private final boolean canMoveLeft = false;
     private final boolean canMoveRight = true;
+    private boolean canPanelMoveDown = true;
+    private boolean canPanelMoveUp = true;
+    private int firstPanelComponent = 4;
+    private int lastPanellComponent = 5;
 
     public enum KeyMode {
         Arrow,
@@ -91,6 +95,13 @@ public class KeySettingPanel extends JPanel {
         });
 
         reload();
+
+        setCanMoveLeft(canMoveLeft);
+        setCanMoveRight(canMoveRight);
+        setCanPanelMoveUp(canPanelMoveUp);
+        setCanPanelMoveDown(canPanelMoveDown);
+        setFirstPanelComponent(firstPanelComponent);
+        setLastPanellComponent(lastPanellComponent);
     }
 
     public void keyTwofun() {
@@ -138,41 +149,5 @@ public class KeySettingPanel extends JPanel {
                 keyTwo.setBackground(color);
                 break;
         }
-    }
-
-    public int getKeyFoucus() {
-        return KeyFoucus - 1;
-    }
-
-    public void foucusMoveUp() {
-        KeyFoucus -= 1;
-    }
-
-    public void foucusMoveDown() {
-        KeyFoucus += 1;
-    }
-
-    public boolean canMoveUp() {
-        foucusMoveUp();
-        if (KeyFoucus < 4) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean canMoveDown() {
-        foucusMoveDown();
-        if (KeyFoucus > 5) {
-            return false;
-        }
-        return true;
-    }
-
-    public void panelFirstFoucus() {
-        KeyFoucus = 4;
-    }
-
-    public void panelLastFoucus() {
-        KeyFoucus = 5;
     }
 }

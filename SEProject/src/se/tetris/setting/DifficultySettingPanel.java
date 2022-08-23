@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 import static se.tetris.setting.Strings.*;
 
-public class DifficultySettingPanel extends JPanel {
+public class DifficultySettingPanel extends SettingPanel {
     JLabel modeTitle = new JLabel(modeTitleString);
 
     public JRadioButton getModeOne() {
@@ -34,6 +34,10 @@ public class DifficultySettingPanel extends JPanel {
     private int KeyFoucus;
     private final boolean canMoveLeft = false;
     private final boolean canMoveRight = true;
+    private boolean canPanelMoveDown = false;
+    private boolean canPanelMoveUp = true;
+    private int firstPanelComponent = 8;
+    private int lastPanellComponent = 10;
 
     enum Difficulty {
         Easy,
@@ -114,6 +118,13 @@ public class DifficultySettingPanel extends JPanel {
         setBackground(SettingValues.getInstance().backgroundColoring(false));
 
         reload();
+
+        setCanMoveLeft(canMoveLeft);
+        setCanMoveRight(canMoveRight);
+        setCanPanelMoveUp(canPanelMoveUp);
+        setCanPanelMoveDown(canPanelMoveDown);
+        setFirstPanelComponent(firstPanelComponent);
+        setLastPanellComponent(lastPanellComponent);
     }
 
     public void modeThreefun() {
@@ -174,41 +185,5 @@ public class DifficultySettingPanel extends JPanel {
                 modeThree.setBackground(color);
                 break;
         }
-    }
-
-    public int getKeyFoucus() {
-        return KeyFoucus - 1;
-    }
-
-    public void foucusMoveUp() {
-        KeyFoucus -= 1;
-    }
-
-    public void foucusMoveDown() {
-        KeyFoucus += 1;
-    }
-
-    public boolean canMoveUp() {
-        foucusMoveUp();
-        if (KeyFoucus < 8) {
-            return false;
-        }
-        return true;
-    }
-
-    public boolean canMoveDown() {
-        foucusMoveDown();
-        if (KeyFoucus > 10) {
-            return false;
-        }
-        return true;
-    }
-
-    public void panelFirstFoucus() {
-        KeyFoucus = 8;
-    }
-
-    public void panelLastFoucus() {
-        KeyFoucus = 10;
     }
 }
