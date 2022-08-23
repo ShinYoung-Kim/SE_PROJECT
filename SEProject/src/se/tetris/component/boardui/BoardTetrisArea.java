@@ -2,10 +2,7 @@ package se.tetris.component.boardui;
 
 import se.tetris.blocks.*;
 import se.tetris.component.Sizeable;
-import se.tetris.component.boardlogic.BoardLocator;
-import se.tetris.component.boardlogic.BoardTimer;
-import se.tetris.component.boardlogic.BoardValues;
-import se.tetris.component.boardlogic.RandomBlock;
+import se.tetris.component.boardlogic.*;
 import se.tetris.setting.SettingValues;
 
 import javax.swing.*;
@@ -34,6 +31,7 @@ public class BoardTetrisArea extends JPanel implements Sizeable {
     private final char BORDER_CHAR = 'X';
     //int eraseCnt = 0;
     private RandomBlock randomBlock = new RandomBlock();
+    private final StrategyPattern strategyPattern;
 
     BoardValues boardValues = BoardValues.getInstance();
     int mode = boardValues.mode;
@@ -69,6 +67,13 @@ public class BoardTetrisArea extends JPanel implements Sizeable {
         boardDoc = tetrisArea.getStyledDocument();
 
         add(tetrisArea);
+
+        strategyPattern = new StrategyPattern();
+        if (setting.colorBlindModeCheck == 1) {
+            strategyPattern.setColorBlindnessStrategy(new ColorBlindnessColorBlindStrategy());
+        } else {
+            strategyPattern.setColorBlindnessStrategy(new ColorBlindnessColorStrategy());
+        }
     }
 
     public void setX(int x) {
@@ -320,7 +325,7 @@ public class BoardTetrisArea extends JPanel implements Sizeable {
             int offset = rows * (WIDTH + 3) + x + 1;
             for (int i = 0; i < curr.width(); i++) {
                 if (curr.getShape(i, j) > 0) {
-                    colorBlindModeCurrent(offset + i);
+                    strategyPattern.colorBlindModeCurrent(offset + i, stylesetCur, boardDoc, curr);
                 }
             }
         }
@@ -328,71 +333,7 @@ public class BoardTetrisArea extends JPanel implements Sizeable {
             int offset = (i + 1) * (WIDTH + 3) + 1;
             for (int j = 0; j < board[0].length; j++) {
                 int block = board[i][j];
-                switch (block) {
-                    case 1:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(0, 58, 97));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.CYAN);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                    case 2:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(126, 98, 61));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.BLUE);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                    case 3:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(165, 148, 159));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.PINK);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                    case 4:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(187, 190, 242));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.YELLOW);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                    case 5:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(247, 193, 121));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.GREEN);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                    case 6:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(154, 127, 112));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.MAGENTA);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                    case 7:
-                        if (setting.colorBlindModeCheck == 1) {
-                            StyleConstants.setForeground(stylesetCur, new Color(99, 106, 141));
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        } else {
-                            StyleConstants.setForeground(stylesetCur, Color.RED);
-                            boardDoc.setCharacterAttributes(offset + j, 1, stylesetCur, true);
-                        }
-                        break;
-                }
+                strategyPattern.colorBlock(block, stylesetCur, boardDoc, offset, j);
             }
         }
     }
@@ -458,16 +399,11 @@ public class BoardTetrisArea extends JPanel implements Sizeable {
     }
 
     private void colorBlindMode(SimpleAttributeSet styleSet, Block block) {
-        if (setting.colorBlindModeCheck == 1) {
-            StyleConstants.setForeground(styleSet, block.getColorBlind());
-        } else {
-            StyleConstants.setForeground(styleSet, block.getColor());
-        }
+        strategyPattern.colorBlindMode(styleSet, block);
     }
 
     private void colorBlindModeCurrent(int offset) {
-        colorBlindMode(stylesetCur, curr);
-        boardDoc.setCharacterAttributes(offset, 1, stylesetCur, true);
+        strategyPattern.colorBlindModeCurrent(offset, stylesetCur, boardDoc, curr);
     }
 
     public void setCurr(Block curr) {
