@@ -11,7 +11,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static se.tetris.setting.SettingCode.grayMade;
 import static se.tetris.setting.Strings.*;
 
 public class SettingButtonPanel extends JPanel {
@@ -53,6 +52,10 @@ public class SettingButtonPanel extends JPanel {
 
     int sizeNumber = SettingValues.getInstance().sizeNumber;
 
+    private int KeyFoucus;
+    private final boolean canMoveLeft = true;
+    private final boolean canMoveRight = false;
+
     public SettingButtonPanel(SettingCode settingCode) {
         this.setPreferredSize(new Dimension(80, 300));
 
@@ -65,12 +68,12 @@ public class SettingButtonPanel extends JPanel {
         add(BackToStart);
         add(settingReset);
 
-        scoreReset.setBackground(grayMade);
-        BackToGame.setBackground(grayMade);
-        BackToBattle.setBackground(grayMade);
-        BackToItemGame.setBackground(grayMade);
-        BackToStart.setBackground(grayMade);
-        settingReset.setBackground(grayMade);
+        scoreReset.setBackground(SettingValues.getInstance().backgroundColoring(false));
+        BackToGame.setBackground(SettingValues.getInstance().backgroundColoring(false));
+        BackToBattle.setBackground(SettingValues.getInstance().backgroundColoring(false));
+        BackToItemGame.setBackground(SettingValues.getInstance().backgroundColoring(false));
+        BackToStart.setBackground(SettingValues.getInstance().backgroundColoring(false));
+        settingReset.setBackground(SettingValues.getInstance().backgroundColoring(false));
 
         EtchedBorder scoreBorder = new EtchedBorder();
         setBorder(scoreBorder);
@@ -206,5 +209,41 @@ public class SettingButtonPanel extends JPanel {
                 settingReset.setBackground(color);
                 break;
         }
+    }
+
+    public int getKeyFoucus() {
+        return KeyFoucus - 1;
+    }
+
+    public void foucusMoveUp() {
+        KeyFoucus -= 1;
+    }
+
+    public void foucusMoveDown() {
+        KeyFoucus += 1;
+    }
+
+    public boolean canMoveUp() {
+        foucusMoveUp();
+        if (KeyFoucus < 11) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean canMoveDown() {
+        foucusMoveDown();
+        if (KeyFoucus > 16) {
+            return false;
+        }
+        return true;
+    }
+
+    public void panelFirstFoucus() {
+        KeyFoucus = 11;
+    }
+
+    public void panelLastFoucus() {
+        KeyFoucus = 16;
     }
 }

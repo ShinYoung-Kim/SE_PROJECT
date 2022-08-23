@@ -1,5 +1,7 @@
 package se.tetris.setting;
 
+import java.awt.*;
+
 public class SettingValues {
 
     private static final SettingValues instance = new SettingValues();
@@ -9,6 +11,9 @@ public class SettingValues {
     public int colorBlindModeCheck = 0;
     public int modeChoose = 2;
     public int keyChoose = 1;
+
+    final static Color notColored = new Color(238, 238, 238);
+    final static Color colored = Color.GRAY;
 
     private SettingValues() {
     }
@@ -21,4 +26,12 @@ public class SettingValues {
         instance.intervalNumber = intervalNumber;
     }
     */
+
+    public Color backgroundColoring(boolean isSelected) {
+        if (isSelected) {
+            return colored;
+        } else {
+            return notColored;
+        }
+    }
 }

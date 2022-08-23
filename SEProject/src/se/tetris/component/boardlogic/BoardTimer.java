@@ -12,14 +12,13 @@ import java.awt.event.ActionListener;
 public class BoardTimer {
     private Timer timer;
     private int blockNumber;
-    private int eraseCnt;
     private int level;
 
     SettingValues setting = SettingValues.getInstance();
     int intervalByMode = setting.intervalNumber;
 
     public BoardTimer() {
-        timer = new Timer(getInterval(this.blockNumber, this.eraseCnt), new ActionListener() {
+        timer = new Timer(getInterval(this.blockNumber, BoardValues.getInstance().getEraseCnt()), new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 BoardLocator.getInstance().getBoardTetrisArea().moveDown();
@@ -132,7 +131,7 @@ public class BoardTimer {
     }
 
     public void boardTimerSetDelay() {
-        timer.setDelay(getInterval(blockNumber, eraseCnt));
+        timer.setDelay(getInterval(blockNumber, BoardValues.getInstance().getEraseCnt()));
     }
 
     public void blockNumberIncrease() {

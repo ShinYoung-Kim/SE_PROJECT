@@ -8,10 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static se.tetris.setting.ScreenSizeSettingPanel.Resolution.*;
-import static se.tetris.setting.SettingCode.grayMade;
 import static se.tetris.setting.Strings.*;
 
 public class ScreenSizeSettingPanel extends JPanel implements SettingInterface {
+    private int KeyFoucus;
+    private final boolean canMoveLeft = false;
+    private final boolean canMoveRight = true;
 
     public enum Resolution {
         Standard(400, 600),
@@ -110,20 +112,14 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface {
         //SettingCode.changeSize(sizeNumber);
     }
 
-    @Override
-    public void changeEachSettingSize() {
-        //interface에 title과 각 radiobutton들을 만들어놓고 class에서 지정을 해주려했고 + settingcode에서 changesize로 한 번에 조정하는 대신
-        //이 함수를 통해 각 사이즈를 조절해주려했는데 인터페이스가 상수만을 가질 수 있어서 값 바꾸는 게 안 됩니다.ㅠㅠ
-    }
-
     public ScreenSizeSettingPanel(SettingCode settingCode) {
         this.settingCode = settingCode;
-        this.setPreferredSize(new Dimension(250, 110));
+        setPreferredSize(new Dimension(250, 110));
 
         screenSizeTitle.setForeground(Color.BLACK);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(screenSizeTitle);
-        this.add(Box.createVerticalStrut(20));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(screenSizeTitle);
+        add(Box.createVerticalStrut(20));
 
         ButtonGroup sizeGroup = new ButtonGroup();
 
@@ -152,13 +148,13 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface {
         sizeGroup.add(sizeOne);
         sizeGroup.add(sizeTwo);
         sizeGroup.add(sizeThree);
-        this.add(sizeOne);
-        this.add(sizeTwo);
-        this.add(sizeThree);
+        add(sizeOne);
+        add(sizeTwo);
+        add(sizeThree);
         add(Box.createVerticalStrut(20));
         // screenSizeArea.setPreferredSize(new Dimension(250, 70));
         setAlignmentX(LEFT_ALIGNMENT);
-        setBackground(grayMade);
+        setBackground(SettingValues.getInstance().backgroundColoring(false));
     }
 
     public void sizeOnefun() {
@@ -210,6 +206,54 @@ public class ScreenSizeSettingPanel extends JPanel implements SettingInterface {
                 sizeThree.setBackground(color);
                 break;
         }
+    }
+
+    public int getKeyFoucus() {
+        return KeyFoucus - 1;
+    }
+
+    public void setKeyFoucus(int KeyFoucus) {
+        this.KeyFoucus = KeyFoucus;
+    }
+
+    public void foucusMoveUp() {
+        KeyFoucus -= 1;
+    }
+
+    public void foucusMoveDown() {
+        KeyFoucus += 1;
+    }
+
+    public boolean canMoveUp() {
+        foucusMoveUp();
+        if (KeyFoucus < 1) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean canMoveDown() {
+        foucusMoveDown();
+        if (KeyFoucus > 3) {
+            return false;
+        }
+        return true;
+    }
+
+    public void panelFirstFoucus() {
+        KeyFoucus = 1;
+    }
+
+    public void panelLastFoucus() {
+        KeyFoucus = 3;
+    }
+
+    public boolean getCanMoveLeft() {
+        return canMoveLeft;
+    }
+
+    public boolean getCanMoveRight() {
+        return canMoveRight;
     }
 }
 

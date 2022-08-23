@@ -62,8 +62,6 @@ public class SettingCode extends JFrame implements Sizeable {
     Font fontBig = new Font(null, Font.PLAIN, 20);
     Font fontFull = new Font(null, Font.PLAIN, 25);
 
-    final static Color grayMade = new Color(238, 238, 238);
-
     JLabel settingTitle = new JLabel(settingTitleString);
 
     int KeyCount = 0;
@@ -113,6 +111,18 @@ public class SettingCode extends JFrame implements Sizeable {
     final int backToStartButton = 14;
     final int settingResetButton = 15;
 
+    private int panelLocation = 1;
+    private final int onScreenSizePanel = 1;
+    private final int onKeySettingPanel = 2;
+    private final int onColorBlindnessSettingPanel = 3;
+    private final int onDifficultySettingPanel = 4;
+    private final int onSettingButtonPanel = 5;
+
+    private final int directionUp = -1;
+    private final int directionDown = 1;
+    private final int directionLeft = 3;
+    private final int directionRight = 4;
+
     int[][] relation = new int[16][4];
 
     public SettingCode() {
@@ -136,7 +146,7 @@ public class SettingCode extends JFrame implements Sizeable {
 
         nextArea = new JPanel();
         // nextArea.setPreferredSize(new Dimension(250, 400));
-        nextArea.setBackground(grayMade);
+        nextArea.setBackground(SettingValues.getInstance().backgroundColoring(false));
         nextArea.setBorder(border);
 
         screenSizeArea = new ScreenSizeSettingPanel(this);
@@ -215,6 +225,8 @@ public class SettingCode extends JFrame implements Sizeable {
                     foucusColoring();
                     //buttonArray[KeyFoucus].setBackground(Color.gray);
                     KeyCount++;
+                    panelLocation = onScreenSizePanel;
+                    screenSizeArea.setKeyFoucus(1);
                 } else {
                     foucusMove(e);
                 }
@@ -264,18 +276,143 @@ public class SettingCode extends JFrame implements Sizeable {
         int keyChoose = SettingValues.getInstance().keyChoose;
         KeyChoose currentKeyChoose = KeyChoose.getKeyChoose(keyChoose);
         if (currentKeyChoose.up == enteredKey) {
-            KeyFoucus = relation[KeyFoucus][0];
+            foucusMoveUp(panelLocation);
         } else if (currentKeyChoose.down == enteredKey) {
-            KeyFoucus = relation[KeyFoucus][1];
+            foucusMoveDown(panelLocation);
         } else if (currentKeyChoose.left == enteredKey) {
-            KeyFoucus = relation[KeyFoucus][2];
+            foucusMoveLeft(panelLocation);
         } else if (currentKeyChoose.right == enteredKey) {
-            KeyFoucus = relation[KeyFoucus][3];
+            foucusMoveRight(panelLocation);
         } else if (enteredKey == vkEnterKeycode) {
             foucusDoClick();
         }
         foucusColoringRemove();
         foucusColoring();
+    }
+
+    void foucusMoveDown(int panelLocation) {
+        switch (panelLocation) {
+            case 1:
+                if (!screenSizeArea.canMoveDown()) {
+                    this.panelLocation = onKeySettingPanel;
+                    keySettingPanel.panelFirstFoucus();
+                    KeyFoucus = keySettingPanel.getKeyFoucus();
+                } else {
+                    KeyFoucus = screenSizeArea.getKeyFoucus();
+                }
+                break;
+            case 2:
+                if (!keySettingPanel.canMoveDown()) {
+                    this.panelLocation = onColorBlindnessSettingPanel;
+                    colorBlindnessSettingPanel.panelFirstFoucus();
+                    KeyFoucus = colorBlindnessSettingPanel.getKeyFoucus();
+                } else {
+                    KeyFoucus = keySettingPanel.getKeyFoucus();
+                }
+                break;
+            case 3:
+                if (!colorBlindnessSettingPanel.canMoveDown()) {
+                    this.panelLocation = onDifficultySettingPanel;
+                    difficultySettingPanel.panelFirstFoucus();
+                    KeyFoucus = difficultySettingPanel.getKeyFoucus();
+                } else {
+                    KeyFoucus = colorBlindnessSettingPanel.getKeyFoucus();
+                }
+                break;
+            case 4:
+                if (!difficultySettingPanel.canMoveDown()) {
+                    difficultySettingPanel.panelLastFoucus();
+                    System.out.println("at difficulty panel last thing down");
+                }
+                KeyFoucus = difficultySettingPanel.getKeyFoucus();
+                System.out.println(KeyFoucus + "difficulty panel downing");
+                break;
+            case 5:
+                if (!buttonPanel.canMoveDown()) {
+                    buttonPanel.panelLastFoucus();
+                    System.out.println("at buttonPanel last thing down");
+                }
+                KeyFoucus = buttonPanel.getKeyFoucus();
+                System.out.println(KeyFoucus + "button panel downing");
+                break;
+        }
+    }
+
+    void foucusMoveUp(int panelLocation) {
+        switch (panelLocation) {
+            case 1:
+                if (!screenSizeArea.canMoveUp()) {
+                    screenSizeArea.panelFirstFoucus();
+                }
+                KeyFoucus = screenSizeArea.getKeyFoucus();
+                break;
+            case 2:
+                if (!keySettingPanel.canMoveUp()) {
+                    this.panelLocation = onScreenSizePanel;
+                    screenSizeArea.panelLastFoucus();
+                    KeyFoucus = screenSizeArea.getKeyFoucus();
+                } else {
+                    KeyFoucus = keySettingPanel.getKeyFoucus();
+                }
+                break;
+            case 3:
+                if (!colorBlindnessSettingPanel.canMoveUp()) {
+                    this.panelLocation = onKeySettingPanel;
+                    keySettingPanel.panelLastFoucus();
+                    KeyFoucus = keySettingPanel.getKeyFoucus();
+                } else {
+                    KeyFoucus = colorBlindnessSettingPanel.getKeyFoucus();
+                }
+                break;
+            case 4:
+                if (!difficultySettingPanel.canMoveUp()) {
+                    this.panelLocation = onColorBlindnessSettingPanel;
+                    colorBlindnessSettingPanel.panelLastFoucus();
+                    KeyFoucus = colorBlindnessSettingPanel.getKeyFoucus();
+                } else {
+                    KeyFoucus = difficultySettingPanel.getKeyFoucus();
+                }
+                break;
+            case 5:
+                if (!buttonPanel.canMoveUp()) {
+                    buttonPanel.panelFirstFoucus();
+                }
+                KeyFoucus = buttonPanel.getKeyFoucus();
+                break;
+        }
+    }
+
+    void foucusMoveLeft(int panelLocation) {
+        switch (panelLocation) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                this.panelLocation = onScreenSizePanel;
+                screenSizeArea.panelFirstFoucus();
+                KeyFoucus = screenSizeArea.getKeyFoucus();
+                break;
+        }
+    }
+
+    void foucusMoveRight(int panelLocation) {
+        switch (panelLocation) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                this.panelLocation = onSettingButtonPanel;
+                buttonPanel.panelFirstFoucus();
+                KeyFoucus = buttonPanel.getKeyFoucus();
+                break;
+            case 5:
+                break;
+        }
     }
 /*
     void foucusMoveDown() {
@@ -306,11 +443,11 @@ public class SettingCode extends JFrame implements Sizeable {
 
     void foucusColoring() {
         //buttonArray[KeyFoucus].setBackground(Color.gray);
-        buttonPanel.foucusColoring(KeyFoucus, Color.gray);
-        screenSizeArea.foucusColoring(KeyFoucus, Color.gray);
-        keySettingPanel.foucusColoring(KeyFoucus, Color.gray);
-        difficultySettingPanel.foucusColoring(KeyFoucus, Color.gray);
-        colorBlindnessSettingPanel.foucusColoring(KeyFoucus, Color.gray);
+        buttonPanel.foucusColoring(KeyFoucus, SettingValues.getInstance().backgroundColoring(true));
+        screenSizeArea.foucusColoring(KeyFoucus, SettingValues.getInstance().backgroundColoring(true));
+        keySettingPanel.foucusColoring(KeyFoucus, SettingValues.getInstance().backgroundColoring(true));
+        difficultySettingPanel.foucusColoring(KeyFoucus, SettingValues.getInstance().backgroundColoring(true));
+        colorBlindnessSettingPanel.foucusColoring(KeyFoucus, SettingValues.getInstance().backgroundColoring(true));
     }
 
     void foucusDoClick() {
@@ -325,11 +462,11 @@ public class SettingCode extends JFrame implements Sizeable {
 
     void foucusColoringRemove() {
         for (int i = 0; i < 16; i++) {
-            buttonPanel.foucusColoring(i, grayMade);
-            screenSizeArea.foucusColoring(i, grayMade);
-            keySettingPanel.foucusColoring(i, grayMade);
-            difficultySettingPanel.foucusColoring(i, grayMade);
-            colorBlindnessSettingPanel.foucusColoring(i, grayMade);
+            buttonPanel.foucusColoring(i, SettingValues.getInstance().backgroundColoring(false));
+            screenSizeArea.foucusColoring(i, SettingValues.getInstance().backgroundColoring(false));
+            keySettingPanel.foucusColoring(i, SettingValues.getInstance().backgroundColoring(false));
+            difficultySettingPanel.foucusColoring(i, SettingValues.getInstance().backgroundColoring(false));
+            colorBlindnessSettingPanel.foucusColoring(i, SettingValues.getInstance().backgroundColoring(false));
         }
     }
 

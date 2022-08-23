@@ -75,7 +75,6 @@ public class Board extends JFrame implements Sizeable {
     //만들어진 블럭 개수 세기
 
     public Board() {
-
         super("SeoulTech SE Tetris");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -298,13 +297,6 @@ public class Board extends JFrame implements Sizeable {
         }
     }
 
-    //max - 30, default - 20,
-
-
-    //max - (200, 60), default - (150, 50)
-
-    //max - 17, default - nothing,
-
     public static Board getBoard() {
         return boardMain;
     }
@@ -373,7 +365,6 @@ public class Board extends JFrame implements Sizeable {
     }
 
     public static void main(String[] args) {
-        /*
         Board board = new Board();
 
         BoardLocator boardLocator = BoardLocator.getInstance();
@@ -387,7 +378,5 @@ public class Board extends JFrame implements Sizeable {
         board.changeSize(1);
 
         board.setVisible(true);
-
-         */
     }
 }

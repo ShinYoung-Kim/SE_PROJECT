@@ -5,6 +5,7 @@ import se.tetris.common.LifeCycleManager;
 import se.tetris.component.Sizeable;
 import se.tetris.component.boardlogic.BoardLocator;
 import se.tetris.component.boardlogic.BoardTimer;
+import se.tetris.component.boardlogic.BoardValues;
 import se.tetris.component.boardlogic.RandomBlock;
 import se.tetris.setting.SettingValues;
 
@@ -18,14 +19,14 @@ import java.awt.*;
 import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
-public class BoardNextArea extends JTextPane implements Sizeable, LifeCycleManager {
-    private static JTextPane nextArea;
-    private static SimpleAttributeSet stylesetNx;
-    private static StyledDocument nextDoc;
+public class BoardNextArea extends JPanel implements Sizeable {
+    private JTextPane nextArea;
+    private SimpleAttributeSet stylesetNx;
+    private StyledDocument nextDoc;
 
     private Block next;
     private int[][] nextBoard;
-    RandomBlock randomBlock = new RandomBlock();
+    private RandomBlock randomBlock = new RandomBlock();
 
     private int nextX = 1;
     private int nextY = 1;
@@ -36,15 +37,13 @@ public class BoardNextArea extends JTextPane implements Sizeable, LifeCycleManag
         nextArea = new JTextPane();
         nextArea.setEditable(false);
         nextArea.setBackground(Color.BLACK);
-        CompoundBorder border = BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.GRAY, 10),
-                BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
-        nextArea.setBorder(border);
+        nextArea.setBorder(BoardValues.getInstance().getBorder());
         nextArea.setAlignmentX(CENTER_ALIGNMENT);
         nextArea.setAlignmentY(CENTER_ALIGNMENT);
         nextArea.setPreferredSize(new Dimension(150, 200));
 
         nextBoard = new int[4][5];
+        next = randomBlock.getRandomBlock(setting.modeChoose);
 
         stylesetNx = new SimpleAttributeSet();
         StyleConstants.setFontSize(stylesetNx, 25);
@@ -54,8 +53,6 @@ public class BoardNextArea extends JTextPane implements Sizeable, LifeCycleManag
         StyleConstants.setLineSpacing(stylesetNx, -0.45f);
 
         nextDoc = nextArea.getStyledDocument();
-
-        next = randomBlock.getRandomBlock(setting.modeChoose);
 
         //placeNext();
         //drawNext();
@@ -67,20 +64,20 @@ public class BoardNextArea extends JTextPane implements Sizeable, LifeCycleManag
     public void changeSize(int sizeNumber) {
         switch (sizeNumber) {
             case 1:
-                setStylesetSize(30, 25, 20);
-                setRtSize(110, 50);
+                setStylesetSize(20);
+                setRtSize(110);
                 break;
             case 2:
-                setStylesetSize(50, 50, 45);
-                setRtSize(250, 55);
+                setStylesetSize(45);
+                setRtSize(250);
                 break;
             case 3:
-                setStylesetSize(50, 50, 45);
-                setRtSize(250, 60);
+                setStylesetSize(45);
+                setRtSize(250);
                 break;
             default:
-                setStylesetSize(30, 25, 25);
-                setRtSize(120, 50);
+                setStylesetSize(20);
+                setRtSize(110);
                 break;
         }
     }
@@ -120,16 +117,16 @@ public class BoardNextArea extends JTextPane implements Sizeable, LifeCycleManag
         colorBlindModeNext();
     }
 
-    public void setStylesetSize(int size1, int size2, int size3) {
-        StyleConstants.setFontSize(stylesetNx, size3);
+    private void setStylesetSize(int size) {
+        StyleConstants.setFontSize(stylesetNx, size);
         drawNext();
     }
 
-    public void setRtSize(int xSize, int ySize) {
-        setSize(new Dimension(xSize, xSize));
+    private void setRtSize(int size) {
+        nextArea.setPreferredSize(new Dimension(size, size));
     }
 
-    public void colorBlindMode(SimpleAttributeSet styleSet, Block block) {
+    private void colorBlindMode(SimpleAttributeSet styleSet, Block block) {
         if (setting.colorBlindModeCheck == 1) {
             StyleConstants.setForeground(styleSet, block.getColorBlind());
         } else {
@@ -137,7 +134,7 @@ public class BoardNextArea extends JTextPane implements Sizeable, LifeCycleManag
         }
     }
 
-    public void colorBlindModeNext() {
+    private void colorBlindModeNext() {
         colorBlindMode(stylesetNx, next);
         nextDoc.setParagraphAttributes(0, nextDoc.getLength(), stylesetNx, false);
     }
@@ -152,16 +149,6 @@ public class BoardNextArea extends JTextPane implements Sizeable, LifeCycleManag
 
     public void resetNextBoard() {
         nextBoard = new int[HEIGHT][WIDTH];
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
     }
 
     public static void main(String[] args) {

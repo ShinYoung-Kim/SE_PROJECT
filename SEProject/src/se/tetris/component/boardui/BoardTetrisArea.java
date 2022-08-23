@@ -33,7 +33,7 @@ public class BoardTetrisArea extends JPanel implements Sizeable {
     private int y = 0;
     private final char BORDER_CHAR = 'X';
     //int eraseCnt = 0;
-    RandomBlock randomBlock = new RandomBlock();
+    private RandomBlock randomBlock = new RandomBlock();
 
     BoardValues boardValues = BoardValues.getInstance();
     int mode = boardValues.mode;
@@ -44,14 +44,12 @@ public class BoardTetrisArea extends JPanel implements Sizeable {
         tetrisArea = new JTextPane();
         tetrisArea.setEditable(false);
         tetrisArea.setBackground(Color.BLACK);
-        CompoundBorder border = BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.GRAY, 10),
-                BorderFactory.createLineBorder(Color.DARK_GRAY, 5));
-        tetrisArea.setBorder(border);
+        tetrisArea.setBorder(boardValues.getBorder());
         tetrisArea.setAlignmentX(CENTER_ALIGNMENT);
         tetrisArea.setAlignmentY(CENTER_ALIGNMENT);
 
         board = new int[HEIGHT][WIDTH];
+        curr = randomBlock.getRandomBlock(setting.modeChoose);
 
         stylesetBr = new SimpleAttributeSet();
         StyleConstants.setFontSize(stylesetBr, 20);
@@ -68,6 +66,8 @@ public class BoardTetrisArea extends JPanel implements Sizeable {
         StyleConstants.setAlignment(stylesetCur, StyleConstants.ALIGN_CENTER);
         StyleConstants.setLineSpacing(stylesetCur, -0.45f);
 
+        boardDoc = tetrisArea.getStyledDocument();
+
         add(tetrisArea);
     }
 
@@ -83,9 +83,9 @@ public class BoardTetrisArea extends JPanel implements Sizeable {
         this.y++;
     }
 
-    public void setStylesetSize(int size1, int size2, int size3) {
-        StyleConstants.setFontSize(stylesetBr, size1);
-        StyleConstants.setFontSize(stylesetCur, size1);
+    private void setStylesetSize(int size) {
+        StyleConstants.setFontSize(stylesetBr, size);
+        StyleConstants.setFontSize(stylesetCur, size);
         drawBoard();
     }
 
@@ -93,20 +93,20 @@ public class BoardTetrisArea extends JPanel implements Sizeable {
     public void changeSize(int sizeNumber) {
         switch (sizeNumber) {
             case 1:
-                this.setStylesetSize(30, 25, 20);
-                this.setPreferredSize(new Dimension(250, 460));
+                this.setStylesetSize(30);
+                tetrisArea.setPreferredSize(new Dimension(250, 460));
                 break;
             case 2:
-                this.setStylesetSize(50, 50, 45);
-                this.setPreferredSize(new Dimension(400, 750));
+                this.setStylesetSize(50);
+                tetrisArea.setPreferredSize(new Dimension(400, 750));
                 break;
             case 3:
-                this.setStylesetSize(50, 50, 45);
-                this.setPreferredSize(new Dimension(400, 750));
+                this.setStylesetSize(50);
+                tetrisArea.setPreferredSize(new Dimension(400, 750));
                 break;
             default:
-                this.setStylesetSize(30, 25, 25);
-                this.setPreferredSize(new Dimension(220, 400));
+                this.setStylesetSize(30);
+                tetrisArea.setPreferredSize(new Dimension(220, 400));
                 break;
         }
     }
@@ -457,7 +457,7 @@ public class BoardTetrisArea extends JPanel implements Sizeable {
         drawBoard();
     }
 
-    public void colorBlindMode(SimpleAttributeSet styleSet, Block block) {
+    private void colorBlindMode(SimpleAttributeSet styleSet, Block block) {
         if (setting.colorBlindModeCheck == 1) {
             StyleConstants.setForeground(styleSet, block.getColorBlind());
         } else {
@@ -465,7 +465,7 @@ public class BoardTetrisArea extends JPanel implements Sizeable {
         }
     }
 
-    public void colorBlindModeCurrent(int offset) {
+    private void colorBlindModeCurrent(int offset) {
         colorBlindMode(stylesetCur, curr);
         boardDoc.setCharacterAttributes(offset, 1, stylesetCur, true);
     }

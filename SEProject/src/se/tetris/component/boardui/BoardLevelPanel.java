@@ -12,7 +12,7 @@ import java.awt.*;
 import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
-public class BoardLevelPanel extends JPanel implements Sizeable, LifeCycleManager {
+public class BoardLevelPanel extends JPanel implements Sizeable {
 
     private JPanel levelPanel;
     private int level = 0;
@@ -65,7 +65,7 @@ public class BoardLevelPanel extends JPanel implements Sizeable, LifeCycleManage
     }
 
     public void setRtSize(int xSize, int ySize) {
-        setSize(new Dimension(xSize, ySize));
+        setPreferredSize(new Dimension(xSize, ySize));
     }
 
     public void setLbSize(int size) {
@@ -75,15 +75,5 @@ public class BoardLevelPanel extends JPanel implements Sizeable, LifeCycleManage
 
     public void changeLevelLb (int level) {
         levelLb2.setText(Integer.toString(level));
-    }
-
-    @Override
-    public void onStart() {
-
-    }
-
-    @Override
-    public void onStop() {
-
     }
 }

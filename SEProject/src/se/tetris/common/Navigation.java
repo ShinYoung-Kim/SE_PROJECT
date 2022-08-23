@@ -1,6 +1,7 @@
 package se.tetris.common;
 
 import se.tetris.component.*;
+import se.tetris.component.itemboardui.SeperatingItemBoard;
 import se.tetris.setting.SettingCode;
 import se.tetris.setting.SettingValues;
 
@@ -45,7 +46,7 @@ public class Navigation {
             case SETTING_SCREEN -> setting;
             case SCOREBOARD_SCREEN -> score;
             case BOARD_SCREEN -> new Board();
-            case ITEM_BOARD_SCREEN -> new ItemBoard();
+            case ITEM_BOARD_SCREEN -> new SeperatingItemBoard();
             case BATTLE_BOARD_SCREEN -> new BattleBoard();
             case BATTLE_ITEM_BOARD_SCREEN -> new ItemBattleBoard();
             case BATTLE_TIME_BOARD_SCREEN -> new TimeBattleBoard();

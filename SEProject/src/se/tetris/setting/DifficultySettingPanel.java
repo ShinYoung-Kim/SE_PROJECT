@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static se.tetris.setting.SettingCode.grayMade;
 import static se.tetris.setting.Strings.*;
 
 public class DifficultySettingPanel extends JPanel {
@@ -31,6 +30,10 @@ public class DifficultySettingPanel extends JPanel {
 
     DBCalls dataCalls = new DBCalls();
     int setLevel = dataCalls.getLevelSetting();
+
+    private int KeyFoucus;
+    private final boolean canMoveLeft = false;
+    private final boolean canMoveRight = true;
 
     enum Difficulty {
         Easy,
@@ -108,7 +111,7 @@ public class DifficultySettingPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // modeArea.setPreferredSize(new Dimension(250, 70));
         setAlignmentX(LEFT_ALIGNMENT);
-        setBackground(grayMade);
+        setBackground(SettingValues.getInstance().backgroundColoring(false));
 
         reload();
     }
@@ -171,5 +174,41 @@ public class DifficultySettingPanel extends JPanel {
                 modeThree.setBackground(color);
                 break;
         }
+    }
+
+    public int getKeyFoucus() {
+        return KeyFoucus - 1;
+    }
+
+    public void foucusMoveUp() {
+        KeyFoucus -= 1;
+    }
+
+    public void foucusMoveDown() {
+        KeyFoucus += 1;
+    }
+
+    public boolean canMoveUp() {
+        foucusMoveUp();
+        if (KeyFoucus < 8) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean canMoveDown() {
+        foucusMoveDown();
+        if (KeyFoucus > 10) {
+            return false;
+        }
+        return true;
+    }
+
+    public void panelFirstFoucus() {
+        KeyFoucus = 8;
+    }
+
+    public void panelLastFoucus() {
+        KeyFoucus = 10;
     }
 }

@@ -11,10 +11,10 @@ import java.awt.*;
 
 public class BoardScorePanel extends JPanel implements Sizeable {
 
-    private static JPanel scorePanel;
-    public static int score = 0;
-    static JLabel scoreLb1 = new JLabel("Scores");
-    static JLabel scoreLb2 = new JLabel(Integer.toString(score));
+    private JPanel scorePanel;
+    private int score = 0;
+    private JLabel scoreLb1 = new JLabel("Scores");
+    private JLabel scoreLb2 = new JLabel(Integer.toString(score));
     private ScoreItem scoreItem = new ScoreItem();
 
     public BoardScorePanel() {
@@ -60,11 +60,11 @@ public class BoardScorePanel extends JPanel implements Sizeable {
         }
     }
 
-    public void setRtSize(int xSize, int ySize) {
-        setSize(new Dimension(xSize, ySize));
+    private void setRtSize(int xSize, int ySize) {
+        setPreferredSize(new Dimension(xSize, ySize));
     }
 
-    public void setLbSize(int size) {
+    private void setLbSize(int size) {
         scoreLb1.setFont(new Font(null, Font.BOLD, size));
         scoreLb2.setFont(new Font(null, Font.BOLD, size));
     }
@@ -90,7 +90,7 @@ public class BoardScorePanel extends JPanel implements Sizeable {
         return score;
     }
 
-    public int updateSroce(int sc, String mode) {
+    private int updateSroce(int sc, String mode) {
         if (mode == "line") {
             if (sc > 0 && sc <= 5) {
                 this.score += 10;

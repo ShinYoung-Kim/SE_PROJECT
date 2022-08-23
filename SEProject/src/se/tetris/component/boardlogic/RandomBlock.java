@@ -3,12 +3,10 @@ package se.tetris.component.boardlogic;
 import se.tetris.blocks.*;
 
 public class RandomBlock {
-    int min;
-    int max;
-    double percentage;
-    int blockNumber;
-
-    Block randomBlock;
+    private int min;
+    private int max;
+    private double percentage;
+    private int blockNumber;
 
     public Block getRandomBlock(int modeChoose) {
         switch (modeChoose) {

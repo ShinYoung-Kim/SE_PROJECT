@@ -7,7 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static se.tetris.setting.SettingCode.grayMade;
 import static se.tetris.setting.Strings.*;
 
 public class KeySettingPanel extends JPanel {
@@ -26,6 +25,10 @@ public class KeySettingPanel extends JPanel {
 
     DBCalls dataCalls = new DBCalls();
     int settingKey = dataCalls.getKeySetting();
+
+    private int KeyFoucus;
+    private final boolean canMoveLeft = false;
+    private final boolean canMoveRight = true;
 
     public enum KeyMode {
         Arrow,
@@ -71,7 +74,7 @@ public class KeySettingPanel extends JPanel {
         add(Box.createVerticalStrut(20));
         // keyArea.setPreferredSize(new Dimension(250, 70));
         setAlignmentX(LEFT_ALIGNMENT);
-        setBackground(grayMade);
+        setBackground(SettingValues.getInstance().backgroundColoring(false));
 
         keyOne.addActionListener(new ActionListener() {
             @Override
@@ -135,5 +138,41 @@ public class KeySettingPanel extends JPanel {
                 keyTwo.setBackground(color);
                 break;
         }
+    }
+
+    public int getKeyFoucus() {
+        return KeyFoucus - 1;
+    }
+
+    public void foucusMoveUp() {
+        KeyFoucus -= 1;
+    }
+
+    public void foucusMoveDown() {
+        KeyFoucus += 1;
+    }
+
+    public boolean canMoveUp() {
+        foucusMoveUp();
+        if (KeyFoucus < 4) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean canMoveDown() {
+        foucusMoveDown();
+        if (KeyFoucus > 5) {
+            return false;
+        }
+        return true;
+    }
+
+    public void panelFirstFoucus() {
+        KeyFoucus = 4;
+    }
+
+    public void panelLastFoucus() {
+        KeyFoucus = 5;
     }
 }
