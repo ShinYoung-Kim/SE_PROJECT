@@ -15,28 +15,12 @@ public class DifficultyHardStrategy implements DifficultyStrategy{
             boardScorePanel.setScore();
         }
         //삭제
-            if (eraseCnt < 5 && eraseCnt >= 0) {
-                interval = 800;
-                level = 1;
-            } else if (eraseCnt < 10 && eraseCnt >= 5) {
-                interval = (int) (800 * 0.88);
-                level = 2;
-            } else if (eraseCnt < 15 && eraseCnt >= 10) {
-                interval = (int) (800 * 0.88 * 0.88);
-                level = 3;
-            } else if (eraseCnt < 20 && eraseCnt >= 15) {
-                interval = (int) (800 * 0.88 * 0.88 * 0.88);
-                level = 4;
-            } else if (eraseCnt < 25 && eraseCnt >= 20) {
-                interval = (int) (800 * 0.88 * 0.88 * 0.88 * 0.88);
-                level = 5;
-            } else if (eraseCnt < 30 && eraseCnt >= 25) {
-                interval = (int) (800 * 0.88 * 0.88 * 0.88 * 0.88 * 0.88);
-                level = 6;
-            } else if (eraseCnt >= 30) {
-                interval = (int) (800 * 0.88 * 0.88 * 0.88 * 0.88 * 0.88 * 0.88);
-                level = 7;
-            }
+        if (eraseCnt < 30) {
+            level = (int) (eraseCnt / 5) + 1;
+        } else {
+            level = 7;
+        }
+        interval = (int) (800 * Math.pow(0.88, level - 1));
         boardLevelPanel.changeLevelLb(level);
         return interval;
     }
