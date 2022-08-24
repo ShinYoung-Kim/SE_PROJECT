@@ -3,6 +3,8 @@ package se.tetris.component.battlemodeui;
 import se.tetris.blocks.Block;
 import se.tetris.component.ScoreItem;
 import se.tetris.component.Sizeable;
+import se.tetris.component.battlemodelogic.BattleBoardLocator;
+import se.tetris.component.battlemodelogic.ObserveInterface;
 import se.tetris.setting.SettingValues;
 
 import javax.swing.*;
@@ -13,7 +15,7 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class InnerBoardAttackPanel extends JPanel implements Sizeable {
+public class InnerBoardAttackPanel extends JPanel implements Sizeable, ObserveInterface {
     private JTextPane attackPanel;
     private int[][] attackBoard;
 
@@ -28,6 +30,8 @@ public class InnerBoardAttackPanel extends JPanel implements Sizeable {
     public ArrayList<Integer> attackLine;
 
     public final SettingValues setting = SettingValues.getInstance();
+
+    private BattleBoardLocator battleBoardLocator;
 
     public InnerBoardAttackPanel() {
         //UI
@@ -141,5 +145,10 @@ public class InnerBoardAttackPanel extends JPanel implements Sizeable {
 
     public void setLastY(int lastY) {
         this.lastY = lastY;
+    }
+
+    @Override
+    public void updateBattleBoardLocator(BattleBoardLocator battleBoardLocator) {
+        this.battleBoardLocator = battleBoardLocator;
     }
 }

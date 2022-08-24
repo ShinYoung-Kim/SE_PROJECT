@@ -4,6 +4,8 @@ import se.tetris.component.Board;
 import se.tetris.component.Sizeable;
 import se.tetris.component.battlemodelogic.BattleBoardLocator;
 import se.tetris.component.battlemodelogic.InnerBoardUIInterface;
+import se.tetris.component.battlemodelogic.ObserveInterface;
+import se.tetris.component.battlemodelogic.ObservedInterface;
 import se.tetris.component.boardlogic.BoardLocator;
 import se.tetris.component.boardlogic.BoardTimer;
 import se.tetris.component.boardlogic.RandomBlock;
@@ -14,9 +16,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.List;
 
-public class InnerBoardUI extends Board implements Sizeable, InnerBoardUIInterface {
+public class InnerBoardUI extends Board implements Sizeable, InnerBoardUIInterface, ObservedInterface {
     private String BattleMode;
     private String name = "player";
 
@@ -29,6 +33,8 @@ public class InnerBoardUI extends Board implements Sizeable, InnerBoardUIInterfa
     private InnerBoardScorePanel scoreArea;
     private InnerBoardLevelPanel levelArea;
     private InnerBoardAttackPanel attackArea;
+
+    private List<ObserveInterface> panelList = new ArrayList<>();
 
     StringBuffer sbByAttack;
     boolean alreadyAttacked = false;
@@ -51,6 +57,11 @@ public class InnerBoardUI extends Board implements Sizeable, InnerBoardUIInterfa
         attackArea = new InnerBoardAttackPanel();
 
         battleBoardLocator = new BattleBoardLocator(nextArea, tetrisArea, scoreArea, levelArea, attackArea);
+        addPanel(nextArea);
+        addPanel(tetrisArea);
+        addPanel(scoreArea);
+        addPanel(levelArea);
+        addPanel(attackArea);
 
         scoreLevelPanel = new JPanel();
         scoreLevelPanel.setLayout(new BoxLayout(scoreLevelPanel, BoxLayout.Y_AXIS));
@@ -86,6 +97,8 @@ public class InnerBoardUI extends Board implements Sizeable, InnerBoardUIInterfa
         boardTimer.boardTimerStart();
 
         battleBoardLocator.setInnerBoardUI(this);
+
+        notifyPanel();
     }
 
     public void reset() {
@@ -153,5 +166,15 @@ public class InnerBoardUI extends Board implements Sizeable, InnerBoardUIInterfa
 
     public BattleBoardLocator getBattleBoardLocator() {
         return battleBoardLocator;
+    }
+
+    @Override
+    public void notifyPanel() {
+        panelList.forEach(panel -> panel.updateBattleBoardLocator(this.getBattleBoardLocator()));
+    }
+
+    @Override
+    public void addPanel(ObserveInterface panel) {
+        panelList.add(panel);
     }
 }

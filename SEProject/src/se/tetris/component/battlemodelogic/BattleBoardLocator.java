@@ -9,7 +9,7 @@ import se.tetris.component.boardui.BoardScorePanel;
 import se.tetris.component.boardui.BoardTetrisArea;
 
 public class BattleBoardLocator {
-    private static BattleBoardLocator instance;
+    private BattleBoardLocator instance;
 
     private InnerBoardNextPanel boardNextArea;
     private InnerBoardTetrisPanel boardTetrisArea;
@@ -20,7 +20,7 @@ public class BattleBoardLocator {
 
     private BattleTimer boardTimer;
 
-    public static BattleBoardLocator getInstance() {
+    public BattleBoardLocator getInstance() {
         if (instance == null) {
             instance = new BattleBoardLocator(new InnerBoardNextPanel(), new InnerBoardTetrisPanel(),
                     new InnerBoardScorePanel(), new InnerBoardLevelPanel(), new InnerBoardAttackPanel());
@@ -37,7 +37,7 @@ public class BattleBoardLocator {
         this.attackPanel = attack;
     }
 
-    public static void init(BattleBoardLocator boardLocator) {
+    public void init(BattleBoardLocator boardLocator) {
         instance = boardLocator;
     }
 

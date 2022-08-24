@@ -5,6 +5,7 @@ import se.tetris.component.ScoreItem;
 import se.tetris.component.Sizeable;
 import se.tetris.component.battlemodelogic.BattleBoardLocator;
 import se.tetris.component.battlemodelogic.BattleTimer;
+import se.tetris.component.battlemodelogic.ObserveInterface;
 import se.tetris.component.boardlogic.RandomBlock;
 import se.tetris.component.boardui.BoardNextArea;
 import se.tetris.setting.SettingValues;
@@ -17,7 +18,7 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class InnerBoardNextPanel extends BoardNextArea implements Sizeable {
+public class InnerBoardNextPanel extends BoardNextArea implements Sizeable, ObserveInterface {
     private JTextPane nextPanel;
     private int[][] nextBoard;
 
@@ -29,6 +30,8 @@ public class InnerBoardNextPanel extends BoardNextArea implements Sizeable {
 
     private int mode = 0;
     private RandomBlock randomBlock = new RandomBlock();
+
+    private BattleBoardLocator battleBoardLocator;
 
     public final SettingValues setting = SettingValues.getInstance();
     public int intervalByMode = setting.intervalNumber;
@@ -80,10 +83,10 @@ public class InnerBoardNextPanel extends BoardNextArea implements Sizeable {
 
     public void drawNext() {
         StringBuffer sb = new StringBuffer();
-        BattleBoardLocator.getInstance().getBoardTimer().blockNumberIncrease();
+        battleBoardLocator.getBoardTimer().blockNumberIncrease();
         sb.append("\n");
         sb.append("\n");
-        BattleBoardLocator.getInstance().getBoardTimer().boardTimerSetDelay();
+        battleBoardLocator.getBoardTimer().boardTimerSetDelay();
         for (int i = 0; i < nextBoard.length; i++) {
             for (int j = 0; j < nextBoard[i].length; j++) {
                 if (nextBoard[i][j] > 0) {
@@ -141,5 +144,10 @@ public class InnerBoardNextPanel extends BoardNextArea implements Sizeable {
                 setRtSize(120);
                 break;
         }
+    }
+
+    @Override
+    public void updateBattleBoardLocator(BattleBoardLocator battleBoardLocator) {
+        this.battleBoardLocator = battleBoardLocator;
     }
 }

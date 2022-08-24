@@ -6,6 +6,7 @@ import se.tetris.component.ScoreItem;
 import se.tetris.component.Sizeable;
 import se.tetris.component.TimeBattleBoard;
 import se.tetris.component.battlemodelogic.BattleBoardLocator;
+import se.tetris.component.battlemodelogic.ObserveInterface;
 import se.tetris.component.battlemodelogic.ProxyInnerBoardUI;
 import se.tetris.component.boardlogic.BoardLocator;
 import se.tetris.component.boardlogic.BoardValues;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-public class InnerBoardTetrisPanel extends BoardTetrisArea implements Sizeable {
+public class InnerBoardTetrisPanel extends BoardTetrisArea implements Sizeable, ObserveInterface {
     private final int HEIGHT = 20;
     private final int WIDTH = 10;
     private final char BORDER_CHAR = 'X';
@@ -60,7 +61,8 @@ public class InnerBoardTetrisPanel extends BoardTetrisArea implements Sizeable {
     private boolean alreadyAttacked = false;
     private boolean attackBoardFull = false;
 
-    private ProxyInnerBoardUI proxyInnerBoardUI = new ProxyInnerBoardUI(BattleBoardLocator.getInstance().getInnerBoardUI());
+    private BattleBoardLocator battleBoardLocator;
+    private ProxyInnerBoardUI proxyInnerBoardUI = new ProxyInnerBoardUI(battleBoardLocator.getInnerBoardUI());
 
     public InnerBoardTetrisPanel() {
         //UI
@@ -136,8 +138,8 @@ public class InnerBoardTetrisPanel extends BoardTetrisArea implements Sizeable {
         String name = proxyInnerBoardUI.getName();
         String BattleMode = proxyInnerBoardUI.getBattleMode();
 
-        InnerBoardAttackPanel attackPanel = BattleBoardLocator.getInstance().getAttackPanel();
-        InnerBoardNextPanel nextPanel = BattleBoardLocator.getInstance().getBoardNextArea();
+        InnerBoardAttackPanel attackPanel = battleBoardLocator.getAttackPanel();
+        InnerBoardNextPanel nextPanel = battleBoardLocator.getBoardNextArea();
 
         saveBoard();
         attackPanel.setLastBlock(curr);
@@ -183,8 +185,8 @@ public class InnerBoardTetrisPanel extends BoardTetrisArea implements Sizeable {
     }
 
     public void lineRemove() {
-        InnerBoardAttackPanel attackPanel = BattleBoardLocator.getInstance().getAttackPanel();
-        InnerBoardScorePanel scorePanel = BattleBoardLocator.getInstance().getScorePanel();
+        InnerBoardAttackPanel attackPanel = battleBoardLocator.getAttackPanel();
+        InnerBoardScorePanel scorePanel = battleBoardLocator.getScorePanel();
 
         line = lineCheck();
         if (line.size() > 1) {
@@ -254,7 +256,7 @@ public class InnerBoardTetrisPanel extends BoardTetrisArea implements Sizeable {
     }
 
     public void moveDown() {
-        InnerBoardScorePanel scorePanel = BattleBoardLocator.getInstance().getScorePanel();
+        InnerBoardScorePanel scorePanel = battleBoardLocator.getScorePanel();
 
         eraseCurr();
 
@@ -520,5 +522,10 @@ public class InnerBoardTetrisPanel extends BoardTetrisArea implements Sizeable {
                 tetrisPanel.setPreferredSize(new Dimension(220, 400));
                 break;
         }
+    }
+
+    @Override
+    public void updateBattleBoardLocator(BattleBoardLocator battleBoardLocator) {
+        this.battleBoardLocator = battleBoardLocator;
     }
 }

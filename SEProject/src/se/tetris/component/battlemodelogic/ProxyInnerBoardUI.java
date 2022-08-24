@@ -17,8 +17,4 @@ public class ProxyInnerBoardUI implements InnerBoardUIInterface{
     public String getBattleMode() {
         return innerBoardUI.getBattleMode();
     }
-
-    public BattleBoardLocator getBattleBoardLocator() {
-        return innerBoardUI.getBattleBoardLocator();
-    }
 }

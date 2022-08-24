@@ -3,6 +3,8 @@ package se.tetris.component.battlemodeui;
 import se.tetris.blocks.Block;
 import se.tetris.component.ScoreItem;
 import se.tetris.component.Sizeable;
+import se.tetris.component.battlemodelogic.BattleBoardLocator;
+import se.tetris.component.battlemodelogic.ObserveInterface;
 import se.tetris.component.boardui.BoardScorePanel;
 import se.tetris.setting.SettingValues;
 
@@ -11,7 +13,7 @@ import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class InnerBoardScorePanel extends BoardScorePanel implements Sizeable {
+public class InnerBoardScorePanel extends BoardScorePanel implements Sizeable, ObserveInterface {
     private int score = 0;
 
     private JPanel scorePanel;
@@ -23,6 +25,8 @@ public class InnerBoardScorePanel extends BoardScorePanel implements Sizeable {
     public int intervalByModeForChange = setting.intervalNumber;
 
     ScoreItem scoreItem = new ScoreItem();
+
+    private BattleBoardLocator battleBoardLocator;
 
     public InnerBoardScorePanel() {
         scorePanel = new JPanel();
@@ -121,5 +125,10 @@ public class InnerBoardScorePanel extends BoardScorePanel implements Sizeable {
                 setLbSize(10);
                 break;
         }
+    }
+
+    @Override
+    public void updateBattleBoardLocator(BattleBoardLocator battleBoardLocator) {
+        this.battleBoardLocator = battleBoardLocator;
     }
 }
