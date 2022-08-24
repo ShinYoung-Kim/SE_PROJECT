@@ -37,11 +37,7 @@ import static se.tetris.setting.SettingCode.screenHeight;
 import static se.tetris.setting.SettingCode.screenWidth;
 
 public class InnerBoard extends JPanel implements Sizeable {
-
     public static String BattleMode;
-
-    public static Board innerBoardMain;
-    private static final long serialVersionUID = 2434035659171694595L;
 
     public static final int HEIGHT = 20;
     public static final int WIDTH = 10;
@@ -50,7 +46,6 @@ public class InnerBoard extends JPanel implements Sizeable {
     double min;
     double max;
     double percentage;
-    double weighted;
     Random rnd;
     int block;
 
@@ -272,7 +267,6 @@ public class InnerBoard extends JPanel implements Sizeable {
         timer.start();
 
         changeSize(sizeNumber);
-        System.out.println(sizeNumber);
     }
 
     public Block getRandomBlock(int modeChoose) {
